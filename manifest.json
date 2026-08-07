@@ -1,0 +1,13 @@
+{
+  "name": "Painel Rende Mais",
+  "short_name": "Painel RM",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1F3864",
+  "theme_color": "#1F3864",
+  "description": "Todos os aplicativos, campanhas e arquivos diários da Rende Mais em um só lugar.",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

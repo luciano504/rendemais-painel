@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Painel Rende Mais</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F3864">
+<link rel="icon" href="icon.svg">
+<style>
+:root{
+  color-scheme:light;
+  --navy:#1F3864; --amber:#FFBF00;
+  --plane:#f2f3f6; --surface:#ffffff; --surface-2:#f7f8fa;
+  --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --baseline:#c3c2b7; --ring:rgba(11,11,11,.10);
+  --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --seq-100:#cde2fb; --seq-250:#86b6ef; --seq-450:#2a78d6; --seq-600:#184f95; --seq-700:#0d366b;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --success-text:#006300;
+  --radius:14px;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --plane:#0d0d0d; --surface:#1a1a19; --surface-2:#211f1e;
+  --ink:#ffffff; --ink-2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --baseline:#383835; --ring:rgba(255,255,255,.10);
+  --seq-100:#184f95; --seq-250:#256abf; --seq-450:#3987e5; --seq-600:#6da7ec; --seq-700:#9ec5f4;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --success-text:#0ca30c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--plane); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.45; -webkit-font-smoothing:antialiased;
+  padding-bottom:48px;
+}
+a{color:inherit}
+button{font:inherit; cursor:pointer}
+
+/* ---------- topo ---------- */
+header.top{
+  background:var(--navy); color:#fff; padding:14px 18px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  position:sticky; top:0; z-index:20; box-shadow:0 1px 0 rgba(0,0,0,.15);
+}
+header.top .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:.2px}
+header.top .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--amber);flex:none}
+header.top .sub{font-size:12.5px;opacity:.82;font-weight:400}
+header.top .spacer{flex:1}
+header.top button{
+  background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25);
+  border-radius:9px; padding:7px 12px; font-size:13px;
+}
+header.top button:hover{background:rgba(255,255,255,.22)}
+.who{font-size:12.5px;opacity:.85}
+
+main{max-width:1180px;margin:0 auto;padding:18px 16px 0}
+
+h2.sec{
+  font-size:13px; text-transform:uppercase; letter-spacing:.9px; color:var(--muted);
+  margin:30px 0 12px; font-weight:700; display:flex; align-items:center; gap:10px;
+}
+h2.sec::after{content:"";flex:1;height:1px;background:var(--grid)}
+h2.sec:first-of-type{margin-top:6px}
+
+/* ---------- tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.tile{
+  background:var(--surface); border:1px solid var(--ring); border-radius:var(--radius);
+  padding:14px 15px; display:flex; flex-direction:column; gap:5px; min-height:104px;
+  text-decoration:none;
+}
+.tile .lbl{font-size:12.5px;color:var(--ink-2);font-weight:600;display:flex;align-items:center;gap:6px}
+.tile .val{font-size:30px;font-weight:700;line-height:1.05;letter-spacing:-.5px}
+.tile .foot{font-size:12px;color:var(--muted);margin-top:auto}
+.tile.is-link:hover{border-color:var(--seq-450)}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;
+  padding:2px 8px;border-radius:999px;border:1px solid var(--ring);
+}
+.pill.good{color:var(--success-text);border-color:color-mix(in srgb,var(--good) 40%,transparent)}
+.pill.warn{color:#8a5a00;border-color:color-mix(in srgb,var(--warning) 55%,transparent)}
+:root[data-theme="dark"] .pill.warn{color:var(--warning)}
+.pill.crit{color:var(--critical);border-color:color-mix(in srgb,var(--critical) 45%,transparent)}
+.pill.neutral{color:var(--muted)}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--surface); border:1px solid var(--ring); border-radius:var(--radius);
+  padding:16px 16px 14px;
+}
+.card h3{margin:0 0 2px;font-size:16px;font-weight:700}
+.card .desc{font-size:13px;color:var(--ink-2);margin:0 0 10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}
+.grid-apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:12px}
+
+/* app cards */
+.app{
+  background:var(--surface); border:1px solid var(--ring); border-radius:var(--radius);
+  padding:15px; display:flex; flex-direction:column; gap:8px; text-decoration:none; color:inherit;
+  transition:border-color .12s, transform .12s;
+}
+.app:hover{border-color:var(--navy); transform:translateY(-1px)}
+.app .ico{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  font-size:20px;background:var(--surface-2);border:1px solid var(--ring);
+}
+.app .nm{font-weight:700;font-size:15.5px}
+.app .dc{font-size:12.6px;color:var(--ink-2);flex:1}
+.app .mt{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.app.off{opacity:.72}
+
+/* ---------- barras ---------- */
+.bars{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.bar-row{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:10px}
+.bar-row .nm{font-size:12.5px;color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums}
+.track{position:relative;height:16px;background:var(--surface-2);border-radius:5px;overflow:hidden}
+.fill{display:block;height:100%;min-width:3px;border-radius:0 5px 5px 0;background:var(--seq-450);transition:width .5s ease}
+.fill.low{background:var(--seq-250)}
+.meta-line{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--baseline)}
+.bar-row .v{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;min-width:58px;text-align:right}
+.legenda{font-size:11.5px;color:var(--muted);margin-top:10px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.legenda .k{display:inline-flex;align-items:center;gap:5px}
+.legenda .sw{width:11px;height:11px;border-radius:3px;background:var(--seq-450)}
+.legenda .sw.low{background:var(--seq-250)}
+.legenda .sw.line{width:2px;height:12px;border-radius:0;background:var(--baseline)}
+
+/* ---------- arquivos ---------- */
+.file{
+  display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--grid);
+}
+.file:first-of-type{border-top:0}
+.file .fi{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--ring);font-size:16px;flex:none}
+.file .fn{font-weight:600;font-size:14px}
+.file .fs{font-size:12px;color:var(--muted)}
+.file .fa{margin-left:auto}
+.btn{
+  background:var(--navy);color:#fff;border:0;border-radius:9px;padding:8px 13px;font-size:13px;font-weight:600;
+  text-decoration:none;display:inline-block;
+}
+.btn.ghost{background:transparent;color:var(--ink-2);border:1px solid var(--ring)}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+
+/* ---------- tabela ---------- */
+table.t{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+table.t th,table.t td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--grid)}
+table.t th{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
+table.t td.n{text-align:right;font-variant-numeric:tabular-nums}
+details.tbl summary{font-size:12.5px;color:var(--ink-2);cursor:pointer;margin-top:12px}
+
+.badge-loja{display:inline-block;color:#fff;border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700}
+.empty{font-size:13px;color:var(--muted);padding:14px 0;text-align:center}
+.err{font-size:12.5px;color:var(--critical);margin-top:8px}
+.skel{color:var(--muted)}
+
+/* ---------- login ---------- */
+#login{position:fixed;inset:0;background:var(--plane);display:none;place-items:center;z-index:60;padding:20px}
+#login .box{background:var(--surface);border:1px solid var(--ring);border-radius:18px;padding:26px;max-width:340px;width:100%;text-align:center}
+#login h1{font-size:19px;margin:12px 0 4px}
+#login p{font-size:13px;color:var(--ink-2);margin:0 0 16px}
+#login select,#login input{width:100%;padding:11px;border-radius:10px;border:1px solid var(--ring);background:var(--surface-2);color:var(--ink);font:inherit;margin-bottom:10px}
+#login .btn{width:100%;padding:11px}
+#login .msg{font-size:12.5px;color:var(--critical);min-height:18px;margin-top:8px}
+footer{max-width:1180px;margin:34px auto 0;padding:0 16px;font-size:11.5px;color:var(--muted)}
+@media(max-width:560px){
+  .tile .val{font-size:26px}
+  header.top{padding:11px 13px}
+  .bar-row{grid-template-columns:52px 1fr auto}
+}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="box">
+    <div style="font-size:34px">🏪</div>
+    <h1>Painel Rende Mais</h1>
+    <p>Entre com o mesmo usuário e PIN do Data Crítica.</p>
+    <select id="lgUser"><option value="">Carregando usuários…</option></select>
+    <input id="lgPin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN de 6 dígitos" autocomplete="off">
+    <button class="btn" id="lgBtn">Entrar</button>
+    <div class="msg" id="lgMsg"></div>
+  </div>
+</div>
+
+<header class="top">
+  <div class="brand"><span class="dot"></span>
+    <div>Painel Rende Mais<div class="sub" id="hdSub">carregando…</div></div>
+  </div>
+  <div class="spacer"></div>
+  <span class="who" id="hdWho"></span>
+  <button id="btTema" title="Alternar tema">🌗</button>
+  <button id="btRef">↻ Atualizar</button>
+  <button id="btSair">Sair</button>
+</header>
+
+<main id="app" hidden>
+
+  <h2 class="sec">Hoje na rede</h2>
+  <div class="tiles" id="kpis"></div>
+
+  <h2 class="sec">Campanhas em andamento</h2>
+  <div class="grid2">
+    <div class="card" id="cGaleto"></div>
+    <div class="card" id="cColeta"></div>
+  </div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card" id="cVerbas"></div>
+    <div class="card" id="cCritica"></div>
+  </div>
+
+  <h2 class="sec">Arquivos do dia</h2>
+  <div class="card" id="cArquivos"></div>
+
+  <h2 class="sec">Os aplicativos</h2>
+  <div class="grid-apps" id="gApps"></div>
+
+  <h2 class="sec">Sistemas e automações</h2>
+  <div class="grid-apps" id="gSist"></div>
+
+</main>
+
+<footer>
+  Painel Rende Mais · dados do Data Crítica e das Campanhas lidos ao vivo do banco;
+  galeto, medidor de coleta e arquivos do dia publicados pela automação diária.
+  <span id="ftGer"></span>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const SB_URL = "https://estciwkeihmokvlnvaum.supabase.co";
+const SB_KEY = "sb_publishable_l14fjxQmWUeu5OXlZJ35GA_-X3ESkgZ";
+
+const LOJAS = {L01:"Veneza",L02:"Máximo",L03:"Royal",L04:"Lojão",L05:"Alvorada",L08:"Tradição",L09:"Massangana"};
+const LOJA_COR = {L01:"#1976D2",L02:"#388E3C",L03:"#C2185B",L04:"#E91E63",L05:"#F57C00",L08:"#7B1FA2",L09:"#00838F"};
+const ORDEM_LOJA = ["L01","L02","L03","L04","L05","L08","L09"];
+
+const APPS = [
+  {ico:"⏳", nome:"Data Crítica", url:"https://luciano504.github.io/rendemais-datacritica/",
+   desc:"Controle de mercadoria perto do vencimento: coleta, lotes FEFO, rebaixa, descarte validado, portal do fornecedor e placas “Agora ou Nunca”.",
+   tag:"PWA · Supabase", estado:"no ar"},
+  {ico:"💸", nome:"Rende Mais Campanhas", url:"https://luciano504.github.io/rendemais-campanhas/",
+   desc:"Verbas de fomento por item: fornecedor propõe, gestor aceita, mostrador de orçamento com alerta em 70% e suspensão no estouro.",
+   tag:"PWA · Supabase", estado:"no ar"},
+  {ico:"🏷️", nome:"Placas de Oferta", url:"https://luciano504.github.io/placas/",
+   desc:"Impressão das placas de/por da semana em A2/A3/A4/A5, por loja e seção, com galeria de artes e combos “Quarta é 10”.",
+   tag:"PWA · dados do VR 2×/dia", estado:"no ar"},
+  {ico:"📊", nome:"Pricing por concorrente", url:"",
+   desc:"Preço sugerido a partir dos preços de NFC-e dos concorrentes, respeitando piso de margem. Coleta migrando para o GitHub Actions.",
+   tag:"PWA · Sefaz NFC-e", estado:"em implantação"},
+  {ico:"🍗", nome:"Galeto Premiado", url:"https://github.com/luciano504/rendemais-pipeline/actions",
+   desc:"Campanha diária de incentivo por loja: 2 pontos no galeto inteiro, 1 no meio. Parcial por e-mail todo dia.",
+   tag:"automação diária", estado:"no ar"},
+  {ico:"📈", nome:"Relatórios Semanais", url:"https://github.com/luciano504/rendemais-pipeline/actions",
+   desc:"Categorias MTD, estoque parado e transferências, de segunda a sexta às 07h, direto no e-mail.",
+   tag:"GitHub Actions", estado:"no ar"}
+];
+
+const SISTEMAS = [
+  {ico:"🗄️", nome:"VR Controller (App SQL)", url:"http://rendemaisdns.zapto.org:8086/teste/",
+   desc:"Consulta SQL direta no ERP. Só abre de dentro da rede das lojas.", tag:"rede interna", estado:"rede interna"},
+  {ico:"📉", nome:"Controller 360", url:"https://portal.controller360.com.br",
+   desc:"BI da rede: vendas, margem, curva ABC, compra × venda.", tag:"portal externo", estado:"no ar"},
+  {ico:"⚙️", nome:"Pipeline (GitHub Actions)", url:"https://github.com/luciano504/rendemais-pipeline/actions",
+   desc:"Todas as rotinas automáticas: sync do Data Crítica, relatórios, galeto, medidor e coleta de preços.", tag:"repositório", estado:"no ar"},
+  {ico:"🧾", nome:"Ressarcimento de fornecedores", url:"https://luciano504.github.io/rendemais-datacritica/",
+   desc:"Aba Fornecedores do Data Crítica: saldo devedor, descartes validados com foto e relatório mensal.", tag:"dentro do Data Crítica", estado:"no ar"}
+];
+
+/* ============================================================
+   UTIL
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const hoje = () => new Date().toISOString().slice(0,10);
+const brl = n => (Number(n)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const brl2 = n => (Number(n)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const num = n => (Number(n)||0).toLocaleString("pt-BR");
+const pct = n => (Number(n)||0).toLocaleString("pt-BR",{style:"percent",maximumFractionDigits:0});
+function diasAte(v){ const a=new Date(hoje()+"T12:00"), b=new Date(String(v).slice(0,10)+"T12:00"); return Math.round((b-a)/86400000); }
+function fmtDataHora(v){ if(!v) return "—"; const d=new Date(v); if(isNaN(d)) return "—";
+  return d.toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}); }
+function fmtData(v){ if(!v) return "—"; const s=String(v).slice(0,10).split("-"); return s[2]+"/"+s[1]; }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function badgeLoja(c){ return `<span class="badge-loja" style="background:${LOJA_COR[c]||"#607D8B"}">${esc(c)}</span>`; }
+async function sha256(t){
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
+}
+async function sb(path){
+  const r = await fetch(SB_URL+"/rest/v1/"+path, {headers:{apikey:SB_KEY, Authorization:"Bearer "+SB_KEY}});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+function mesAtual(){ return hoje().slice(0,7); }
+function proxMes(m){ const [y,mm]=m.split("-").map(Number); const d=new Date(y,mm,1); return d.toISOString().slice(0,7)+"-01"; }
+
+/* ============================================================
+   LOGIN (mesmo usuário/PIN do Data Crítica)
+   ============================================================ */
+let sess = null;
+const PODE = ["gestor","prevencao"];
+
+async function iniciarLogin(){
+  $("login").style.display = "grid";
+  try{
+    const us = await sb("usuarios?select=id,nome,papel,loja,pin_hash&ativo=eq.true&order=nome");
+    const elegiveis = us.filter(u => PODE.includes(u.papel));
+    window.__users = elegiveis;
+    $("lgUser").innerHTML = elegiveis.length
+      ? elegiveis.map(u=>`<option value="${u.id}">${esc(u.nome)} — ${u.papel==="gestor"?"Gestor":"Prevenção"}</option>`).join("")
+      : `<option value="">Nenhum gestor cadastrado</option>`;
+  }catch(e){
+    $("lgMsg").textContent = "Não consegui falar com o banco. Verifique a internet.";
+  }
+}
+async function entrar(){
+  const id = $("lgUser").value, pin = $("lgPin").value.trim();
+  if(!id || pin.length<4){ $("lgMsg").textContent="Informe o PIN."; return; }
+  if(!window.crypto?.subtle){ $("lgMsg").textContent="Abra o painel por HTTPS para validar o PIN."; return; }
+  const u = (window.__users||[]).find(x=>String(x.id)===String(id));
+  const h = await sha256(pin);
+  if(!u || u.pin_hash !== h){ $("lgMsg").textContent="PIN incorreto."; return; }
+  sess = {id:u.id, nome:u.nome, papel:u.papel};
+  localStorage.setItem("painelSess", JSON.stringify(sess));
+  $("login").style.display="none"; $("app").hidden=false;
+  $("hdWho").textContent = u.nome.split(" ")[0]+" · "+(u.papel==="gestor"?"Gestor":"Prevenção");
+  carregar();
+}
+function sair(){ localStorage.removeItem("painelSess"); location.reload(); }
+
+/* ============================================================
+   CARGA
+   ============================================================ */
+const D = {lotes:[], descartes:0, ress:0, campanhas:[], consumo:[], alertas:[], painel:null, erros:[]};
+
+async function carregar(){
+  $("hdSub").textContent = "atualizando…";
+  D.erros = [];
+  await Promise.all([carregarCritica(), carregarCampanhas(), carregarPainelJson()]);
+  render();
+  $("hdSub").textContent = "atualizado às " + new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+}
+
+async function carregarCritica(){
+  try{
+    D.lotes = await sb("lotes?select=id,loja,ean,validade,qtd_restante,preco_atual,criado_em&resolvido=eq.false&limit=20000");
+  }catch(e){ D.erros.push("lotes"); D.lotes=[]; }
+  try{
+    const d = await sb("descartes?select=lote_id&status=neq.validado&limit=5000");
+    D.descartes = d.length;
+  }catch(e){ D.descartes = null; }
+  try{
+    const m = mesAtual();
+    const r = await sb(`ressarcimento_diario?select=valor&data=gte.${m}-01&data=lt.${proxMes(m)}&limit=50000`);
+    D.ress = r.reduce((a,x)=>a+(Number(x.valor)||0),0);
+  }catch(e){ D.ress = null; }
+}
+
+async function carregarCampanhas(){
+  try{ D.campanhas = await sb("campanhas?select=*&order=criada_em.desc&limit=500"); }
+  catch(e){ D.campanhas = []; D.erros.push("campanhas"); }
+  try{ D.consumo = await sb("v_consumo_campanha?select=*"); } catch(e){ D.consumo = []; }
+  try{ D.alertas = await sb("alertas_verba?select=id,nivel,tipo,mensagem,criado_em&lido=eq.false&order=criado_em.desc&limit=50"); }
+  catch(e){ D.alertas = []; }
+}
+
+async function carregarPainelJson(){
+  try{
+    const r = await fetch("data/painel.json?t="+Date.now(), {cache:"no-store"});
+    D.painel = r.ok ? await r.json() : null;
+  }catch(e){ D.painel = null; }
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function render(){ kpis(); galeto(); coleta(); verbas(); critica(); arquivos(); apps(); }
+
+function tile(o){
+  const t = o.href ? "a" : "div";
+  const attrs = o.href ? ` href="${o.href}" target="_blank" rel="noopener" class="tile is-link"` : ` class="tile"`;
+  return `<${t}${attrs}>
+    <div class="lbl">${o.ico||""} ${esc(o.lbl)}</div>
+    <div class="val" style="${o.cor?`color:${o.cor}`:""}">${o.val}</div>
+    <div class="foot">${o.foot||""}</div>
+  </${t}>`;
+}
+
+function kpis(){
+  const l = D.lotes;
+  const criticos = l.filter(x=>diasAte(x.validade)<=5).length;
+  const valorRisco = l.filter(x=>diasAte(x.validade)<=5)
+                      .reduce((a,x)=>a+(Number(x.qtd_restante)||0)*(Number(x.preco_atual)||0),0);
+  const vigentes = D.campanhas.filter(c=>c.status==="vigente");
+  const pendAceite = D.campanhas.filter(c=>c.status==="aguardando_aceite"||c.status==="aguardando_fornecedor").length;
+  const orc = vigentes.reduce((a,c)=>a+(Number(c.orcamento_total)||0),0);
+  const cons = D.consumo.filter(x=>vigentes.some(c=>c.id===x.campanha_id))
+                        .reduce((a,x)=>a+(Number(x.verba_consumida)||0),0);
+  const g = D.painel?.galeto;
+  const gTot = g ? (g.lojas||[]).reduce((a,x)=>a+(Number(x.pontos)||0),0) : null;
+  const gLider = g && (g.lojas||[]).length ? [...g.lojas].sort((a,b)=>b.pontos-a.pontos)[0] : null;
+
+  $("kpis").innerHTML = [
+    tile({ico:"⏳", lbl:"Vencendo em até 5 dias", val:num(criticos),
+      cor: criticos>0 ? "var(--critical)" : "var(--success-text)",
+      foot:`${brl(valorRisco)} em risco · ${num(l.length)} lotes ativos`,
+      href:"https://luciano504.github.io/rendemais-datacritica/"}),
+    tile({ico:"🗑️", lbl:"Descartes a validar", val: D.descartes==null ? "—" : num(D.descartes),
+      cor: D.descartes>0 ? "var(--warning)" : "",
+      foot: D.descartes==null ? "sem leitura do banco" : "aguardando Prevenção conferir e fotografar",
+      href:"https://luciano504.github.io/rendemais-datacritica/"}),
+    tile({ico:"🧾", lbl:"A ressarcir no mês", val: D.ress==null ? "—" : brl(D.ress),
+      foot:"descartes validados virando dívida do fornecedor",
+      href:"https://luciano504.github.io/rendemais-datacritica/"}),
+    tile({ico:"💸", lbl:"Campanhas vigentes", val:num(vigentes.length),
+      foot: pendAceite ? `<span class="pill warn">⚠ ${pendAceite} aguardando aceite</span>`
+                       : (orc ? `${brl(cons)} de ${brl(orc)} consumidos` : "sem campanha ativa"),
+      href:"https://luciano504.github.io/rendemais-campanhas/"}),
+    tile({ico:"🍗", lbl:"Galeto — pontos do período", val: gTot==null ? "—" : num(gTot),
+      foot: gLider ? `líder ${badgeLoja(gLider.loja)} ${LOJAS[gLider.loja]||""}` : "aguardando publicação da automação"})
+  ].join("");
+}
+
+/* ---------- barras (magnitude, uma cor só) ---------- */
+function barras(itens, opt){
+  opt = opt||{};
+  const max = Math.max(...itens.map(i=>Math.max(i.v||0, opt.mostrarMeta?(i.meta||0):0)), 1);
+  return `<div class="bars">` + itens.map(i=>{
+    const w = Math.max(1.5, (i.v/max)*100);
+    const baixo = opt.meta && i.meta ? (i.v < i.meta) : false;
+    const mp = opt.mostrarMeta && i.meta ? `<span class="meta-line" style="left:${Math.min(99.6,(i.meta/max)*100)}%"></span>` : "";
+    return `<div class="bar-row">
+      <span class="nm">${badgeLoja(i.k)}</span>
+      <span class="track"><span class="fill${baixo?" low":""}" style="width:${w}%"></span>${mp}</span>
+      <span class="v">${i.rot}</span>
+    </div>`;
+  }).join("") + `</div>`;
+}
+
+function galeto(){
+  const g = D.painel?.galeto;
+  const el = $("cGaleto");
+  if(!g || !(g.lojas||[]).length){
+    el.innerHTML = `<h3>🍗 Galeto Premiado</h3>
+      <p class="desc">Competição diária entre as lojas — 2 pontos no galeto inteiro, 1 no meio.</p>
+      <div class="empty">Ainda não há parcial publicada no painel.<br>
+      A automação passa a gravar aqui na próxima execução diária.</div>`;
+    return;
+  }
+  const itens = [...g.lojas].sort((a,b)=>b.pontos-a.pontos).map(x=>({
+    k:x.loja, v:Number(x.pontos)||0, meta:Number(x.meta)||0, rot:num(x.pontos)
+  }));
+  const tot = itens.reduce((a,x)=>a+x.v,0);
+  const metaTot = itens.reduce((a,x)=>a+(x.meta||0),0);
+  el.innerHTML = `<h3>🍗 Galeto Premiado</h3>
+    <p class="desc">${esc(g.periodo||"período corrente")} · ${num(tot)} pontos na rede${metaTot?` · meta ${num(metaTot)} (${pct(tot/metaTot)})`:""}</p>
+    ${barras(itens,{mostrarMeta:!!metaTot, meta:!!metaTot})}
+    <div class="legenda">
+      <span class="k"><span class="sw"></span>na meta ou acima</span>
+      ${metaTot?`<span class="k"><span class="sw low"></span>abaixo da meta</span>
+      <span class="k"><span class="sw line"></span>meta da loja</span>`:""}
+      <span class="k">atualizado ${fmtDataHora(g.atualizado_em)}</span>
+    </div>
+    <details class="tbl"><summary>Ver tabela</summary>
+      <table class="t"><thead><tr><th>Loja</th><th class="n">Inteiros</th><th class="n">Meios</th><th class="n">Pontos</th><th class="n">Meta</th></tr></thead>
+      <tbody>${[...g.lojas].sort((a,b)=>b.pontos-a.pontos).map(x=>`<tr>
+        <td>${badgeLoja(x.loja)} ${esc(LOJAS[x.loja]||"")}</td>
+        <td class="n">${num(x.inteiros||0)}</td><td class="n">${num(x.meios||0)}</td>
+        <td class="n"><b>${num(x.pontos||0)}</b></td><td class="n">${x.meta?num(x.meta):"—"}</td></tr>`).join("")}
+      </tbody></table></details>`;
+}
+
+function coleta(){
+  const el = $("cColeta");
+  const m = D.painel?.medidor;
+  if(m && (m.lojas||[]).length){
+    const temPct = m.lojas.some(x=>x.pct!=null);
+    const itens = temPct
+      ? [...m.lojas].sort((a,b)=>(b.pct||0)-(a.pct||0)).map(x=>({
+          k:x.loja, v:(Number(x.pct)||0)*100, meta:(Number(m.meta_pct)||0.8)*100, rot:pct(x.pct||0)}))
+      : [...m.lojas].sort((a,b)=>(b.coletado||0)-(a.coletado||0)).map(x=>({
+          k:x.loja, v:Number(x.coletado)||0, meta:Number(x.esperado)||0, rot:num(x.coletado||0)}));
+    const temMeta = itens.some(i=>i.meta>0);
+    el.innerHTML = `<h3>📥 Medidor de Coleta (recebimento)</h3>
+      <p class="desc">Semana ${esc(m.semana||"")} · ${temPct?`meta ${pct(m.meta_pct||0.8)} do que entrou com data crítica`:"lotes coletados por loja"}</p>
+      ${barras(itens,{mostrarMeta:temMeta, meta:temMeta})}
+      <div class="legenda"><span class="k"><span class="sw"></span>na meta ou acima</span>
+      ${temMeta?`<span class="k"><span class="sw low"></span>abaixo da meta</span>
+      <span class="k"><span class="sw line"></span>meta</span>`:""}
+      <span class="k">atualizado ${fmtDataHora(m.atualizado_em)}</span></div>`;
+    return;
+  }
+  // fallback ao vivo: lotes registrados nos últimos 7 dias por loja
+  const corte = new Date(Date.now()-7*86400000).toISOString();
+  const cont = {}; ORDEM_LOJA.forEach(l=>cont[l]=0);
+  D.lotes.forEach(l=>{ if(l.criado_em && l.criado_em >= corte) cont[l.loja] = (cont[l.loja]||0)+1; });
+  const itens = Object.keys(cont).map(k=>({k, v:cont[k], rot:num(cont[k])})).sort((a,b)=>b.v-a.v);
+  const tot = itens.reduce((a,x)=>a+x.v,0);
+  el.innerHTML = `<h3>📥 Medidor de Coleta (recebimento)</h3>
+    <p class="desc">Lotes de data crítica registrados nos últimos 7 dias — ${num(tot)} na rede</p>
+    ${barras(itens,{})}
+    <div class="legenda"><span class="k"><span class="sw"></span>lotes registrados</span>
+    <span class="k">leitura ao vivo; o percentual oficial da semana entra quando a automática publicar</span></div>`;
+}
+
+function verbas(){
+  const el = $("cVerbas");
+  const vig = D.campanhas.filter(c=>["vigente","suspensa_orcamento"].includes(c.status));
+  const pend = D.campanhas.filter(c=>["aguardando_aceite","aguardando_fornecedor"].includes(c.status));
+  const cmap = {}; D.consumo.forEach(x=>cmap[x.campanha_id]=x);
+  if(!D.campanhas.length){
+    el.innerHTML = `<h3>💸 Campanhas de fornecedor</h3>
+      <p class="desc">Verbas de fomento por item, com teto de orçamento por campanha e por item.</p>
+      <div class="empty">Nenhuma campanha cadastrada ainda.<br>
+      <a class="btn" style="margin-top:10px" href="https://luciano504.github.io/rendemais-campanhas/" target="_blank" rel="noopener">Abrir o app</a></div>`;
+    return;
+  }
+  const linhas = [...vig].sort((a,b)=>{
+    const pa=cmap[a.id]?.pct_campanha||0, pb=cmap[b.id]?.pct_campanha||0; return pb-pa;
+  }).slice(0,6).map(c=>{
+    const k = cmap[c.id]||{}; const p = Number(k.pct_campanha)||0;
+    const cls = p>=1?"crit":(p>=0.7?"warn":"good");
+    const ico = p>=1?"⛔":(p>=0.7?"⚠":"✓");
+    return `<tr>
+      <td>${esc(c.nome)}<div style="font-size:11.5px;color:var(--muted)">${esc(c.fornecedor_chave)} · até ${fmtData(c.fim)}</div></td>
+      <td class="n">${brl2(k.verba_consumida||0)}<div style="font-size:11.5px;color:var(--muted)">de ${brl(c.orcamento_total)}</div></td>
+      <td class="n"><span class="pill ${cls}">${ico} ${pct(p)}</span></td></tr>`;
+  }).join("");
+  el.innerHTML = `<h3>💸 Campanhas de fornecedor</h3>
+    <p class="desc">${num(vig.length)} vigente(s)${pend.length?` · <b>${num(pend.length)} aguardando aceite</b>`:""}${D.alertas.length?` · ${num(D.alertas.length)} alerta(s) não lido(s)`:""}</p>
+    ${linhas ? `<table class="t"><thead><tr><th>Campanha</th><th class="n">Verba consumida</th><th class="n">Do teto</th></tr></thead><tbody>${linhas}</tbody></table>`
+             : `<div class="empty">Nenhuma campanha vigente no momento.</div>`}
+    ${D.alertas.length ? `<div class="legenda">🔔 ${esc(D.alertas[0].mensagem)}</div>` : ""}`;
+}
+
+function critica(){
+  const el = $("cCritica");
+  const buckets = [{lbl:"Vencidos / hoje",max:0,cor:"var(--critical)"},
+                   {lbl:"1 a 5 dias",max:5,cor:"var(--serious)"},
+                   {lbl:"6 a 15 dias",max:15,cor:"var(--warning)"},
+                   {lbl:"16 a 30 dias",max:30,cor:"var(--muted)"}];
+  const porLoja = {}; ORDEM_LOJA.forEach(l=>porLoja[l]={n:0,v:0});
+  let sem = 0;
+  D.lotes.forEach(l=>{
+    const d = diasAte(l.validade); if(d>5) return;
+    if(!porLoja[l.loja]) porLoja[l.loja]={n:0,v:0};
+    porLoja[l.loja].n++; porLoja[l.loja].v += (Number(l.qtd_restante)||0)*(Number(l.preco_atual)||0);
+    if(!l.preco_atual) sem++;
+  });
+  const itens = Object.keys(porLoja).map(k=>({k, v:porLoja[k].n, rot:num(porLoja[k].n)})).sort((a,b)=>b.v-a.v);
+  const faixas = buckets.map(b=>{
+    const n = D.lotes.filter(l=>{ const d=diasAte(l.validade); return d<=b.max && d> (buckets[buckets.indexOf(b)-1]?.max ?? -9999); }).length;
+    return `<tr><td><span class="pill" style="color:${b.cor};border-color:${b.cor}">${esc(b.lbl)}</span></td><td class="n"><b>${num(n)}</b></td></tr>`;
+  }).join("");
+  el.innerHTML = `<h3>⏳ Data Crítica — o que aperta agora</h3>
+    <p class="desc">Lotes vencendo em até 5 dias, por loja${sem?` · ${num(sem)} sem preço lançado`:""}</p>
+    ${itens.some(i=>i.v>0) ? barras(itens,{}) : `<div class="empty">Nada vencendo nos próximos 5 dias. 👏</div>`}
+    <details class="tbl"><summary>Ver por faixa de vencimento</summary>
+      <table class="t"><thead><tr><th>Faixa</th><th class="n">Lotes</th></tr></thead><tbody>${faixas}</tbody></table></details>`;
+}
+
+function arquivos(){
+  const el = $("cArquivos");
+  const padrao = [
+    {id:"estoque_parado", ico:"📦", titulo:"Mercadoria sem venda", nota:"itens parados, por loja e curva"},
+    {id:"transferencias", ico:"🔁", titulo:"Transferências sugeridas", nota:"origem com sobra → destino com falta"},
+    {id:"categorias",     ico:"📊", titulo:"Categorias (mês corrente)", nota:"MTD contra o ano passado, com projeção"}
+  ];
+  const pub = {}; (D.painel?.arquivos||[]).forEach(a=>pub[a.id]=a);
+  el.innerHTML = padrao.map(p=>{
+    const a = pub[p.id];
+    const fresco = a && a.atualizado_em && (Date.now()-new Date(a.atualizado_em).getTime()) < 36*3600*1000;
+    return `<div class="file">
+      <div class="fi">${p.ico}</div>
+      <div>
+        <div class="fn">${esc(a?.titulo||p.titulo)}</div>
+        <div class="fs">${a ? `${fmtDataHora(a.atualizado_em)}${a.linhas?` · ${num(a.linhas)} linhas`:""}${a.valor?` · ${brl(a.valor)}`:""}`
+                            : "aguardando a primeira publicação da automação"} — ${p.nota}</div>
+      </div>
+      <div class="fa">
+        ${a ? `<a class="btn" href="${esc(a.arquivo)}" download>Baixar</a>` : `<span class="btn ghost" aria-disabled="true">Sem arquivo</span>`}
+        ${a && !fresco ? `<div style="font-size:11px;color:var(--warning);text-align:right;margin-top:4px">desatualizado</div>` : ""}
+      </div>
+    </div>`;
+  }).join("") + (D.painel?.gerado_em
+      ? `<div class="legenda">Publicado pela automação em ${fmtDataHora(D.painel.gerado_em)}</div>`
+      : `<div class="legenda">Assim que o workflow do pipeline for atualizado, os arquivos passam a aparecer aqui para baixar direto do celular.</div>`);
+}
+
+function cardApp(a){
+  const off = !a.url;
+  const tag = a.estado==="no ar" ? `<span class="pill good">● no ar</span>`
+            : a.estado==="rede interna" ? `<span class="pill neutral">● só na loja</span>`
+            : `<span class="pill warn">● ${esc(a.estado)}</span>`;
+  const inner = `<div class="ico">${a.ico}</div>
+    <div class="nm">${esc(a.nome)}</div>
+    <div class="dc">${esc(a.desc)}</div>
+    <div class="mt">${tag}<span>${esc(a.tag)}</span></div>`;
+  return off ? `<div class="app off">${inner}</div>`
+             : `<a class="app" href="${esc(a.url)}" target="_blank" rel="noopener">${inner}</a>`;
+}
+function apps(){
+  $("gApps").innerHTML = APPS.map(cardApp).join("");
+  $("gSist").innerHTML = SISTEMAS.map(cardApp).join("");
+  $("ftGer").textContent = D.erros.length ? " · falha ao ler: "+D.erros.join(", ") : "";
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+(function(){
+  const t = localStorage.getItem("painelTema");
+  if(t) document.documentElement.setAttribute("data-theme", t);
+  else if(matchMedia("(prefers-color-scheme: dark)").matches) document.documentElement.setAttribute("data-theme","dark");
+
+  $("btTema").onclick = ()=>{
+    const n = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", n); localStorage.setItem("painelTema", n);
+  };
+  $("btRef").onclick = ()=>carregar();
+  $("btSair").onclick = sair;
+  $("lgBtn").onclick = entrar;
+  $("lgPin").addEventListener("keydown", e=>{ if(e.key==="Enter") entrar(); });
+
+  const s = localStorage.getItem("painelSess");
+  if(s){
+    sess = JSON.parse(s);
+    $("app").hidden=false;
+    $("hdWho").textContent = sess.nome.split(" ")[0]+" · "+(sess.papel==="gestor"?"Gestor":"Prevenção");
+    carregar();
+  } else iniciarLogin();
+
+  setInterval(()=>{ if(sess && !document.hidden) carregar(); }, 5*60*1000);
+  document.addEventListener("visibilitychange", ()=>{ if(sess && !document.hidden) carregar(); });
+})();
+</script>
+</body>
+</html>
