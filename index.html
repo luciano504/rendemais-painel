@@ -452,26 +452,43 @@ function galeto(){
       A automação passa a gravar aqui na próxima execução diária.</div>`;
     return;
   }
+  // a meta publicada é do MÊS FECHADO; no meio do mês a comparação justa
+  // é contra a fatia proporcional aos dias já corridos
+  const d = new Date();
+  const diaHoje = d.getDate();
+  const diasMes = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+  const fatia = diaHoje / diasMes;
+
   const itens = [...g.lojas].sort((a,b)=>b.pontos-a.pontos).map(x=>({
-    k:x.loja, v:Number(x.pontos)||0, meta:Number(x.meta)||0, rot:num(x.pontos)
+    k:x.loja, v:Number(x.pontos)||0, meta:Math.round((Number(x.meta)||0)*fatia), rot:num(x.pontos)
   }));
   const tot = itens.reduce((a,x)=>a+x.v,0);
-  const metaTot = itens.reduce((a,x)=>a+(x.meta||0),0);
+  const metaMes = g.lojas.reduce((a,x)=>a+(Number(x.meta)||0),0);
+  const metaHoje = Math.round(metaMes*fatia);
+  const noRitmo = metaHoje ? tot/metaHoje : null;
   el.innerHTML = `<h3>🍗 Galeto Premiado</h3>
-    <p class="desc">${esc(g.periodo||"período corrente")} · ${num(tot)} pontos na rede${metaTot?` · meta ${num(metaTot)} (${pct(tot/metaTot)})`:""}</p>
-    ${barras(itens,{mostrarMeta:!!metaTot, meta:!!metaTot})}
+    <p class="desc">${esc(g.periodo||"período corrente")} · ${num(tot)} pontos na rede${
+      metaMes ? ` · ${pct(tot/metaMes)} da meta do mês` : ""}</p>
+    ${metaHoje ? `<p class="desc" style="margin-top:-6px">Até o dia ${diaHoje} o esperado era ${num(metaHoje)} —
+      a rede está em <b style="color:${noRitmo>=1?"var(--success-text)":"var(--critical)"}">${pct(noRitmo)}</b> do ritmo.</p>` : ""}
+    ${barras(itens,{mostrarMeta:!!metaHoje, meta:!!metaHoje})}
     <div class="legenda">
-      <span class="k"><span class="sw"></span>na meta ou acima</span>
-      ${metaTot?`<span class="k"><span class="sw low"></span>abaixo da meta</span>
-      <span class="k"><span class="sw line"></span>meta da loja</span>`:""}
+      <span class="k"><span class="sw"></span>no ritmo ou acima</span>
+      ${metaHoje?`<span class="k"><span class="sw low"></span>atrás do ritmo</span>
+      <span class="k"><span class="sw line"></span>esperado até hoje</span>`:""}
       <span class="k">atualizado ${fmtDataHora(g.atualizado_em)}</span>
     </div>
     <details class="tbl"><summary>Ver tabela</summary>
-      <table class="t"><thead><tr><th>Loja</th><th class="n">Inteiros</th><th class="n">Meios</th><th class="n">Pontos</th><th class="n">Meta</th></tr></thead>
-      <tbody>${[...g.lojas].sort((a,b)=>b.pontos-a.pontos).map(x=>`<tr>
+      <table class="t"><thead><tr><th>Loja</th><th class="n">Inteiros</th><th class="n">Meios</th><th class="n">Pontos</th><th class="n">Até hoje</th><th class="n">Meta do mês</th></tr></thead>
+      <tbody>${[...g.lojas].sort((a,b)=>b.pontos-a.pontos).map(x=>{
+        const mh = Math.round((Number(x.meta)||0)*fatia);
+        const ok = mh && (x.pontos||0) >= mh;
+        return `<tr>
         <td>${badgeLoja(x.loja)} ${esc(LOJAS[x.loja]||"")}</td>
         <td class="n">${num(x.inteiros||0)}</td><td class="n">${num(x.meios||0)}</td>
-        <td class="n"><b>${num(x.pontos||0)}</b></td><td class="n">${x.meta?num(x.meta):"—"}</td></tr>`).join("")}
+        <td class="n"><b>${num(x.pontos||0)}</b></td>
+        <td class="n" style="color:${mh?(ok?"var(--success-text)":"var(--critical)"):"inherit"}">${mh?num(mh):"—"}</td>
+        <td class="n">${x.meta?num(x.meta):"—"}</td></tr>`;}).join("")}
       </tbody></table></details>`;
 }
 
@@ -486,8 +503,13 @@ function coleta(){
       : [...m.lojas].sort((a,b)=>(b.coletado||0)-(a.coletado||0)).map(x=>({
           k:x.loja, v:Number(x.coletado)||0, meta:Number(x.esperado)||0, rot:num(x.coletado||0)}));
     const temMeta = itens.some(i=>i.meta>0);
+    const per = String(m.semana||"").replace(/^semana\s+(de\s+)?/i,"");
+    const oficial = String(m.fonte||"").includes("nota");
     el.innerHTML = `<h3>📥 Medidor de Coleta (recebimento)</h3>
-      <p class="desc">Semana ${esc(m.semana||"")} · ${temPct?`meta ${pct(m.meta_pct||0.8)} do que entrou com data crítica`:"lotes coletados por loja"}</p>
+      <p class="desc">Semana de ${esc(per)} · ${temPct
+        ? (oficial ? `itens de nota de entrada com validade coletada — meta ${pct(m.meta_pct||0.8)}`
+                   : `meta ${pct(m.meta_pct||0.8)}`)
+        : "lotes coletados por loja"}</p>
       ${barras(itens,{mostrarMeta:temMeta, meta:temMeta})}
       <div class="legenda"><span class="k"><span class="sw"></span>na meta ou acima</span>
       ${temMeta?`<span class="k"><span class="sw low"></span>abaixo da meta</span>
