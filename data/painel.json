@@ -1,53 +1,47 @@
 {
- "gerado_em": "2026-08-07T16:38-03:00",
+ "gerado_em": "2026-08-07T16:54-03:00",
  "galeto": null,
  "medidor": {
-  "semana": "03/08 a 09/08",
-  "fonte": "lotes registrados (Supabase)",
+  "semana": "semana de 03/08",
+  "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-07T16:38-03:00",
+  "atualizado_em": "2026-08-07T16:54-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 14,
-    "esperado": 40,
-    "pct": 0.35
+    "coletado": 840,
+    "esperado": 1215,
+    "pct": 0.6914
    },
    {
     "loja": "L02",
-    "coletado": 56,
-    "esperado": 40,
-    "pct": 1.4
+    "coletado": 522,
+    "esperado": 680,
+    "pct": 0.7676
    },
    {
     "loja": "L03",
-    "coletado": 17,
-    "esperado": 40,
-    "pct": 0.425
-   },
-   {
-    "loja": "L04",
-    "coletado": 0,
-    "esperado": 40,
-    "pct": 0.0
+    "coletado": 727,
+    "esperado": 871,
+    "pct": 0.8347
    },
    {
     "loja": "L05",
-    "coletado": 10,
-    "esperado": 40,
-    "pct": 0.25
+    "coletado": 634,
+    "esperado": 883,
+    "pct": 0.718
    },
    {
     "loja": "L08",
-    "coletado": 7,
-    "esperado": 40,
-    "pct": 0.175
+    "coletado": 727,
+    "esperado": 985,
+    "pct": 0.7381
    },
    {
     "loja": "L09",
-    "coletado": 17,
-    "esperado": 40,
-    "pct": 0.425
+    "coletado": 807,
+    "esperado": 1134,
+    "pct": 0.7116
    }
   ]
  },
@@ -56,9 +50,9 @@
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-08-07T16:38-03:00",
+   "atualizado_em": "2026-08-07T16:54-03:00",
    "linhas": 917,
-   "origem": "categorias_01082026.xlsx"
+   "origem": "categorias.xlsx"
   }
  ]
 }
