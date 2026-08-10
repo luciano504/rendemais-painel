@@ -547,11 +547,19 @@ function coleta(){
     const temMeta = itens.some(i=>i.meta>0);
     const per = String(m.semana||"").replace(/^semana\s+(de\s+)?/i,"");
     const oficial = String(m.fonte||"").includes("nota");
+    const totItens = m.lojas.reduce((a,x)=>a+(Number(x.esperado)||0),0);
+    const colet = m.lojas.reduce((a,x)=>a+(Number(x.coletado)||0),0);
+    const ant = m.anterior;
+    // a semana em curso começa quase vazia — avisa em vez de deixar parecer desastre
+    const magra = ant && ant.itens && totItens < ant.itens*0.3;
     el.innerHTML = `<h3>📥 Medidor de Coleta (recebimento)</h3>
       <p class="desc">Semana de ${esc(per)} · ${temPct
-        ? (oficial ? `itens de nota de entrada com validade coletada — meta ${pct(m.meta_pct||0.8)}`
+        ? (oficial ? `${num(colet)} de ${num(totItens)} itens de nota de entrada com validade coletada — meta ${pct(m.meta_pct||0.8)}`
                    : `meta ${pct(m.meta_pct||0.8)}`)
         : "lotes coletados por loja"}</p>
+      ${ant && ant.pct!=null ? `<p class="desc" style="margin-top:-6px">${magra
+          ? `Semana ainda no começo — pouca nota entrou. Na semana de ${esc(ant.semana)} a rede fechou em <b>${pct(ant.pct)}</b>.`
+          : `Semana de ${esc(ant.semana)} fechou em <b>${pct(ant.pct)}</b>.`}</p>` : ""}
       ${barras(itens,{mostrarMeta:temMeta, meta:temMeta})}
       <div class="legenda"><span class="k"><span class="sw"></span>na meta ou acima</span>
       ${temMeta?`<span class="k"><span class="sw low"></span>abaixo da meta</span>
