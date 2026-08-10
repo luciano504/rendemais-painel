@@ -199,6 +199,8 @@ footer{max-width:1180px;margin:34px auto 0;padding:0 16px;font-size:11.5px;color
 
 <main id="app" hidden>
 
+  <div id="aviso"></div>
+
   <h2 class="sec">Hoje na rede</h2>
   <div class="tiles" id="kpis"></div>
 
@@ -285,6 +287,20 @@ function diasAte(v){ const a=new Date(hoje()+"T12:00"), b=new Date(String(v).sli
 function fmtDataHora(v){ if(!v) return "—"; const d=new Date(v); if(isNaN(d)) return "—";
   return d.toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}); }
 function fmtData(v){ if(!v) return "—"; const s=String(v).slice(0,10).split("-"); return s[2]+"/"+s[1]; }
+/* selo de idade: verde se é de hoje, âmbar se é de outro dia */
+function idade(v){
+  if(!v) return `<span class="pill warn">⚠ sem data</span>`;
+  const d = new Date(v); if(isNaN(d)) return "";
+  const h = new Date();
+  const mesmoDia = d.toDateString() === h.toDateString();
+  const horas = (h - d)/3600000;
+  if(mesmoDia) return `<span class="pill good">● hoje, ${d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}</span>`;
+  const dias = Math.max(1, Math.round(horas/24));
+  const cls = horas > 30 ? "crit" : "warn";
+  return `<span class="pill ${cls}">⚠ de ${d.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})}`
+       + ` — ${dias === 1 ? "ontem" : dias + " dias atrás"}</span>`;
+}
+function ehDeHoje(v){ const d = v && new Date(v); return !!d && !isNaN(d) && d.toDateString() === new Date().toDateString(); }
 function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function badgeLoja(c){ return `<span class="badge-loja" style="background:${LOJA_COR[c]||"#607D8B"}">${esc(c)}</span>`; }
 async function sha256(t){
@@ -379,7 +395,32 @@ async function carregarPainelJson(){
 /* ============================================================
    RENDER
    ============================================================ */
-function render(){ kpis(); galeto(); coleta(); verbas(); critica(); arquivos(); apps(); }
+function render(){ aviso(); kpis(); galeto(); coleta(); verbas(); critica(); arquivos(); apps(); }
+
+function aviso(){
+  const el = $("aviso");
+  const g = D.painel?.gerado_em;
+  if(!D.painel){
+    el.innerHTML = `<div class="card" style="border-color:var(--warning);margin-bottom:4px">
+      <b>⚠ A automação ainda não publicou nada.</b>
+      <div class="desc" style="margin:4px 0 0">Galeto, medidor e arquivos do dia só aparecem depois da primeira execução.</div></div>`;
+    return;
+  }
+  if(ehDeHoje(g)){ el.innerHTML = ""; return; }
+  const d = new Date(g);
+  el.innerHTML = `<div class="card" style="border-color:var(--warning);margin-bottom:4px;display:flex;gap:12px;align-items:center">
+    <span style="font-size:22px">⚠</span>
+    <div>
+      <b>Galeto, medidor e arquivos são de ${d.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit"})},
+      ${d.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}.</b>
+      <div class="desc" style="margin:4px 0 0">Os números do Data Crítica e das Campanhas, esses sim, são lidos ao vivo agora.
+      A atualização automática roda de 2 em 2 horas, das 8h às 20h.</div>
+    </div>
+    <a class="btn ghost" style="margin-left:auto;white-space:nowrap"
+       href="https://github.com/luciano504/rendemais-pipeline/actions/workflows/painel-rapido.yml"
+       target="_blank" rel="noopener">Atualizar agora</a>
+  </div>`;
+}
 
 function tile(o){
   const t = o.href ? "a" : "div";
@@ -421,8 +462,9 @@ function kpis(){
       foot: pendAceite ? `<span class="pill warn">⚠ ${pendAceite} aguardando aceite</span>`
                        : (orc ? `${brl(cons)} de ${brl(orc)} consumidos` : "sem campanha ativa"),
       href:"https://luciano504.github.io/rendemais-campanhas/"}),
-    tile({ico:"🍗", lbl:"Galeto — pontos do período", val: gTot==null ? "—" : num(gTot),
-      foot: gLider ? `líder ${badgeLoja(gLider.loja)} ${LOJAS[gLider.loja]||""}` : "aguardando publicação da automação"})
+    tile({ico:"🍗", lbl:"Galeto — pontos do mês", val: gTot==null ? "—" : num(gTot),
+      foot: gLider ? `líder ${badgeLoja(gLider.loja)} ${LOJAS[gLider.loja]||""} · ${idade(g.atualizado_em)}`
+                   : "aguardando publicação da automação"})
   ].join("");
 }
 
@@ -476,7 +518,7 @@ function galeto(){
       <span class="k"><span class="sw"></span>no ritmo ou acima</span>
       ${metaHoje?`<span class="k"><span class="sw low"></span>atrás do ritmo</span>
       <span class="k"><span class="sw line"></span>esperado até hoje</span>`:""}
-      <span class="k">atualizado ${fmtDataHora(g.atualizado_em)}</span>
+      <span class="k">${idade(g.atualizado_em)}</span>
     </div>
     <details class="tbl"><summary>Ver tabela</summary>
       <table class="t"><thead><tr><th>Loja</th><th class="n">Inteiros</th><th class="n">Meios</th><th class="n">Pontos</th><th class="n">Até hoje</th><th class="n">Meta do mês</th></tr></thead>
@@ -514,7 +556,7 @@ function coleta(){
       <div class="legenda"><span class="k"><span class="sw"></span>na meta ou acima</span>
       ${temMeta?`<span class="k"><span class="sw low"></span>abaixo da meta</span>
       <span class="k"><span class="sw line"></span>meta</span>`:""}
-      <span class="k">atualizado ${fmtDataHora(m.atualizado_em)}</span></div>`;
+      <span class="k">${idade(m.atualizado_em)}</span></div>`;
     return;
   }
   // fallback ao vivo: lotes registrados nos últimos 7 dias por loja
@@ -596,21 +638,19 @@ function arquivos(){
   const pub = {}; (D.painel?.arquivos||[]).forEach(a=>pub[a.id]=a);
   el.innerHTML = padrao.map(p=>{
     const a = pub[p.id];
-    const fresco = a && a.atualizado_em && (Date.now()-new Date(a.atualizado_em).getTime()) < 36*3600*1000;
     return `<div class="file">
       <div class="fi">${p.ico}</div>
       <div>
-        <div class="fn">${esc(a?.titulo||p.titulo)}</div>
-        <div class="fs">${a ? `${fmtDataHora(a.atualizado_em)}${a.linhas?` · ${num(a.linhas)} linhas`:""}${a.valor?` · ${brl(a.valor)}`:""}`
-                            : "aguardando a primeira publicação da automação"} — ${p.nota}</div>
+        <div class="fn">${esc(a?.titulo||p.titulo)} ${a?idade(a.atualizado_em):""}</div>
+        <div class="fs">${a ? `${a.linhas?`${num(a.linhas)} linhas · `:""}${p.nota}`
+                            : `aguardando a primeira publicação da automação — ${p.nota}`}</div>
       </div>
       <div class="fa">
         ${a ? `<a class="btn" href="${esc(a.arquivo)}" download>Baixar</a>` : `<span class="btn ghost" aria-disabled="true">Sem arquivo</span>`}
-        ${a && !fresco ? `<div style="font-size:11px;color:var(--warning);text-align:right;margin-top:4px">desatualizado</div>` : ""}
       </div>
     </div>`;
   }).join("") + (D.painel?.gerado_em
-      ? `<div class="legenda">Publicado pela automação em ${fmtDataHora(D.painel.gerado_em)}</div>`
+      ? `<div class="legenda">Os relatórios pesados são gerados uma vez por dia, de manhã. ${idade(D.painel.gerado_em)}</div>`
       : `<div class="legenda">Assim que o workflow do pipeline for atualizado, os arquivos passam a aparecer aqui para baixar direto do celular.</div>`);
 }
 
