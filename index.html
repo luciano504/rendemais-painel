@@ -214,6 +214,9 @@ footer{max-width:1180px;margin:34px auto 0;padding:0 16px;font-size:11.5px;color
     <div class="card" id="cCritica"></div>
   </div>
 
+  <h2 class="sec">Prevenção de perdas</h2>
+  <div class="card" id="cPerdas"></div>
+
   <h2 class="sec">Arquivos do dia</h2>
   <div class="card" id="cArquivos"></div>
 
@@ -313,6 +316,9 @@ async function sb(path){
   return r.json();
 }
 function mesAtual(){ return hoje().slice(0,7); }
+const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho",
+               "agosto","setembro","outubro","novembro","dezembro"];
+function mesNome(m){ const [y,mm]=String(m).split("-"); return MESES[Number(mm)-1]+" de "+y; }
 function proxMes(m){ const [y,mm]=m.split("-").map(Number); const d=new Date(y,mm,1); return d.toISOString().slice(0,7)+"-01"; }
 
 /* ============================================================
@@ -352,12 +358,13 @@ function sair(){ localStorage.removeItem("painelSess"); location.reload(); }
 /* ============================================================
    CARGA
    ============================================================ */
-const D = {lotes:[], descartes:0, ress:0, campanhas:[], consumo:[], alertas:[], painel:null, erros:[]};
+const D = {lotes:[], descartes:0, ress:0, campanhas:[], consumo:[], alertas:[], painel:null,
+           perdas:null, erros:[]};
 
 async function carregar(){
   $("hdSub").textContent = "atualizando…";
   D.erros = [];
-  await Promise.all([carregarCritica(), carregarCampanhas(), carregarPainelJson()]);
+  await Promise.all([carregarCritica(), carregarCampanhas(), carregarPainelJson(), carregarPerdas()]);
   render();
   $("hdSub").textContent = "atualizado às " + new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
 }
@@ -385,6 +392,60 @@ async function carregarCampanhas(){
   catch(e){ D.alertas = []; }
 }
 
+/* Índice de Prevenção de Perdas — mesma conta da aba "📉 Perdas" do Data Crítica:
+   identificadas = rebaixa (preco_vigente>0) + vencidas com acompanhamento
+                 + vencidas sem acompanhamento (descarte com qtd_contada = 0)
+   não identificadas = diferença do balanço, digitada pelo gestor
+   índice = perda total ÷ compras do mês                                        */
+async function carregarPerdas(){
+  const m = mesAtual(), ini = m+"-01", fim = proxMes(m);
+  try{
+    const ress = await sb(`ressarcimento_diario?select=lote_id,ean,loja,valor,preco_vigente`
+                        + `&data=gte.${ini}&data=lt.${fim}&limit=50000`);
+    let descs = [];
+    try{ descs = await sb("descartes?select=lote_id,qtd_contada&status=eq.validado&limit=50000"); }catch(e){}
+    const semAcomp = new Set(descs.filter(d=>Number(d.qtd_contada)===0).map(d=>d.lote_id));
+
+    let compras = [], balancos = [], semCompras = false, semBalancos = false;
+    try{ compras = await sb(`compras_mes?select=loja,valor&mes=eq.${m}&limit=50000`); }
+    catch(e){ semCompras = true; }
+    try{ balancos = await sb(`balancos?select=loja,valor&mes=eq.${m}&limit=500`); }
+    catch(e){ semBalancos = true; }
+
+    // seção de cada EAN, em lotes (só para o corte por seção)
+    const eans = [...new Set(ress.map(r=>r.ean).filter(Boolean))];
+    const secao = {};
+    for(let i=0;i<eans.length && i<3000;i+=180){
+      try{
+        const ps = await sb("produtos?select=ean,secao&ean=in.("
+                   + eans.slice(i,i+180).map(e=>`"${e}"`).join(",") + ")");
+        ps.forEach(p=>{ secao[p.ean] = p.secao || "(sem seção)"; });
+      }catch(e){ break; }
+    }
+
+    const porLoja = {}, porSec = {};
+    const L = k => porLoja[k] || (porLoja[k] = {rebaixa:0, vencAcomp:0, vencSem:0, balanco:0, compras:0});
+    const S = k => porSec[k]  || (porSec[k]  = {rebaixa:0, venc:0});
+    ress.forEach(r=>{
+      const v = Number(r.valor)||0, s = secao[r.ean] || "(sem seção)";
+      if(Number(r.preco_vigente) > 0){ L(r.loja).rebaixa += v; S(s).rebaixa += v; }
+      else {
+        if(semAcomp.has(r.lote_id)) L(r.loja).vencSem += v; else L(r.loja).vencAcomp += v;
+        S(s).venc += v;
+      }
+    });
+    compras.forEach(c=>{ L(c.loja).compras += Number(c.valor)||0; });
+    balancos.forEach(b=>{ L(b.loja).balanco = Number(b.valor)||0; });
+
+    const t = {rebaixa:0, vencAcomp:0, vencSem:0, balanco:0, compras:0};
+    Object.values(porLoja).forEach(d=>{ Object.keys(t).forEach(k=>t[k]+=d[k]); });
+
+    D.perdas = {mes:m, porLoja, porSec, tot:t, semCompras, semBalancos,
+                identificadas: t.rebaixa+t.vencAcomp+t.vencSem,
+                total: t.rebaixa+t.vencAcomp+t.vencSem+t.balanco};
+  }catch(e){ D.perdas = null; D.erros.push("índice de perdas"); }
+}
+
 async function carregarPainelJson(){
   try{
     const r = await fetch("data/painel.json?t="+Date.now(), {cache:"no-store"});
@@ -395,7 +456,93 @@ async function carregarPainelJson(){
 /* ============================================================
    RENDER
    ============================================================ */
-function render(){ aviso(); kpis(); galeto(); coleta(); verbas(); critica(); arquivos(); apps(); }
+function render(){ aviso(); kpis(); galeto(); coleta(); verbas(); critica(); perdas(); arquivos(); apps(); }
+
+function perdas(){
+  const el = $("cPerdas"), P = D.perdas;
+  const APP = "https://luciano504.github.io/rendemais-datacritica/";
+  if(!P){
+    el.innerHTML = `<h3>📉 Índice de Prevenção de Perdas</h3>
+      <div class="empty">Não consegui ler as perdas do mês agora.
+      <br><a class="btn" style="margin-top:10px" href="${APP}" target="_blank" rel="noopener">Abrir o Data Crítica</a></div>`;
+    return;
+  }
+  const t = P.tot, ident = P.identificadas, total = P.total;
+  const idx = t.compras > 0 ? total/t.compras : null;
+
+  const comp = [
+    {lbl:"Rebaixa para evitar vencimento", v:t.rebaixa,    cor:"var(--seq-450)", nota:"perda planejada — evitou o vencimento"},
+    {lbl:"Vencidas com acompanhamento",    v:t.vencAcomp,  cor:"var(--serious)", nota:"passaram pelo controle e venceram"},
+    {lbl:"Vencidas sem acompanhamento",    v:t.vencSem,    cor:"var(--critical)",nota:"achadas pela Prevenção, sem lote"},
+    {lbl:"Não identificadas (balanço)",    v:t.balanco,    cor:"var(--muted)",   nota:"diferença de contagem"}
+  ];
+  const maxC = Math.max(...comp.map(c=>c.v), 1);
+
+  // por loja: o índice comparável é a perda sobre a compra; sem compras, usa o R$
+  const temCompras = t.compras > 0;
+  const itens = ORDEM_LOJA.map(k=>{
+    const d = P.porLoja[k] || {rebaixa:0,vencAcomp:0,vencSem:0,balanco:0,compras:0};
+    const tot = d.rebaixa+d.vencAcomp+d.vencSem+d.balanco;
+    const p = d.compras > 0 ? tot/d.compras : null;
+    return {k, tot, compras:d.compras, p, d,
+            v: temCompras ? (p||0)*100 : tot,
+            rot: temCompras ? (p==null ? "—" : (p*100).toFixed(2)+"%") : brl(tot)};
+  }).filter(x=>x.tot>0 || x.compras>0).sort((a,b)=>b.v-a.v);
+
+  el.innerHTML = `<h3>📉 Índice de Prevenção de Perdas — ${esc(mesNome(P.mes))}</h3>
+    <p class="desc">Perda total da rede <b>${brl2(total)}</b>${
+      idx!=null ? ` · <b style="color:${idx>0.02?"var(--critical)":"var(--success-text)"}">${(idx*100).toFixed(2)}% das compras</b>` : ""} ·
+      identificadas ${brl(ident)}${t.balanco?` + balanço ${brl(t.balanco)}`:""}</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px;margin:12px 0 4px">
+      ${comp.map(c=>`<div style="border:1px solid var(--ring);border-radius:11px;padding:10px 11px">
+        <div style="font-size:12px;color:var(--ink-2);font-weight:600;min-height:32px">${esc(c.lbl)}</div>
+        <div style="font-size:19px;font-weight:700;color:${c.cor}">${brl(c.v)}</div>
+        <div class="track" style="height:6px;margin:6px 0 5px"><span class="fill" style="width:${Math.max(2,(c.v/maxC)*100)}%;background:${c.cor}"></span></div>
+        <div style="font-size:11px;color:var(--muted)">${esc(c.nota)}${ident>0&&c.v>0?` · ${((c.v/total)*100).toFixed(0)}% da perda`:""}</div>
+      </div>`).join("")}
+    </div>
+
+    ${P.semCompras ? `<div class="legenda" style="color:var(--warning)">⚠ A tabela <b>compras_mes</b> ainda não existe no banco — sem ela o percentual sobre a compra não sai. Rode o SQL de setup no Supabase.</div>` : ""}
+    ${P.semBalancos ? `<div class="legenda" style="color:var(--warning)">⚠ A tabela <b>balancos</b> ainda não existe — as perdas não identificadas entram zeradas.</div>` : ""}
+
+    <h4 style="font-size:13px;margin:16px 0 2px">Por loja — ${temCompras?"perda sobre a compra":"perda em reais"}</h4>
+    ${itens.length ? barras(itens,{}) : `<div class="empty">Nenhuma perda registrada no mês.</div>`}
+    <div class="legenda"><span class="k"><span class="sw"></span>${temCompras?"% da compra do mês":"perda do mês"}</span>
+      <span class="k">leitura ao vivo do banco</span></div>
+
+    <details class="tbl"><summary>Ver a tabela completa</summary>
+      <table class="t"><thead><tr><th>Loja</th><th class="n">Rebaixa</th><th class="n">Venc. c/</th><th class="n">Venc. s/</th>
+        <th class="n">Balanço</th><th class="n">Perda</th><th class="n">Compras</th><th class="n">%</th></tr></thead>
+      <tbody>${itens.map(x=>`<tr>
+        <td>${badgeLoja(x.k)} ${esc(LOJAS[x.k]||"")}</td>
+        <td class="n">${brl(x.d.rebaixa)}</td><td class="n">${brl(x.d.vencAcomp)}</td>
+        <td class="n" style="color:${x.d.vencSem>0?"var(--critical)":"inherit"}">${brl(x.d.vencSem)}</td>
+        <td class="n">${x.d.balanco?brl(x.d.balanco):"—"}</td>
+        <td class="n"><b>${brl(x.tot)}</b></td>
+        <td class="n">${x.compras?brl(x.compras):"—"}</td>
+        <td class="n"><b>${x.p==null?"—":(x.p*100).toFixed(2)+"%"}</b></td></tr>`).join("")}
+      </tbody></table></details>
+
+    ${secoesPerdas(P)}
+
+    <div style="margin-top:12px">
+      <a class="btn" href="${APP}" target="_blank" rel="noopener">Abrir a aba Perdas no Data Crítica</a>
+      <span class="legenda" style="display:inline;margin-left:8px">o balanço de cada loja é informado por lá</span>
+    </div>`;
+}
+
+function secoesPerdas(P){
+  const lista = Object.entries(P.porSec).map(([s,d])=>({s, v:d.rebaixa+d.venc, ...d}))
+                  .filter(x=>x.v>0.005).sort((a,b)=>b.v-a.v).slice(0,12);
+  if(!lista.length) return "";
+  return `<details class="tbl"><summary>Ver as seções que mais perdem</summary>
+    <table class="t"><thead><tr><th>Seção</th><th class="n">Rebaixa</th><th class="n">Vencidas</th><th class="n">Perda</th></tr></thead>
+    <tbody>${lista.map(x=>`<tr><td>${esc(x.s)}</td>
+      <td class="n">${brl(x.rebaixa)}</td><td class="n">${brl(x.venc)}</td>
+      <td class="n"><b>${brl(x.v)}</b></td></tr>`).join("")}
+    </tbody></table></details>`;
+}
 
 function aviso(){
   const el = $("aviso");
@@ -457,6 +604,14 @@ function kpis(){
       href:"https://luciano504.github.io/rendemais-datacritica/"}),
     tile({ico:"🧾", lbl:"A ressarcir no mês", val: D.ress==null ? "—" : brl(D.ress),
       foot:"descartes validados virando dívida do fornecedor",
+      href:"https://luciano504.github.io/rendemais-datacritica/"}),
+    tile({ico:"📉", lbl:"Perda do mês", val: D.perdas ? brl(D.perdas.total) : "—",
+      cor: D.perdas && D.perdas.tot.compras>0 && D.perdas.total/D.perdas.tot.compras > 0.02
+           ? "var(--critical)" : "",
+      foot: !D.perdas ? "índice indisponível"
+            : (D.perdas.tot.compras>0
+               ? `${(D.perdas.total/D.perdas.tot.compras*100).toFixed(2)}% das compras do mês`
+               : `${brl(D.perdas.tot.vencSem)} vencidas sem acompanhamento`),
       href:"https://luciano504.github.io/rendemais-datacritica/"}),
     tile({ico:"💸", lbl:"Campanhas vigentes", val:num(vigentes.length),
       foot: pendAceite ? `<span class="pill warn">⚠ ${pendAceite} aguardando aceite</span>`
