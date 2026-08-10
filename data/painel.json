@@ -1,8 +1,8 @@
 {
- "gerado_em": "2026-08-10T08:08-03:00",
+ "gerado_em": "2026-08-10T08:35-03:00",
  "galeto": {
   "periodo": "01/08 a 10/08",
-  "atualizado_em": "2026-08-10T08:08-03:00",
+  "atualizado_em": "2026-08-10T08:35-03:00",
   "lojas": [
    {
     "loja": "L01",
@@ -58,13 +58,13 @@
   "semana": "semana de 10/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-10T08:08-03:00",
+  "atualizado_em": "2026-08-10T08:35-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 0,
-    "esperado": 1,
-    "pct": 0.0
+    "coletado": 1,
+    "esperado": 36,
+    "pct": 0.0278
    },
    {
     "loja": "L02",
@@ -73,22 +73,28 @@
     "pct": 0.0
    },
    {
-    "loja": "L05",
-    "coletado": 0,
-    "esperado": 17,
-    "pct": 0.0
-   },
-   {
-    "loja": "L08",
+    "loja": "L03",
     "coletado": 0,
     "esperado": 47,
     "pct": 0.0
    },
    {
+    "loja": "L05",
+    "coletado": 0,
+    "esperado": 20,
+    "pct": 0.0
+   },
+   {
+    "loja": "L08",
+    "coletado": 0,
+    "esperado": 54,
+    "pct": 0.0
+   },
+   {
     "loja": "L09",
-    "coletado": 6,
-    "esperado": 68,
-    "pct": 0.0882
+    "coletado": 12,
+    "esperado": 81,
+    "pct": 0.1481
    }
   ]
  },
@@ -97,23 +103,23 @@
    "id": "estoque_parado",
    "titulo": "Mercadoria sem venda",
    "arquivo": "data/estoque_parado.xlsx",
-   "atualizado_em": "2026-08-10T08:08-03:00",
-   "linhas": 1689,
+   "atualizado_em": "2026-08-10T08:35-03:00",
+   "linhas": 1688,
    "origem": "estoque_parado_20260810.xlsx"
   },
   {
    "id": "transferencias",
    "titulo": "Transferências sugeridas",
    "arquivo": "data/transferencias.xlsx",
-   "atualizado_em": "2026-08-10T08:08-03:00",
-   "linhas": 3154,
+   "atualizado_em": "2026-08-10T08:35-03:00",
+   "linhas": 3155,
    "origem": "transferencias_20260810.xlsx"
   },
   {
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-08-10T08:08-03:00",
+   "atualizado_em": "2026-08-10T08:35-03:00",
    "linhas": 946,
    "origem": "categorias_01082026.xlsx"
   }
