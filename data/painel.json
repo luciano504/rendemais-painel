@@ -1,8 +1,8 @@
 {
- "gerado_em": "2026-08-10T08:48-03:00",
+ "gerado_em": "2026-08-10T10:04-03:00",
  "galeto": {
   "periodo": "01/08 a 10/08",
-  "atualizado_em": "2026-08-10T08:48-03:00",
+  "atualizado_em": "2026-08-10T10:04-03:00",
   "lojas": [
    {
     "loja": "L01",
@@ -58,45 +58,89 @@
   "semana": "semana de 10/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-10T08:48-03:00",
+  "atualizado_em": "2026-08-10T10:04-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 1,
-    "esperado": 67,
-    "pct": 0.0149
+    "coletado": 8,
+    "esperado": 149,
+    "pct": 0.0537
    },
    {
     "loja": "L02",
-    "coletado": 0,
-    "esperado": 9,
-    "pct": 0.0
+    "coletado": 23,
+    "esperado": 83,
+    "pct": 0.2771
    },
    {
     "loja": "L03",
-    "coletado": 2,
-    "esperado": 47,
-    "pct": 0.0426
+    "coletado": 47,
+    "esperado": 147,
+    "pct": 0.3197
    },
    {
     "loja": "L05",
-    "coletado": 0,
-    "esperado": 84,
-    "pct": 0.0
+    "coletado": 21,
+    "esperado": 129,
+    "pct": 0.1628
    },
    {
     "loja": "L08",
-    "coletado": 0,
-    "esperado": 65,
-    "pct": 0.0
+    "coletado": 18,
+    "esperado": 108,
+    "pct": 0.1667
    },
    {
     "loja": "L09",
-    "coletado": 12,
-    "esperado": 91,
-    "pct": 0.1319
+    "coletado": 17,
+    "esperado": 235,
+    "pct": 0.0723
    }
-  ]
+  ],
+  "anterior": {
+   "semana": "03/08",
+   "itens": 6046,
+   "coletado": 4495,
+   "pct": 0.7435,
+   "lojas": [
+    {
+     "loja": "L01",
+     "coletado": 910,
+     "esperado": 1259,
+     "pct": 0.7228
+    },
+    {
+     "loja": "L02",
+     "coletado": 567,
+     "esperado": 751,
+     "pct": 0.755
+    },
+    {
+     "loja": "L03",
+     "coletado": 753,
+     "esperado": 878,
+     "pct": 0.8576
+    },
+    {
+     "loja": "L05",
+     "coletado": 645,
+     "esperado": 900,
+     "pct": 0.7167
+    },
+    {
+     "loja": "L08",
+     "coletado": 765,
+     "esperado": 1036,
+     "pct": 0.7384
+    },
+    {
+     "loja": "L09",
+     "coletado": 855,
+     "esperado": 1222,
+     "pct": 0.6997
+    }
+   ]
+  }
  },
  "arquivos": [
   {
