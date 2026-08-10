@@ -1,100 +1,94 @@
 {
- "gerado_em": "2026-08-07T17:06-03:00",
+ "gerado_em": "2026-08-10T07:51-03:00",
  "galeto": {
-  "periodo": "01/08 a 07/08",
-  "atualizado_em": "2026-08-07T17:06-03:00",
+  "periodo": "01/08 a 10/08",
+  "atualizado_em": "2026-08-10T07:51-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 260,
-    "meios": 154,
-    "galetos": 337.0,
-    "pontos": 674,
+    "inteiros": 442,
+    "meios": 220,
+    "galetos": 552.0,
+    "pontos": 1104,
     "meta": 3273
    },
    {
     "loja": "L05",
-    "inteiros": 135,
-    "meios": 7,
-    "galetos": 138.5,
-    "pontos": 277,
+    "inteiros": 260,
+    "meios": 9,
+    "galetos": 264.5,
+    "pontos": 529,
     "meta": 1218
    },
    {
     "loja": "L03",
-    "inteiros": 100,
-    "meios": 35,
-    "galetos": 117.5,
-    "pontos": 235,
+    "inteiros": 174,
+    "meios": 47,
+    "galetos": 197.5,
+    "pontos": 395,
     "meta": 1560
    },
    {
-    "loja": "L02",
-    "inteiros": 80,
-    "meios": 4,
-    "galetos": 82.0,
-    "pontos": 164,
-    "meta": 693
-   },
-   {
     "loja": "L08",
-    "inteiros": 70,
-    "meios": 17,
-    "galetos": 78.5,
-    "pontos": 157,
+    "inteiros": 123,
+    "meios": 21,
+    "galetos": 133.5,
+    "pontos": 267,
     "meta": 568
    },
    {
+    "loja": "L02",
+    "inteiros": 108,
+    "meios": 5,
+    "galetos": 110.5,
+    "pontos": 221,
+    "meta": 693
+   },
+   {
     "loja": "L09",
-    "inteiros": 50,
-    "meios": 4,
-    "galetos": 52.0,
-    "pontos": 104,
+    "inteiros": 100,
+    "meios": 5,
+    "galetos": 102.5,
+    "pontos": 205,
     "meta": 745
    }
   ]
  },
  "medidor": {
-  "semana": "semana de 03/08",
+  "semana": "semana de 10/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-07T17:06-03:00",
+  "atualizado_em": "2026-08-10T07:51-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 840,
-    "esperado": 1215,
-    "pct": 0.6914
+    "coletado": 0,
+    "esperado": 1,
+    "pct": 0.0
    },
    {
     "loja": "L02",
-    "coletado": 522,
-    "esperado": 701,
-    "pct": 0.7447
-   },
-   {
-    "loja": "L03",
-    "coletado": 730,
-    "esperado": 874,
-    "pct": 0.8352
+    "coletado": 0,
+    "esperado": 9,
+    "pct": 0.0
    },
    {
     "loja": "L05",
-    "coletado": 636,
-    "esperado": 883,
-    "pct": 0.7203
+    "coletado": 0,
+    "esperado": 13,
+    "pct": 0.0
    },
    {
     "loja": "L08",
-    "coletado": 727,
-    "esperado": 985,
-    "pct": 0.7381
+    "coletado": 0,
+    "esperado": 23,
+    "pct": 0.0
    },
    {
     "loja": "L09",
-    "coletado": 807,
-    "esperado": 1134,
-    "pct": 0.7116
+    "coletado": 6,
+    "esperado": 19,
+    "pct": 0.3158
    }
   ]
  },
@@ -103,23 +97,23 @@
    "id": "estoque_parado",
    "titulo": "Mercadoria sem venda",
    "arquivo": "data/estoque_parado.xlsx",
-   "atualizado_em": "2026-08-07T17:06-03:00",
+   "atualizado_em": "2026-08-10T07:51-03:00",
    "linhas": 1748,
-   "origem": "estoque_parado_20260807.xlsx"
+   "origem": "estoque_parado.xlsx"
   },
   {
    "id": "transferencias",
    "titulo": "Transferências sugeridas",
    "arquivo": "data/transferencias.xlsx",
-   "atualizado_em": "2026-08-07T17:06-03:00",
+   "atualizado_em": "2026-08-10T07:51-03:00",
    "linhas": 3118,
-   "origem": "transferencias_20260807.xlsx"
+   "origem": "transferencias.xlsx"
   },
   {
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-08-07T17:06-03:00",
+   "atualizado_em": "2026-08-10T07:51-03:00",
    "linhas": 917,
    "origem": "categorias.xlsx"
   }
