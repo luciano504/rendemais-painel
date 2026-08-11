@@ -1,31 +1,31 @@
 {
- "gerado_em": "2026-08-11T13:01-03:00",
+ "gerado_em": "2026-08-11T14:58-03:00",
  "galeto": {
   "periodo": "01/08 a 11/08",
-  "atualizado_em": "2026-08-11T13:01-03:00",
+  "atualizado_em": "2026-08-11T14:58-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 466,
-    "meios": 242,
-    "galetos": 587.0,
-    "pontos": 1174,
+    "inteiros": 469,
+    "meios": 245,
+    "galetos": 591.5,
+    "pontos": 1183,
     "meta": 3273
    },
    {
     "loja": "L05",
-    "inteiros": 265,
+    "inteiros": 266,
     "meios": 9,
-    "galetos": 269.5,
-    "pontos": 539,
+    "galetos": 270.5,
+    "pontos": 541,
     "meta": 1218
    },
    {
     "loja": "L03",
-    "inteiros": 176,
-    "meios": 50,
-    "galetos": 201.0,
-    "pontos": 402,
+    "inteiros": 177,
+    "meios": 54,
+    "galetos": 204.0,
+    "pontos": 408,
     "meta": 1560
    },
    {
@@ -58,43 +58,43 @@
   "semana": "semana de 10/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-11T13:01-03:00",
+  "atualizado_em": "2026-08-11T14:58-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 306,
-    "esperado": 446,
-    "pct": 0.6861
+    "coletado": 312,
+    "esperado": 494,
+    "pct": 0.6316
    },
    {
     "loja": "L02",
-    "coletado": 133,
-    "esperado": 240,
-    "pct": 0.5542
+    "coletado": 148,
+    "esperado": 249,
+    "pct": 0.5944
    },
    {
     "loja": "L03",
-    "coletado": 295,
-    "esperado": 423,
-    "pct": 0.6974
+    "coletado": 296,
+    "esperado": 451,
+    "pct": 0.6563
    },
    {
     "loja": "L05",
-    "coletado": 245,
-    "esperado": 344,
-    "pct": 0.7122
+    "coletado": 261,
+    "esperado": 367,
+    "pct": 0.7112
    },
    {
     "loja": "L08",
-    "coletado": 202,
-    "esperado": 290,
-    "pct": 0.6966
+    "coletado": 205,
+    "esperado": 297,
+    "pct": 0.6902
    },
    {
     "loja": "L09",
     "coletado": 313,
-    "esperado": 573,
-    "pct": 0.5462
+    "esperado": 580,
+    "pct": 0.5397
    }
   ],
   "anterior": {
