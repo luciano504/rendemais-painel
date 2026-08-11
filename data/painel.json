@@ -1,23 +1,23 @@
 {
- "gerado_em": "2026-08-11T08:44-03:00",
+ "gerado_em": "2026-08-11T11:20-03:00",
  "galeto": {
   "periodo": "01/08 a 11/08",
-  "atualizado_em": "2026-08-11T08:44-03:00",
+  "atualizado_em": "2026-08-11T11:20-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 454,
-    "meios": 236,
-    "galetos": 572.0,
-    "pontos": 1144,
+    "inteiros": 458,
+    "meios": 237,
+    "galetos": 576.5,
+    "pontos": 1153,
     "meta": 3273
    },
    {
     "loja": "L05",
-    "inteiros": 262,
+    "inteiros": 265,
     "meios": 9,
-    "galetos": 266.5,
-    "pontos": 533,
+    "galetos": 269.5,
+    "pontos": 539,
     "meta": 1218
    },
    {
@@ -58,43 +58,43 @@
   "semana": "semana de 10/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-11T08:44-03:00",
+  "atualizado_em": "2026-08-11T11:20-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 240,
-    "esperado": 393,
-    "pct": 0.6107
+    "coletado": 306,
+    "esperado": 434,
+    "pct": 0.7051
    },
    {
     "loja": "L02",
-    "coletado": 123,
-    "esperado": 184,
-    "pct": 0.6685
+    "coletado": 133,
+    "esperado": 231,
+    "pct": 0.5758
    },
    {
     "loja": "L03",
-    "coletado": 202,
-    "esperado": 342,
-    "pct": 0.5906
+    "coletado": 282,
+    "esperado": 371,
+    "pct": 0.7601
    },
    {
     "loja": "L05",
-    "coletado": 204,
-    "esperado": 287,
-    "pct": 0.7108
+    "coletado": 241,
+    "esperado": 331,
+    "pct": 0.7281
    },
    {
     "loja": "L08",
-    "coletado": 171,
-    "esperado": 224,
-    "pct": 0.7634
+    "coletado": 201,
+    "esperado": 290,
+    "pct": 0.6931
    },
    {
     "loja": "L09",
-    "coletado": 186,
-    "esperado": 413,
-    "pct": 0.4504
+    "coletado": 298,
+    "esperado": 558,
+    "pct": 0.5341
    }
   ],
   "anterior": {
