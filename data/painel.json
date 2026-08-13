@@ -1,15 +1,15 @@
 {
- "gerado_em": "2026-08-13T14:58-03:00",
+ "gerado_em": "2026-08-13T16:56-03:00",
  "galeto": {
   "periodo": "01/08 a 13/08",
-  "atualizado_em": "2026-08-13T14:58-03:00",
+  "atualizado_em": "2026-08-13T16:56-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 503,
+    "inteiros": 504,
     "meios": 279,
-    "galetos": 642.5,
-    "pontos": 1285,
+    "galetos": 643.5,
+    "pontos": 1287,
     "meta": 3273
    },
    {
@@ -23,9 +23,9 @@
    {
     "loja": "L03",
     "inteiros": 210,
-    "meios": 81,
-    "galetos": 250.5,
-    "pontos": 501,
+    "meios": 83,
+    "galetos": 251.5,
+    "pontos": 503,
     "meta": 1560
    },
    {
@@ -38,10 +38,10 @@
    },
    {
     "loja": "L02",
-    "inteiros": 116,
+    "inteiros": 117,
     "meios": 5,
-    "galetos": 118.5,
-    "pontos": 237,
+    "galetos": 119.5,
+    "pontos": 239,
     "meta": 693
    },
    {
@@ -58,43 +58,43 @@
   "semana": "semana de 10/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-13T14:58-03:00",
+  "atualizado_em": "2026-08-13T16:56-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 755,
-    "esperado": 1095,
-    "pct": 0.6895
+    "coletado": 857,
+    "esperado": 1121,
+    "pct": 0.7645
    },
    {
     "loja": "L02",
-    "coletado": 369,
-    "esperado": 517,
-    "pct": 0.7137
+    "coletado": 389,
+    "esperado": 524,
+    "pct": 0.7424
    },
    {
     "loja": "L03",
-    "coletado": 624,
-    "esperado": 828,
-    "pct": 0.7536
+    "coletado": 639,
+    "esperado": 840,
+    "pct": 0.7607
    },
    {
     "loja": "L05",
-    "coletado": 635,
-    "esperado": 835,
-    "pct": 0.7605
+    "coletado": 639,
+    "esperado": 873,
+    "pct": 0.732
    },
    {
     "loja": "L08",
-    "coletado": 567,
-    "esperado": 722,
-    "pct": 0.7853
+    "coletado": 599,
+    "esperado": 781,
+    "pct": 0.767
    },
    {
     "loja": "L09",
-    "coletado": 677,
+    "coletado": 742,
     "esperado": 1056,
-    "pct": 0.6411
+    "pct": 0.7027
    }
   ],
   "anterior": {
