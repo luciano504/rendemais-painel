@@ -1,31 +1,31 @@
 {
- "gerado_em": "2026-08-18T08:20-03:00",
+ "gerado_em": "2026-08-18T12:26-03:00",
  "galeto": {
   "periodo": "01/08 a 18/08",
-  "atualizado_em": "2026-08-18T08:20-03:00",
+  "atualizado_em": "2026-08-18T12:26-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 692,
-    "meios": 382,
-    "galetos": 883.0,
-    "pontos": 1766,
+    "inteiros": 702,
+    "meios": 389,
+    "galetos": 896.5,
+    "pontos": 1793,
     "meta": 3273
    },
    {
     "loja": "L05",
-    "inteiros": 406,
+    "inteiros": 407,
     "meios": 15,
-    "galetos": 413.5,
-    "pontos": 827,
+    "galetos": 414.5,
+    "pontos": 829,
     "meta": 1218
    },
    {
     "loja": "L03",
-    "inteiros": 286,
-    "meios": 153,
-    "galetos": 362.5,
-    "pontos": 725,
+    "inteiros": 295,
+    "meios": 162,
+    "galetos": 376.0,
+    "pontos": 752,
     "meta": 1560
    },
    {
@@ -58,43 +58,43 @@
   "semana": "semana de 17/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-18T08:20-03:00",
+  "atualizado_em": "2026-08-18T12:26-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 253,
-    "esperado": 346,
-    "pct": 0.7312
+    "coletado": 308,
+    "esperado": 406,
+    "pct": 0.7586
    },
    {
     "loja": "L02",
-    "coletado": 34,
-    "esperado": 178,
-    "pct": 0.191
+    "coletado": 51,
+    "esperado": 184,
+    "pct": 0.2772
    },
    {
     "loja": "L03",
-    "coletado": 107,
-    "esperado": 163,
-    "pct": 0.6564
+    "coletado": 173,
+    "esperado": 267,
+    "pct": 0.6479
    },
    {
     "loja": "L05",
-    "coletado": 141,
-    "esperado": 194,
-    "pct": 0.7268
+    "coletado": 192,
+    "esperado": 259,
+    "pct": 0.7413
    },
    {
     "loja": "L08",
-    "coletado": 202,
-    "esperado": 313,
-    "pct": 0.6454
+    "coletado": 288,
+    "esperado": 365,
+    "pct": 0.789
    },
    {
     "loja": "L09",
-    "coletado": 201,
-    "esperado": 294,
-    "pct": 0.6837
+    "coletado": 262,
+    "esperado": 365,
+    "pct": 0.7178
    }
   ],
   "anterior": {
