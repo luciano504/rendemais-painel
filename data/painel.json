@@ -1,15 +1,15 @@
 {
- "gerado_em": "2026-08-20T20:20-03:00",
+ "gerado_em": "2026-08-21T08:04-03:00",
  "galeto": {
-  "periodo": "01/08 a 20/08",
-  "atualizado_em": "2026-08-20T20:20-03:00",
+  "periodo": "01/08 a 21/08",
+  "atualizado_em": "2026-08-21T08:04-03:00",
   "lojas": [
    {
     "loja": "L01",
     "inteiros": 747,
-    "meios": 438,
-    "galetos": 966.0,
-    "pontos": 1932,
+    "meios": 441,
+    "galetos": 967.5,
+    "pontos": 1935,
     "meta": 3273
    },
    {
@@ -58,43 +58,43 @@
   "semana": "semana de 17/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-08-20T20:20-03:00",
+  "atualizado_em": "2026-08-21T08:04-03:00",
   "lojas": [
    {
     "loja": "L01",
     "coletado": 629,
-    "esperado": 830,
-    "pct": 0.7578
+    "esperado": 868,
+    "pct": 0.7247
    },
    {
     "loja": "L02",
-    "coletado": 276,
-    "esperado": 487,
-    "pct": 0.5667
+    "coletado": 279,
+    "esperado": 506,
+    "pct": 0.5514
    },
    {
     "loja": "L03",
     "coletado": 490,
-    "esperado": 610,
-    "pct": 0.8033
+    "esperado": 696,
+    "pct": 0.704
    },
    {
     "loja": "L05",
     "coletado": 449,
-    "esperado": 633,
-    "pct": 0.7093
+    "esperado": 685,
+    "pct": 0.6555
    },
    {
     "loja": "L08",
     "coletado": 626,
-    "esperado": 845,
-    "pct": 0.7408
+    "esperado": 873,
+    "pct": 0.7171
    },
    {
     "loja": "L09",
     "coletado": 445,
-    "esperado": 710,
-    "pct": 0.6268
+    "esperado": 735,
+    "pct": 0.6054
    }
   ],
   "anterior": {
@@ -147,24 +147,24 @@
    "id": "estoque_parado",
    "titulo": "Mercadoria sem venda",
    "arquivo": "data/estoque_parado.xlsx",
-   "atualizado_em": "2026-08-20T08:04-03:00",
-   "linhas": 1972,
-   "origem": "estoque_parado_20260820.xlsx"
+   "atualizado_em": "2026-08-21T08:04-03:00",
+   "linhas": 2132,
+   "origem": "estoque_parado_20260821.xlsx"
   },
   {
    "id": "transferencias",
    "titulo": "Transferências sugeridas",
    "arquivo": "data/transferencias.xlsx",
-   "atualizado_em": "2026-08-20T08:04-03:00",
-   "linhas": 3114,
-   "origem": "transferencias_20260820.xlsx"
+   "atualizado_em": "2026-08-21T08:04-03:00",
+   "linhas": 3068,
+   "origem": "transferencias_20260821.xlsx"
   },
   {
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-08-20T08:04-03:00",
-   "linhas": 960,
+   "atualizado_em": "2026-08-21T08:04-03:00",
+   "linhas": 962,
    "origem": "categorias_01082026.xlsx"
   }
  ],
