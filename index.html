@@ -247,17 +247,23 @@ const ORDEM_LOJA = ["L01","L02","L03","L04","L05","L08","L09"];
 
 const APPS = [
   {ico:"⏳", nome:"Data Crítica", url:"https://luciano504.github.io/rendemais-datacritica/",
-   desc:"Controle de mercadoria perto do vencimento: coleta, lotes FEFO, rebaixa, descarte validado, portal do fornecedor e placas “Agora ou Nunca”.",
+   desc:"Mercadoria perto do vencimento: coleta, lotes FEFO, rebaixa, descarte validado, índice de perdas, portal do fornecedor e a aba Sugestões, onde o fornecedor propõe a rebaixa e a loja aceita em lote.",
    tag:"PWA · Supabase", estado:"no ar"},
   {ico:"💸", nome:"Rende Mais Campanhas", url:"https://luciano504.github.io/rendemais-campanhas/",
-   desc:"Verbas de fomento por item: fornecedor propõe, gestor aceita, mostrador de orçamento com alerta em 70% e suspensão no estouro.",
+   desc:"Verbas de fomento por item, com o portfólio inteiro do fornecedor separado por seção — sem incluir item a item. Mostrador de orçamento com alerta em 70% e suspensão no estouro.",
    tag:"PWA · Supabase", estado:"no ar"},
   {ico:"🏷️", nome:"Placas de Oferta", url:"https://luciano504.github.io/placas/",
    desc:"Impressão das placas de/por da semana em A2/A3/A4/A5, por loja e seção, com galeria de artes e combos “Quarta é 10”.",
    tag:"PWA · dados do VR 2×/dia", estado:"no ar"},
+  {ico:"🔎", nome:"Ronda de Preços", url:"https://luciano504.github.io/ronda/",
+   desc:"Coleta de preço na gôndola do concorrente: escolhe loja e concorrente, bipa ou digita o código e anota a etiqueta. É o que alimenta o Pricing.",
+   tag:"PWA · celular na rua", estado:"no ar"},
   {ico:"📊", nome:"Pricing por concorrente", url:"",
-   desc:"Preço sugerido a partir dos preços de NFC-e dos concorrentes, respeitando piso de margem. Coleta migrando para o GitHub Actions.",
+   desc:"Preço sugerido a partir dos preços de NFC-e e da Ronda, respeitando o piso de margem. Coleta migrando para o GitHub Actions.",
    tag:"PWA · Sefaz NFC-e", estado:"em implantação"},
+  {ico:"🛰️", nome:"Radar de Ofertas", url:"https://luciano504.github.io/radar-ofertas/",
+   desc:"Protótipo navegável de acompanhamento de oferta por loja. Os números são fictícios — serve para decidir o desenho antes de ligar no banco.",
+   tag:"protótipo · dados fictícios", estado:"protótipo"},
   {ico:"🍗", nome:"Galeto Premiado", url:"https://github.com/luciano504/rendemais-pipeline/actions",
    desc:"Campanha diária de incentivo por loja: 2 pontos no galeto inteiro, 1 no meio. Parcial por e-mail todo dia.",
    tag:"automação diária", estado:"no ar"},
@@ -272,9 +278,18 @@ const SISTEMAS = [
   {ico:"📉", nome:"Controller 360", url:"https://portal.controller360.com.br",
    desc:"BI da rede: vendas, margem, curva ABC, compra × venda.", tag:"portal externo", estado:"no ar"},
   {ico:"⚙️", nome:"Pipeline (GitHub Actions)", url:"https://github.com/luciano504/rendemais-pipeline/actions",
-   desc:"Todas as rotinas automáticas: sync do Data Crítica, relatórios, galeto, medidor e coleta de preços.", tag:"repositório", estado:"no ar"},
+   desc:"O código das rotinas: relatórios, galeto, medidor, coleta de preços e a correção das transferências entre lojas.", tag:"repositório privado", estado:"no ar"},
+  {ico:"🔄", nome:"Sync do Data Crítica", url:"https://github.com/luciano504/rendemais-datacritica/actions/workflows/sync-datacritica.yml",
+   desc:"VR → Supabase às 07h e às 16h: estoque, preço, venda do dia e o ressarcimento de cada lote. Roda no repositório público, onde o minuto de Actions é de graça.",
+   tag:"2× por dia", estado:"no ar"},
+  {ico:"📦", nome:"Base ativa dos fornecedores", url:"https://github.com/luciano504/rendemais-datacritica/actions/workflows/base-fornecedores.yml",
+   desc:"Todo dia às 08h30 monta o catálogo de cada fornecedor com acesso: item cadastrado nele, com estoque na loja e venda nos últimos 90 dias. É o que ele enxerga ao criar campanha.",
+   tag:"alimenta as Campanhas", estado:"no ar"},
   {ico:"🧾", nome:"Ressarcimento de fornecedores", url:"https://luciano504.github.io/rendemais-datacritica/",
-   desc:"Aba Fornecedores do Data Crítica: saldo devedor, descartes validados com foto e relatório mensal.", tag:"dentro do Data Crítica", estado:"no ar"}
+   desc:"Aba Fornecedores do Data Crítica: saldo devedor, descartes validados com foto e relatório mensal.", tag:"dentro do Data Crítica", estado:"no ar"},
+  {ico:"🔐", nome:"Backup diário", url:"https://github.com/luciano504/rendemais-backup/settings/secrets/actions",
+   desc:"Cópia cifrada do Supabase, dos repositórios e do VR, com restauração de um clique. Falta você criar os secrets no repositório — até lá nada foi salvo.",
+   tag:"precisa dos secrets", estado:"aguardando você"}
 ];
 
 /* ============================================================
@@ -310,10 +325,18 @@ async function sha256(t){
   const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
   return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
 }
-async function sb(path){
-  const r = await fetch(SB_URL+"/rest/v1/"+path, {headers:{apikey:SB_KEY, Authorization:"Bearer "+SB_KEY}});
+/* comContagem=true devolve {linhas, total}: o total vem do cabeçalho content-range,
+   então dá para saber quantas linhas existem sem baixar todas elas. */
+async function sb(path, comContagem){
+  const h = {apikey:SB_KEY, Authorization:"Bearer "+SB_KEY};
+  if(comContagem) h.Prefer = "count=exact";
+  const r = await fetch(SB_URL+"/rest/v1/"+path, {headers:h});
   if(!r.ok) throw new Error(await r.text());
-  return r.json();
+  const linhas = await r.json();
+  if(!comContagem) return linhas;
+  const cr = r.headers.get("content-range") || "";
+  const t = Number(String(cr).split("/")[1]);
+  return {linhas, total: Number.isFinite(t) ? t : linhas.length};
 }
 function mesAtual(){ return hoje().slice(0,7); }
 const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho",
@@ -359,7 +382,7 @@ function sair(){ localStorage.removeItem("painelSess"); location.reload(); }
    CARGA
    ============================================================ */
 const D = {lotes:[], descartes:0, ress:0, campanhas:[], consumo:[], alertas:[], painel:null,
-           perdas:null, erros:[]};
+           perdas:null, sugestoes:null, catalogo:null, catalogoEm:null, erros:[]};
 
 async function carregar(){
   $("hdSub").textContent = "atualizando…";
@@ -382,6 +405,17 @@ async function carregarCritica(){
     const r = await sb(`ressarcimento_diario?select=valor&data=gte.${m}-01&data=lt.${proxMes(m)}&limit=50000`);
     D.ress = r.reduce((a,x)=>a+(Number(x.valor)||0),0);
   }catch(e){ D.ress = null; }
+  // aba Sugestões: rebaixa que o fornecedor propôs e a loja ainda não respondeu
+  try{
+    const s = await sb("sugestoes_fornecedor?select=id&status=eq.pendente&limit=5000");
+    D.sugestoes = s.length;
+  }catch(e){ D.sugestoes = null; }
+  // base ativa dos fornecedores, montada de madrugada para as campanhas
+  try{
+    const c = await sb("catalogo_fornecedor?select=ean,atualizado_em&order=atualizado_em.desc&limit=1", true);
+    D.catalogo = c.total;
+    D.catalogoEm = (c.linhas[0]||{}).atualizado_em || null;
+  }catch(e){ D.catalogo = null; D.catalogoEm = null; }
 }
 
 async function carregarCampanhas(){
@@ -616,6 +650,16 @@ function kpis(){
     tile({ico:"💸", lbl:"Campanhas vigentes", val:num(vigentes.length),
       foot: pendAceite ? `<span class="pill warn">⚠ ${pendAceite} aguardando aceite</span>`
                        : (orc ? `${brl(cons)} de ${brl(orc)} consumidos` : "sem campanha ativa"),
+      href:"https://luciano504.github.io/rendemais-campanhas/"}),
+    tile({ico:"💡", lbl:"Sugestões de rebaixa", val: D.sugestoes==null ? "—" : num(D.sugestoes),
+      cor: D.sugestoes>0 ? "var(--warning)" : "",
+      foot: D.sugestoes==null ? "sem leitura do banco"
+            : (D.sugestoes ? "o fornecedor propôs, a loja ainda não respondeu"
+                           : "nada pendente de resposta"),
+      href:"https://luciano504.github.io/rendemais-datacritica/"}),
+    tile({ico:"📦", lbl:"Base ativa dos fornecedores", val: D.catalogo==null ? "—" : num(D.catalogo),
+      foot: D.catalogo==null ? "catálogo ainda não montado"
+            : `itens × loja liberados para campanha · ${idade(D.catalogoEm)}`,
       href:"https://luciano504.github.io/rendemais-campanhas/"}),
     tile({ico:"🍗", lbl:"Galeto — pontos do mês", val: gTot==null ? "—" : num(gTot),
       foot: gLider ? `líder ${badgeLoja(gLider.loja)} ${LOJAS[gLider.loja]||""} · ${idade(g.atualizado_em)}`
