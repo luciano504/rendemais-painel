@@ -696,6 +696,12 @@ function galeto(){
   // a meta publicada é do MÊS FECHADO; no meio do mês a comparação justa
   // é contra a fatia proporcional aos dias já corridos
   const d = new Date();
+  // A parcial publicada pode ainda ser do mês passado — é o que acontece no dia 1º,
+  // antes da primeira venda de galeto entrar. Comparar o acumulado daquele mês com
+  // a fatia de dias DESTE mês dava número sem sentido (2.161% do ritmo).
+  const pub = g.atualizado_em ? new Date(g.atualizado_em) : null;
+  const mesmoMes = !pub || isNaN(pub)
+        || (pub.getFullYear() === d.getFullYear() && pub.getMonth() === d.getMonth());
   const diaHoje = d.getDate();
   const diasMes = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
   const fatia = diaHoje / diasMes;
@@ -705,13 +711,15 @@ function galeto(){
   }));
   const tot = itens.reduce((a,x)=>a+x.v,0);
   const metaMes = g.lojas.reduce((a,x)=>a+(Number(x.meta)||0),0);
-  const metaHoje = Math.round(metaMes*fatia);
+  const metaHoje = mesmoMes ? Math.round(metaMes*fatia) : 0;
   const noRitmo = metaHoje ? tot/metaHoje : null;
   el.innerHTML = `<h3>🍗 Galeto Premiado</h3>
     <p class="desc">${esc(g.periodo||"período corrente")} · ${num(tot)} pontos na rede${
-      metaMes ? ` · ${pct(tot/metaMes)} da meta do mês` : ""}</p>
+      metaMes ? ` · ${pct(tot/metaMes)} da meta ${mesmoMes ? "do mês" : "daquele mês"}` : ""}</p>
     ${metaHoje ? `<p class="desc" style="margin-top:-6px">Até o dia ${diaHoje} o esperado era ${num(metaHoje)} —
       a rede está em <b style="color:${noRitmo>=1?"var(--success-text)":"var(--critical)"}">${pct(noRitmo)}</b> do ritmo.</p>` : ""}
+    ${mesmoMes ? "" : `<p class="desc" style="margin-top:-6px">Esta parcial ainda é do mês passado.
+      A do mês novo aparece assim que a primeira venda de galeto entrar.</p>`}
     ${barras(itens,{mostrarMeta:!!metaHoje, meta:!!metaHoje})}
     <div class="legenda">
       <span class="k"><span class="sw"></span>no ritmo ou acima</span>
