@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caixa e Compras · Rende Mais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Libre+Franklin:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F1F4F9; --surface:#FFFFFF; --surface-2:#F7F9FC;
+  --ink:#131A2B; --ink-2:#414D68; --muted:#6B7590; --hair:#DCE2EC; --hair-2:#EBEFF6;
+  --navy:#1F3864; --on-navy:#FFFFFF; --amber:#FFBF00; --amber-ink:#8A6200;
+  --bol:#3D62B0; --out:#D99400; --ven:#12866B;
+  --acima:#D99400; --abaixo:#3D62B0;
+  --falta:#A93318; --falta-bg:#FBEDE9; --sobra-bg:#FBF2E2; --ok-bg:#EDF1F8;
+  --shadow:0 1px 2px rgba(19,26,43,.05), 0 8px 24px rgba(19,26,43,.06);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0E121A; --surface:#161B26; --surface-2:#1C2230;
+  --ink:#E8ECF5; --ink-2:#BAC3D6; --muted:#8D97AF; --hair:#28313F; --hair-2:#1F2734;
+  --navy:#8FA9DC; --on-navy:#0E121A; --amber:#FFC940; --amber-ink:#FFC940;
+  --bol:#5C86DC; --out:#BC8318; --ven:#2E9E80;
+  --acima:#BC8318; --abaixo:#5C86DC;
+  --falta:#F08A6C; --falta-bg:#2A1A16; --sobra-bg:#2A2314; --ok-bg:#1B2230;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --ground:#0E121A; --surface:#161B26; --surface-2:#1C2230;
+  --ink:#E8ECF5; --ink-2:#BAC3D6; --muted:#8D97AF; --hair:#28313F; --hair-2:#1F2734;
+  --navy:#8FA9DC; --on-navy:#0E121A; --amber:#FFC940; --amber-ink:#FFC940;
+  --bol:#5C86DC; --out:#BC8318; --ven:#2E9E80;
+  --acima:#BC8318; --abaixo:#5C86DC;
+  --falta:#F08A6C; --falta-bg:#2A1A16; --sobra-bg:#2A2314; --ok-bg:#1B2230;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{background:var(--ground); color:var(--ink); margin:0; padding:0 0 60px;
+  font-family:"Libre Franklin",system-ui,-apple-system,Segoe UI,sans-serif; font-size:15px; line-height:1.55}
+h1,h2,h3{font-family:"Archivo",system-ui,sans-serif; margin:0; text-wrap:balance}
+.wrap{max-width:1160px; margin:0 auto; padding:0 18px; display:flex; flex-direction:column; gap:22px}
+.eyebrow{font-family:"Archivo",sans-serif; font-size:11px; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted)}
+.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+/* topo */
+header.topo{background:var(--navy); color:#fff; padding:14px 0; margin-bottom:20px}
+header.topo .wrap{flex-direction:row; align-items:center; gap:14px; flex-wrap:wrap}
+header.topo h1{font-size:19px; font-weight:700; letter-spacing:-.01em}
+header.topo .dir{margin-left:auto; display:flex; gap:10px; align-items:center; font-size:12.5px; opacity:.9}
+header.topo button{background:rgba(255,255,255,.14); color:#fff; border:0; border-radius:8px;
+  padding:6px 11px; font-size:12.5px; cursor:pointer; font-family:inherit}
+header.topo button:hover{background:rgba(255,255,255,.24)}
+
+/* login */
+#login{position:fixed; inset:0; background:var(--ground); display:none; place-items:center; z-index:50; padding:20px}
+#login .box{background:var(--surface); border:1px solid var(--hair); border-radius:16px; box-shadow:var(--shadow);
+  padding:28px; width:min(360px,100%); text-align:center; display:flex; flex-direction:column; gap:12px}
+#login h1{font-size:22px}
+#login p{margin:0; color:var(--muted); font-size:13.5px}
+#login select,#login input{width:100%; padding:11px 12px; border:1px solid var(--hair); border-radius:9px;
+  background:var(--surface-2); color:var(--ink); font-family:inherit; font-size:15px}
+#login .btn{background:var(--navy); color:var(--on-navy); border:0; border-radius:9px; padding:11px;
+  font-weight:600; cursor:pointer; font-family:inherit; font-size:15px}
+#login .msg{color:var(--falta); font-size:13px; min-height:18px}
+
+/* abas e filtros */
+.abas{display:flex; gap:6px; flex-wrap:wrap}
+.abas button{font-family:"Archivo",sans-serif; font-size:13px; font-weight:600; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--hair); border-radius:999px; padding:8px 16px; cursor:pointer}
+.abas button[aria-selected="true"]{background:var(--navy); color:var(--on-navy); border-color:var(--navy)}
+.filtro{background:var(--surface); border:1px solid var(--hair); border-radius:14px; box-shadow:var(--shadow);
+  padding:13px 18px; display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center}
+.filtro .rot{font-family:"Archivo",sans-serif; font-size:11px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted)}
+.chips{display:flex; gap:6px; flex-wrap:wrap}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-2); background:var(--surface-2);
+  border:1px solid var(--hair); border-radius:999px; padding:5px 11px; cursor:pointer}
+.chip[data-on="1"]{background:var(--navy); color:var(--on-navy); border-color:var(--navy)}
+.chip.acao{border-style:dashed}
+.selo{margin-left:auto; font-size:12.5px; color:var(--muted)}
+
+.kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:13px}
+.kpi{background:var(--surface); border:1px solid var(--hair); border-radius:12px; padding:15px 17px;
+  box-shadow:var(--shadow); display:flex; flex-direction:column; gap:5px}
+.kpi.destaque{box-shadow:var(--shadow), inset 3px 0 0 var(--amber); border-color:var(--amber)}
+.kpi .val{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-size:23px;
+  font-weight:600; letter-spacing:-.02em; line-height:1.1}
+.kpi .sub{font-size:12px; color:var(--muted)}
+.kpi .sub b{color:var(--ink-2); font-weight:600}
+
+.card{background:var(--surface); border:1px solid var(--hair); border-radius:14px; box-shadow:var(--shadow);
+  padding:20px 20px 16px}
+.card-head{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:baseline; justify-content:space-between}
+.card-head h2{font-size:18px; font-weight:600}
+.card-head p{margin:3px 0 0; color:var(--muted); font-size:13px; max-width:66ch}
+.seg{display:inline-flex; border:1px solid var(--hair); border-radius:8px; overflow:hidden; background:var(--surface-2)}
+.seg button{font-family:inherit; font-size:12.5px; color:var(--ink-2); background:transparent; border:0;
+  padding:7px 13px; cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy); color:var(--on-navy)}
+.legend{display:flex; gap:15px; flex-wrap:wrap; align-items:center; font-size:12.5px; color:var(--ink-2); margin:13px 0 3px}
+.swatch{width:11px; height:11px; border-radius:3px; display:inline-block; margin-right:6px; vertical-align:-1px}
+.linha-demo{display:inline-block; width:16px; height:3px; border-radius:999px; background:var(--ven);
+  margin-right:6px; vertical-align:3px}
+
+/* grafico de barras */
+.chart-scroll{overflow-x:auto}
+.chart{position:relative; min-width:820px; height:250px; margin-top:6px}
+.grid{position:absolute; inset:0; pointer-events:none}
+.grid div{position:absolute; left:0; right:0; border-top:1px solid var(--hair-2)}
+.grid span{position:absolute; left:0; transform:translateY(-50%); font-size:11px; color:var(--muted);
+  font-family:"IBM Plex Mono",monospace; background:var(--surface); padding-right:6px}
+.bars{position:absolute; inset:0 0 0 52px; display:flex; align-items:flex-end; gap:3px}
+.col{flex:1 1 0; height:100%; display:flex; flex-direction:column; justify-content:flex-end; position:relative}
+.col .stack{display:flex; flex-direction:column; justify-content:flex-end; gap:2px; border-radius:4px 4px 0 0}
+.sbol{background:var(--bol)}
+.sout{background:var(--out); border-radius:4px 4px 0 0}
+.col.zero .stack{min-height:2px; background:var(--hair)}
+.col.nu .stack{opacity:.72}
+.col.hoje::after{content:"hoje"; position:absolute; top:-2px; left:50%; transform:translateX(-50%);
+  font-family:"Archivo",sans-serif; font-size:9.5px; font-weight:600; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--amber-ink); white-space:nowrap}
+.col:hover .stack{filter:brightness(1.08)}
+svg.linha{position:absolute; inset:0 0 0 52px; width:calc(100% - 52px); height:100%; pointer-events:none; overflow:visible}
+.axis{position:absolute; left:52px; right:0; bottom:-22px; display:flex; gap:3px}
+.axis div{flex:1 1 0; text-align:center; font-size:10.5px; color:var(--muted); font-family:"IBM Plex Mono",monospace}
+.axis div.mark{color:var(--ink-2); font-weight:600}
+.axis div.mes{color:var(--navy); font-weight:600}
+.chart-foot{margin-top:32px; font-size:12.5px; color:var(--muted)}
+#tip{position:fixed; z-index:60; background:var(--surface); border:1px solid var(--hair); border-radius:10px;
+  box-shadow:var(--shadow); padding:10px 12px; font-size:12.5px; pointer-events:none; opacity:0;
+  transition:opacity .12s; min-width:170px}
+#tip .t{font-family:"Archivo",sans-serif; font-weight:600; font-size:13px; margin-bottom:6px}
+#tip .r{display:flex; justify-content:space-between; gap:16px; color:var(--ink-2)}
+#tip .r b{font-family:"IBM Plex Mono",monospace; color:var(--ink)}
+
+/* entra x sai */
+.cmp{display:flex; flex-direction:column; gap:10px; margin-top:14px}
+.cmp-row{display:grid; grid-template-columns:150px minmax(0,1fr) 96px; gap:14px; align-items:center}
+.cmp-bars{display:flex; flex-direction:column; gap:3px}
+.cmp-bar{height:11px; border-radius:0 3px 3px 0; min-width:2px}
+.cmp-bar.v{background:var(--ven)} .cmp-bar.p{background:var(--bol)}
+.cmp-nome{font-size:13px; color:var(--ink-2)}
+.cmp-val{font-family:"IBM Plex Mono",monospace; font-size:12.5px; text-align:right; color:var(--ink-2)}
+.cmp-val b{color:var(--ink); font-weight:600}
+.cmp-val.alto b{color:var(--falta)}
+
+/* tabelas */
+table{width:100%; border-collapse:collapse; font-size:13px}
+.tbl-scroll{overflow-x:auto; margin-top:12px}
+th,td{padding:7px 9px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--hair-2)}
+th:first-child,td:first-child{text-align:left; position:sticky; left:0; background:var(--surface); z-index:1}
+thead th{font-family:"Archivo",sans-serif; font-size:10.5px; font-weight:600; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--hair); cursor:pointer}
+tbody td{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; color:var(--ink-2)}
+tbody tr:hover td,tbody tr:hover td:first-child{background:var(--surface-2)}
+tfoot td{font-family:"IBM Plex Mono",monospace; font-weight:600; border-top:1px solid var(--hair); border-bottom:0}
+.heat{border-radius:4px; padding:2px 6px; font-weight:600}
+.pill{display:inline-block; font-family:"Archivo",sans-serif; font-size:10px; font-weight:600; letter-spacing:.05em;
+  text-transform:uppercase; padding:2px 7px; border-radius:999px}
+.pill.f{background:color-mix(in srgb,var(--falta) 18%,transparent); color:var(--falta)}
+.pill.s{background:color-mix(in srgb,var(--acima) 18%,transparent); color:var(--acima)}
+.pill.n{background:var(--hair-2); color:var(--muted)}
+
+/* credores */
+.forn{display:flex; flex-direction:column; gap:9px; margin-top:14px}
+.forn-row{display:grid; grid-template-columns:minmax(0,1fr) 112px; gap:12px; align-items:center}
+.forn-nome{font-size:13px; color:var(--ink-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.forn-bar{height:9px; border-radius:0 4px 4px 0; background:var(--bol); min-width:2px}
+.forn-val{font-family:"IBM Plex Mono",monospace; font-size:12.5px; text-align:right}
+.forn-meta{font-size:11px; color:var(--muted)}
+
+/* insights */
+.insights{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:13px}
+.ins{border-radius:12px; padding:15px 17px; border:1px solid var(--hair); background:var(--surface)}
+.ins.falta{background:var(--falta-bg); border-color:color-mix(in srgb,var(--falta) 35%,transparent)}
+.ins.sobra{background:var(--sobra-bg); border-color:color-mix(in srgb,var(--acima) 35%,transparent)}
+.ins.ok{background:var(--ok-bg)}
+.ins h3{font-size:13px; margin-bottom:8px}
+.ins.falta h3{color:var(--falta)} .ins.sobra h3{color:var(--acima)}
+.ins ul{margin:0; padding-left:17px; font-size:13px; color:var(--ink-2)}
+.ins li{margin-bottom:6px} .ins li:last-child{margin-bottom:0} .ins li b{color:var(--ink)}
+.ins p{margin:8px 0 0; font-size:12px; color:var(--muted)}
+
+.aviso{background:var(--falta-bg); border-left:3px solid var(--falta); border-radius:0 10px 10px 0;
+  padding:13px 17px; font-size:14px; color:var(--ink-2)}
+.aviso b{color:var(--falta)}
+.notas{background:var(--surface-2); border:1px solid var(--hair); border-radius:14px; padding:18px 20px}
+.notas h2{font-size:16px}
+.notas ul{margin:9px 0 0; padding-left:18px; color:var(--ink-2); font-size:13.5px}
+.notas li{margin-bottom:6px} .notas li:last-child{margin-bottom:0}
+footer{color:var(--muted); font-size:12px; text-align:center; padding:8px 0 0}
+[hidden]{display:none !important}
+@media (max-width:720px){
+  .wrap{padding:0 12px}
+  .card{padding:16px 14px 12px}
+  .cmp-row{grid-template-columns:104px minmax(0,1fr) 84px; gap:9px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="box">
+    <div style="font-size:32px">💸</div>
+    <h1>Caixa e Compras</h1>
+    <p>Entre com o mesmo usuário e PIN do Data Crítica. Só gestores têm acesso.</p>
+    <select id="lgUser"><option value="">Carregando usuários…</option></select>
+    <input id="lgPin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN de 6 dígitos" autocomplete="off">
+    <button class="btn" id="lgBtn">Entrar</button>
+    <div class="msg" id="lgMsg"></div>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <header class="topo">
+    <div class="wrap">
+      <h1>Caixa e Compras</h1>
+      <div class="dir">
+        <span id="hdWho"></span>
+        <button id="btTema">Tema</button>
+        <button id="btSair">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="abas" role="tablist">
+      <button role="tab" data-aba="boletos" aria-selected="true">Boletos a vencer</button>
+      <button role="tab" data-aba="cxv" aria-selected="false">Compra × venda</button>
+      <button role="tab" data-aba="analista" aria-selected="false">Analista de compra</button>
+    </div>
+
+    <div class="filtro">
+      <span class="rot">Lojas</span>
+      <div class="chips" id="chipsLoja"></div>
+      <span class="selo" id="selo"></span>
+    </div>
+
+    <div id="carregando" class="card" style="text-align:center;color:var(--muted)">Carregando dados do VR…</div>
+
+    <!-- ABA 1 -->
+    <section id="ab-boletos" class="wrap" style="padding:0; gap:22px" hidden>
+      <div id="alertaPico"></div>
+      <div class="kpis" id="kpis1"></div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Calendário de vencimentos</h2>
+            <p>Próximos 45 dias. A cauda cai porque as notas do fim do período ainda não entraram — não porque não há o que pagar.</p>
+          </div>
+          <div class="seg" role="group" aria-label="Modo">
+            <button type="button" data-modo="venc" aria-pressed="false">Por vencimento</button>
+            <button type="button" data-modo="util" aria-pressed="true">Por dia de pagamento</button>
+          </div>
+        </div>
+        <div class="legend" id="leg1"></div>
+        <div class="chart-scroll"><div class="chart">
+          <div class="grid" id="grid1"></div><div class="bars" id="bars1"></div>
+          <svg class="linha" id="linha1"></svg><div class="axis" id="axis1"></div>
+        </div></div>
+        <p class="chart-foot" id="foot1"></p>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Entra × sai, por loja</h2>
+            <p>Venda prevista contra vencimentos. A previsão espelha o mesmo dia da semana de 52 semanas atrás e aplica o crescimento de cada loja nos últimos 90 dias.</p>
+          </div>
+          <div class="seg" role="group" aria-label="Horizonte">
+            <button type="button" data-hz="1" aria-pressed="false">Hoje</button>
+            <button type="button" data-hz="7" aria-pressed="true">7 dias</button>
+            <button type="button" data-hz="14" aria-pressed="false">14 dias</button>
+          </div>
+        </div>
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--ven)"></span>Venda prevista</span>
+          <span><span class="swatch" style="background:var(--bol)"></span>Vencimentos</span>
+          <span style="color:var(--muted)">O número à direita é quanto dos boletos a venda cobre</span>
+        </div>
+        <div class="cmp" id="cmp"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Por loja, dia a dia</h2>
+          <p>Próximos 14 dias pelo vencimento lançado. Fim de semana e feriado em cinza — o dinheiro sai no dia útil seguinte.</p></div></div>
+        <div class="tbl-scroll"><table id="tabDia"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Quem recebe nos próximos 30 dias</h2>
+          <p id="credNota">Os 15 maiores credores por valor a vencer.</p></div></div>
+        <div class="forn" id="forn"></div>
+      </div>
+    </section>
+
+    <!-- ABA 2 -->
+    <section id="ab-cxv" class="wrap" style="padding:0; gap:22px" hidden>
+      <div class="kpis" id="kpis2"></div>
+      <div class="card">
+        <div class="card-head"><div><h2 id="t2titulo">Reposição por seção</h2>
+          <p>Compra do mês fechado dividida pelo custo do que foi vendido. O traço escuro marca o padrão da própria seção nos três meses anteriores — é ele que diz o que é "dentro da média".</p></div></div>
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--acima)"></span>Comprou acima do que vendeu</span>
+          <span><span class="swatch" style="background:var(--abaixo)"></span>Comprou abaixo</span>
+          <span><span style="display:inline-block;width:2px;height:12px;background:var(--ink-2);margin-right:6px;vertical-align:-2px"></span>Padrão dos 3 meses anteriores</span>
+        </div>
+        <div id="dv2" style="margin-top:8px"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Onde está o desvio, loja a loja</h2>
+          <p>Reposição do mês fechado nas seções que mais fugiram do próprio padrão. Acima de 130% a célula fica âmbar; abaixo de 90%, azul.</p></div></div>
+        <div class="tbl-scroll"><table id="tabLojas"></table></div>
+      </div>
+    </section>
+
+    <!-- ABA 3 -->
+    <section id="ab-analista" class="wrap" style="padding:0; gap:22px" hidden>
+      <div class="filtro">
+        <span class="rot">Período</span>
+        <span style="font-size:12px;color:var(--muted)">clique num mês para ver só ele · Shift+clique para um intervalo</span>
+        <div class="chips" id="chipsMes"></div>
+        <span class="selo" id="seloPeriodo"></span>
+      </div>
+      <div class="kpis" id="kpis3"></div>
+      <div class="insights" id="insights"></div>
+      <div class="card">
+        <div class="card-head"><div><h2>Reposição por seção</h2>
+          <p>Quanto entrou para cada real de custo que saiu no período. Acima de 100% a prateleira engorda; abaixo, ela é que está pagando a conta.</p></div></div>
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--acima)"></span>Comprou acima do que vendeu</span>
+          <span><span class="swatch" style="background:var(--abaixo)"></span>Comprou abaixo</span>
+          <span style="color:var(--muted)">Linha vertical: 100%</span>
+        </div>
+        <div id="dv3" style="margin-top:8px"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Tabela do período</h2>
+          <p>Clique no cabeçalho para ordenar. Cobertura é o estoque de hoje dividido pelo custo vendido por dia — quantos dias a prateleira aguenta sem comprar nada.</p></div></div>
+        <div class="tbl-scroll"><table id="tabSec"></table></div>
+      </div>
+    </section>
+
+    <section class="notas">
+      <h2>Como a conta é feita</h2>
+      <ul>
+        <li><b>A pagar</b> = duplicatas em aberto no VR com vencimento de hoje em diante, incluindo impostos e outras despesas. O passado não entra: a baixa é feita em só 13% a 22% dos títulos, então o "em aberto" antigo não é dívida real.</li>
+        <li><b>Compra</b> = notas de entrada de compra e de insumos, pelo custo final com impostos. <b>Custo vendido</b> = quantidade vendida × custo médio com imposto, mesma base. <b>Reposição</b> = um dividido pelo outro, em reais — não em unidades.</li>
+        <li><b>Previsão de venda</b> = mesmo dia da semana de 52 semanas atrás × crescimento da loja nos últimos 90 dias contra o mesmo período do ano anterior. Não corrige feriado que mudou de dia da semana.</li>
+        <li><b>Padaria, Pastelaria e Restaurante</b> aparecem somados a Matéria-prima: compram numa seção e vendem em outra. A baixa de matéria-prima não é feita corretamente no VR, então o estoque e a cobertura desse grupo estão inflados — não use como excesso real.</li>
+        <li>Os credores dos próximos 30 dias são da rede inteira, sem quebra por loja.</li>
+      </ul>
+    </section>
+
+    <footer id="rodape"></footer>
+  </div>
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script>
+const SB_URL = "https://estciwkeihmokvlnvaum.supabase.co";
+const SB_KEY = "sb_publishable_l14fjxQmWUeu5OXlZJ35GA_-X3ESkgZ";
+const LOJAS = {L01:"Veneza",L02:"Máximo",L03:"Royal",L04:"Lojão",L05:"Alvorada",L08:"Tradição",L09:"Massangana"};
+const ORDEM_LOJA = ["L01","L02","L03","L04","L05","L08","L09"];
+const PROD = new Set([18,19,52,53,58]);              // produção própria + matéria-prima
+const NOME_PROD = "Padaria / Pastelaria / Restaurante";
+const FERIADOS = new Set(["2026-09-07","2026-10-12","2026-11-02","2026-11-15","2026-11-20","2026-12-25",
+                          "2027-01-01","2027-03-01","2027-03-02","2027-04-16","2027-04-21","2027-05-01"]);
+const DOW = ["seg","ter","qua","qui","sex","sáb","dom"];
+const MESN = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+
+const $ = id => document.getElementById(id);
+const brl = v => (Number(v)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const brl2 = v => (Number(v)||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = v => (Number(v)||0).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";
+const dd = v => (Number(v)||0).toLocaleString("pt-BR",{maximumFractionDigits:0})+" d";
+const curto = v => Math.abs(v)>=1e6 ? (v/1e6).toLocaleString("pt-BR",{maximumFractionDigits:2})+" mi"
+                                    : (v/1e3).toLocaleString("pt-BR",{maximumFractionDigits:0})+" mil";
+const dm = s => String(s).slice(8,10)+"/"+String(s).slice(5,7);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const hojeISO = () => new Date().toLocaleDateString("sv-SE");
+function mesRotulo(m){ const [y,mm]=String(m).split("-"); return MESN[Number(mm)-1]+"/"+String(y).slice(2); }
+function diaSemana(d){ return (new Date(d+"T12:00:00").getDay()+6)%7; }
+function naoUtil(d){ return diaSemana(d)>=5 || FERIADOS.has(d); }
+function proxUtil(d){ let x=new Date(d+"T12:00:00");
+  while([5,6].includes((x.getDay()+6)%7) || FERIADOS.has(x.toLocaleDateString("sv-SE"))) x.setDate(x.getDate()+1);
+  return x.toLocaleDateString("sv-SE"); }
+
+async function sha256(t){
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
+}
+async function sb(path){
+  const r = await fetch(SB_URL+"/rest/v1/"+path, {headers:{apikey:SB_KEY, Authorization:"Bearer "+SB_KEY}});
+  if(!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+/* o PostgREST devolve no máximo 1.000 linhas por chamada — busca em páginas até o fim */
+async function sbTudo(path, pagina = 1000){
+  const sep = path.includes("?") ? "&" : "?";
+  let fora = [], off = 0;
+  for(;;){
+    const parte = await sb(`${path}${sep}limit=${pagina}&offset=${off}`);
+    fora = fora.concat(parte);
+    if(parte.length < pagina) return fora;
+    off += pagina;
+    if(off > 100000) return fora;
+  }
+}
+
+/* ---------------- login ---------------- */
+let sess = null;
+const PODE = ["gestor"];
+async function iniciarLogin(){
+  $("login").style.display = "grid";
+  try{
+    const us = await sb("usuarios?select=id,nome,papel,pin_hash&ativo=eq.true&order=nome");
+    const el = us.filter(u => PODE.includes(u.papel));
+    window.__users = el;
+    $("lgUser").innerHTML = el.length ? el.map(u=>`<option value="${u.id}">${esc(u.nome)}</option>`).join("")
+                                     : `<option value="">Nenhum gestor cadastrado</option>`;
+  }catch(e){ $("lgMsg").textContent = "Não consegui falar com o banco."; }
+}
+async function entrar(){
+  const id = $("lgUser").value, pin = $("lgPin").value.trim();
+  if(!id || pin.length < 4){ $("lgMsg").textContent = "Informe o PIN."; return; }
+  if(!window.crypto?.subtle){ $("lgMsg").textContent = "Abra por HTTPS para validar o PIN."; return; }
+  const u = (window.__users||[]).find(x=>String(x.id)===String(id));
+  if(!u || u.pin_hash !== await sha256(pin)){ $("lgMsg").textContent = "PIN incorreto."; return; }
+  sess = {id:u.id, nome:u.nome, papel:u.papel};
+  try{ localStorage.setItem("caixaSess", JSON.stringify(sess)); }catch(e){}
+  abrirApp();
+}
+function abrirApp(){
+  $("login").style.display = "none"; $("app").hidden = false;
+  $("hdWho").textContent = sess.nome.split(" ")[0] + " · Gestor";
+  carregar();
+}
+$("lgBtn").onclick = entrar;
+$("lgPin").addEventListener("keydown", e => { if(e.key==="Enter") entrar(); });
+$("btSair").onclick = () => { try{ localStorage.removeItem("caixaSess"); }catch(e){} location.reload(); };
+$("btTema").onclick = () => {
+  const atual = document.documentElement.getAttribute("data-theme");
+  const novo = atual === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", novo);
+  try{ localStorage.setItem("caixaTema", novo); }catch(e){}
+};
+try{ const t = localStorage.getItem("caixaTema"); if(t) document.documentElement.setAttribute("data-theme", t); }catch(e){}
+
+/* ---------------- estado ---------------- */
+const D = {venc:[], prev:[], cred:[], sec:[], est:[], meta:null};
+let lojasOn = new Set(ORDEM_LOJA);
+let aba = "boletos", modo = "util", horizonte = 7;
+let mesDe = null, mesAte = null, ordem = {col:"c", dir:-1};
+
+async function carregar(){
+  try{
+    const [venc, prev, cred, sec, est, meta] = await Promise.all([
+      sbTudo("caixa_vencimentos?select=data,loja,total,boleto,titulos&order=data"),
+      sbTudo("caixa_previsao?select=data,loja,valor,fator&order=data"),
+      sbTudo("caixa_credores?select=nome,valor,titulos,proximo&order=valor.desc"),
+      sbTudo("caixa_secao_mes?select=cod,mes,loja,secao,compra,venda,cmv&order=id"),
+      sbTudo("caixa_secao_estoque?select=cod,loja,secao,valor,itens&order=id"),
+      sb("caixa_meta?select=chave,valor,detalhe&chave=eq.atualizacao")
+    ]);
+    Object.assign(D, {venc, prev, cred, sec, est, meta: meta[0]||null});
+    $("carregando").hidden = true;
+    const meses = [...new Set(D.sec.map(r=>r.mes))].sort();
+    mesAte = meses[meses.length-1]; mesDe = meses[Math.max(0, meses.length-3)];
+    montarChips(meses);
+    render();
+  }catch(e){
+    $("carregando").innerHTML = "Não consegui carregar os dados: " + esc(e.message).slice(0,200) +
+      "<br><span style='font-size:12.5px'>Se as tabelas ainda não existem, rode o SQL de criação no Supabase.</span>";
+  }
+}
+
+function montarChips(meses){
+  $("chipsLoja").innerHTML = ORDEM_LOJA.map(l =>
+      `<button class="chip" data-loja="${l}" data-on="1">${l} ${LOJAS[l]}</button>`).join("")
+    + `<button class="chip acao" data-acao="todas">Todas</button>`;
+  $("chipsLoja").onclick = e => {
+    const b = e.target.closest(".chip"); if(!b) return;
+    if(b.dataset.acao === "todas"){ lojasOn = new Set(ORDEM_LOJA); }
+    else {
+      const l = b.dataset.loja;
+      if(lojasOn.has(l)) lojasOn.delete(l); else lojasOn.add(l);
+      if(!lojasOn.size) lojasOn = new Set(ORDEM_LOJA);
+    }
+    document.querySelectorAll("#chipsLoja .chip[data-loja]").forEach(c =>
+      c.dataset.on = lojasOn.has(c.dataset.loja) ? "1" : "0");
+    render();
+  };
+  $("chipsMes").innerHTML = meses.map(m => `<button class="chip" data-mes="${m}">${mesRotulo(m)}</button>`).join("");
+  $("chipsMes").onclick = e => {
+    const b = e.target.closest(".chip"); if(!b) return;
+    const m = b.dataset.mes;
+    if(e.shiftKey){ if(m < mesDe) mesDe = m; else mesAte = m; }
+    else { mesDe = m; mesAte = m; }
+    render();
+  };
+}
+
+/* ---------------- agregações ---------------- */
+const lojaOk = l => lojasOn.has(l);
+function porDia(fonte, campo){
+  const m = new Map();
+  for(const r of fonte){ if(!lojaOk(r.loja)) continue;
+    m.set(r.data, (m.get(r.data)||0) + Number(r[campo]||0)); }
+  return m;
+}
+function dias45(){
+  const s = new Set(D.venc.map(r=>r.data)); D.prev.forEach(r=>s.add(r.data));
+  return [...s].sort().filter(d => d >= hojeISO());
+}
+function chaveSecao(cod){ return PROD.has(Number(cod)) ? "prod" : String(cod); }
+function nomeSecao(cod, secao){ return PROD.has(Number(cod)) ? NOME_PROD : secao; }
+
+function agregarSecoes(de, ate){
+  const acc = new Map();
+  for(const r of D.sec){
+    if(!lojaOk(r.loja) || r.mes < de || r.mes > ate) continue;
+    const k = chaveSecao(r.cod);
+    const o = acc.get(k) || {k, sec:nomeSecao(r.cod, r.secao), c:0, v:0, q:0, e:0};
+    o.c += Number(r.compra||0); o.v += Number(r.venda||0); o.q += Number(r.cmv||0);
+    acc.set(k, o);
+  }
+  for(const r of D.est){
+    if(!lojaOk(r.loja)) continue;
+    const k = chaveSecao(r.cod); const o = acc.get(k); if(o) o.e += Number(r.valor||0);
+  }
+  return [...acc.values()];
+}
+function diasDoPeriodo(de, ate){
+  const [y1,m1] = de.split("-").map(Number), [y2,m2] = ate.split("-").map(Number);
+  let n = 0, y = y1, m = m1;
+  const hojeMes = hojeISO().slice(0,7);
+  while(y < y2 || (y === y2 && m <= m2)){
+    const mm = `${y}-${String(m).padStart(2,"0")}`;
+    n += (mm === hojeMes) ? Number(hojeISO().slice(8,10)) - 1 : new Date(y, m, 0).getDate();
+    m++; if(m > 12){ m = 1; y++; }
+  }
+  return Math.max(1, n);
+}
+
+/* ---------------- render ---------------- */
+function render(){
+  $("selo").innerHTML = (D.meta ? "Atualizado em " +
+      new Date(D.meta.valor).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}) : "")
+    + (lojasOn.size < ORDEM_LOJA.length ? ` · ${lojasOn.size} de 7 lojas` : " · todas as lojas");
+  $("rodape").textContent = "Fonte: VR Controller — duplicatas em aberto, notas de entrada, vendas do PDV e estoque atual.";
+  document.querySelectorAll(".abas button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.aba === aba)));
+  ["boletos","cxv","analista"].forEach(a => $("ab-"+a).hidden = (a !== aba));
+  if(aba === "boletos") renderBoletos();
+  if(aba === "cxv") renderCxV();
+  if(aba === "analista") renderAnalista();
+}
+document.querySelector(".abas").onclick = e => {
+  const b = e.target.closest("button[data-aba]"); if(!b) return;
+  aba = b.dataset.aba; render();
+};
+
+/* ===== aba 1 ===== */
+function serie1(){
+  const dias = dias45();
+  const tot = porDia(D.venc, "total"), bol = porDia(D.venc, "boleto"),
+        tit = porDia(D.venc, "titulos"), pv = porDia(D.prev, "valor");
+  const linhas = dias.map(d => ({d, tot: tot.get(d)||0, bol: bol.get(d)||0,
+      out: (tot.get(d)||0) - (bol.get(d)||0), n: tit.get(d)||0, prev: pv.get(d)||0, nu: naoUtil(d)}));
+  const ef = new Map();
+  linhas.forEach(x => ef.set(proxUtil(x.d), (ef.get(proxUtil(x.d))||0) + x.tot));
+  linhas.forEach(x => x.ef = ef.get(x.d) || 0);
+  return linhas;
+}
+function renderBoletos(){
+  const s = serie1();
+  if(!s.length){ $("kpis1").innerHTML = "<div class='card'>Sem vencimentos carregados.</div>"; return; }
+  const hoje = s[0];
+  const soma = (n, campo) => s.slice(0, n).reduce((a,x) => a + x[campo], 0);
+  const fimSemana = s.findIndex(x => diaSemana(x.d) === 6);
+  const ateDomingo = s.slice(0, (fimSemana < 0 ? 7 : fimSemana + 1));
+  const pico = s.slice().sort((a,b) => b.ef - a.ef)[0];
+  $("alertaPico").innerHTML = pico && pico.ef > soma(30,"tot")/30*2.2
+    ? `<div class="aviso"><b>${DOW[diaSemana(pico.d)]}, ${dm(pico.d)} concentra ${brl(pico.ef)}.</b>
+       É o maior dia de saída dos próximos 45 — soma o que vence no fim de semana e no feriado anterior.</div>` : "";
+  $("kpis1").innerHTML = [
+    {t:"Vence hoje", v:brl(hoje.tot), s:`<b>${brl(hoje.bol)}</b> em boleto · ${hoje.n} títulos`, d:true},
+    {t:"Até domingo", v:brl(ateDomingo.reduce((a,x)=>a+x.tot,0)), s:`<b>${brl(ateDomingo.reduce((a,x)=>a+x.bol,0))}</b> em boleto`},
+    {t:"Próximos 7 dias", v:brl(soma(7,"tot")), s:`média <b>${brl(soma(7,"tot")/7)}</b> por dia`},
+    {t:"Próximos 30 dias", v:brl(soma(30,"tot")), s:`<b>${brl(soma(30,"bol"))}</b> em boleto · ainda vai crescer`},
+    {t:"Venda prevista hoje", v:brl(hoje.prev), s:hoje.prev ? `os boletos de hoje comem <b>${(hoje.tot/hoje.prev*100).toFixed(0)}%</b> disso` : "sem espelho do ano passado"}
+  ].map(x=>`<div class="kpi${x.d?" destaque":""}"><span class="eyebrow">${x.t}</span><span class="val">${x.v}</span><span class="sub">${x.s}</span></div>`).join("");
+
+  const max = Math.max(...s.map(x => modo==="venc" ? x.tot : x.ef), ...s.map(x=>x.prev)) * 1.06 || 1;
+  const passo = max > 1.2e6 ? 400000 : max > 600000 ? 200000 : 100000;
+  let g = "";
+  for(let v = 0; v <= max; v += passo){ const b = v/max*100;
+    g += `<div style="bottom:${b}%"></div><span style="bottom:${b}%">${v ? curto(v) : "0"}</span>`; }
+  $("grid1").innerHTML = g;
+  $("bars1").innerHTML = s.map((x,i) => {
+    const val = modo==="venc" ? x.tot : x.ef, h = val/max*100;
+    let inner;
+    if(modo === "venc"){
+      const hb = x.bol/max*100, ho = x.out/max*100;
+      inner = `<div class="stack" style="height:${h}%">
+        ${ho>0?`<div class="sout" style="height:${ho/h*100}%"></div>`:""}
+        ${hb>0?`<div class="sbol" style="height:${hb/h*100}%;${ho>0?"":"border-radius:4px 4px 0 0"}"></div>`:""}</div>`;
+    } else inner = `<div class="stack" style="height:${h}%"><div class="sbol" style="height:100%;border-radius:4px 4px 0 0"></div></div>`;
+    return `<div class="col ${val<=0?"zero":""} ${x.nu&&modo==="venc"?"nu":""} ${i===0?"hoje":""}" data-i="${i}">${inner}</div>`;
+  }).join("");
+  const pts = s.map((x,i) => [((i+0.5)/s.length*100), 100 - x.prev/max*100]);
+  const svg = $("linha1");
+  svg.setAttribute("viewBox","0 0 100 100"); svg.setAttribute("preserveAspectRatio","none");
+  svg.innerHTML = `<polyline points="${pts.map(p=>p[0].toFixed(2)+","+p[1].toFixed(2)).join(" ")}" fill="none"
+      stroke="var(--ven)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"></polyline>`;
+  $("axis1").innerHTML = s.map((x,i) => {
+    const virada = x.d.slice(8,10) === "01", marca = virada || i === 0 || diaSemana(x.d) === 0;
+    return `<div class="${virada?"mes":marca?"mark":""}">${virada ? dm(x.d) : marca ? x.d.slice(8,10) : ""}</div>`;
+  }).join("");
+  $("leg1").innerHTML = (modo === "venc"
+    ? `<span><span class="swatch" style="background:var(--bol)"></span>Boleto bancário</span>
+       <span><span class="swatch" style="background:var(--out)"></span>Outras formas</span>
+       <span style="color:var(--muted)">Barras claras: sábado, domingo ou feriado</span>`
+    : `<span><span class="swatch" style="background:var(--bol)"></span>Saída no dia útil</span>
+       <span style="color:var(--muted)">Fim de semana e feriado somados ao dia útil seguinte</span>`)
+    + `<span><span class="linha-demo"></span>Venda prevista do dia</span>`;
+  const top3 = s.slice().sort((a,b)=>b.ef-a.ef).slice(0,3);
+  $("foot1").textContent = modo === "venc" ? "Eixo: dia 1 de cada mês e as segundas-feiras."
+    : "Maiores dias de saída: " + top3.map(x=>dm(x.d)+" ("+brl(x.ef)+")").join(" · ") + ".";
+  $("bars1").onmousemove = e => {
+    const col = e.target.closest(".col"); const tip = $("tip");
+    if(!col){ tip.style.opacity = 0; return; }
+    const x = s[+col.dataset.i];
+    tip.innerHTML = `<div class="t">${DOW[diaSemana(x.d)]}, ${dm(x.d)}${x.nu?" · não útil":""}</div>` +
+      (modo === "venc"
+        ? `<div class="r"><span>Total</span><b>${brl(x.tot)}</b></div>
+           <div class="r"><span>Boleto</span><b>${brl(x.bol)}</b></div>
+           <div class="r"><span>Outras</span><b>${brl(x.out)}</b></div>
+           <div class="r"><span>Títulos</span><b>${x.n}</b></div>`
+        : `<div class="r"><span>Sai do caixa</span><b>${brl(x.ef)}</b></div>`) +
+      `<div class="r"><span>Venda prevista</span><b>${brl(x.prev)}</b></div>`;
+    tip.style.opacity = 1;
+    tip.style.left = Math.min(innerWidth - tip.offsetWidth - 12, Math.max(8, e.clientX - tip.offsetWidth/2)) + "px";
+    tip.style.top = Math.max(8, e.clientY - tip.offsetHeight - 14) + "px";
+  };
+  $("bars1").onmouseleave = () => $("tip").style.opacity = 0;
+
+  /* entra x sai */
+  const dias = s.slice(0, horizonte).map(x => x.d);
+  const linhas = [...lojasOn].sort((a,b)=>ORDEM_LOJA.indexOf(a)-ORDEM_LOJA.indexOf(b)).map(l => {
+    const venda = D.prev.filter(r => r.loja===l && dias.includes(r.data)).reduce((a,r)=>a+Number(r.valor||0),0);
+    const pagar = D.venc.filter(r => r.loja===l && dias.includes(r.data)).reduce((a,r)=>a+Number(r.total||0),0);
+    return {l, venda, pagar, pct: venda ? pagar/venda*100 : 0};
+  }).sort((a,b)=>b.pagar-a.pagar);
+  const maxC = Math.max(...linhas.map(r=>Math.max(r.venda,r.pagar)), 1);
+  const rede = linhas.reduce((a,r)=>({venda:a.venda+r.venda, pagar:a.pagar+r.pagar}), {venda:0,pagar:0});
+  $("cmp").innerHTML = linhas.map(r => `
+    <div class="cmp-row">
+      <span class="cmp-nome">${r.l} ${LOJAS[r.l]}</span>
+      <div class="cmp-bars">
+        <div class="cmp-bar v" style="width:${r.venda/maxC*100}%"></div>
+        <div class="cmp-bar p" style="width:${r.pagar/maxC*100}%"></div>
+      </div>
+      <span class="cmp-val ${r.pct>=85?"alto":""}"><b>${r.pct.toFixed(0)}%</b><br>${brl(r.pagar)}</span>
+    </div>`).join("") + `
+    <div class="cmp-row" style="border-top:1px solid var(--hair); padding-top:9px">
+      <span class="cmp-nome" style="font-weight:600;color:var(--ink)">Selecionado</span>
+      <span class="cmp-val" style="text-align:left">venda prevista <b>${brl(rede.venda)}</b> · vence <b>${brl(rede.pagar)}</b></span>
+      <span class="cmp-val ${rede.venda&&rede.pagar/rede.venda*100>=85?"alto":""}"><b>${rede.venda?(rede.pagar/rede.venda*100).toFixed(0):"—"}%</b></span>
+    </div>`;
+
+  /* tabela dia x loja */
+  const ids = ORDEM_LOJA.filter(l => lojasOn.has(l));
+  const l14 = s.slice(0,14);
+  let h = "<thead><tr><th>Dia</th>" + ids.map(l=>`<th>${l} ${LOJAS[l]}</th>`).join("") +
+          "<th>Vence</th><th>Venda prev.</th></tr></thead><tbody>";
+  for(const x of l14){
+    h += `<tr><td>${DOW[diaSemana(x.d)]} ${dm(x.d)}${x.nu?" ·":""}</td>` + ids.map(l => {
+      const c = D.venc.find(r => r.data===x.d && r.loja===l);
+      return `<td>${c ? brl2(c.total) : "—"}</td>`;
+    }).join("") + `<td>${brl2(x.tot)}</td><td style="color:var(--ven)">${brl2(x.prev)}</td></tr>`;
+  }
+  h += "</tbody><tfoot><tr><td>14 dias</td>" + ids.map(l => {
+    const v = D.venc.filter(r => r.loja===l && l14.some(x=>x.d===r.data)).reduce((a,r)=>a+Number(r.total||0),0);
+    return `<td>${brl2(v)}</td>`; }).join("") +
+    `<td>${brl2(l14.reduce((a,x)=>a+x.tot,0))}</td><td>${brl2(l14.reduce((a,x)=>a+x.prev,0))}</td></tr></tfoot>`;
+  $("tabDia").innerHTML = h;
+
+  /* credores */
+  const cred = D.cred.slice(0,15);
+  $("credNota").textContent = "Os 15 maiores credores por valor a vencer — rede inteira, o filtro de lojas não se aplica aqui.";
+  const maxF = Math.max(...cred.map(f=>Number(f.valor||0)), 1);
+  $("forn").innerHTML = cred.map(f => `
+    <div class="forn-row">
+      <div><div class="forn-nome">${esc(f.nome)}</div>
+        <div class="forn-bar" style="width:${Math.max(2, f.valor/maxF*100)}%"></div></div>
+      <div><div class="forn-val">${brl(f.valor)}</div>
+        <div class="forn-meta">${f.titulos} títulos · 1º ${dm(f.proximo)}</div></div>
+    </div>`).join("");
+}
+document.querySelectorAll("[data-modo]").forEach(b => b.onclick = () => {
+  modo = b.dataset.modo;
+  document.querySelectorAll("[data-modo]").forEach(o => o.setAttribute("aria-pressed", String(o===b)));
+  renderBoletos();
+});
+document.querySelectorAll("[data-hz]").forEach(b => b.onclick = () => {
+  horizonte = +b.dataset.hz;
+  document.querySelectorAll("[data-hz]").forEach(o => o.setAttribute("aria-pressed", String(o===b)));
+  renderBoletos();
+});
+
+/* ===== barras divergentes ===== */
+function barrasDivergentes(el, linhas, comBase){
+  const MIN = 40, MAX = 220, x = p => (Math.min(MAX,Math.max(MIN,p)) - MIN)/(MAX-MIN)*100, x100 = x(100);
+  el.innerHTML = linhas.map(r => {
+    const p = x(r.rep), acima = r.rep >= 100, l = acima ? x100 : p, w = Math.max(1.2, Math.abs(p - x100));
+    return `<div style="display:grid;grid-template-columns:186px minmax(0,1fr) 90px;gap:12px;align-items:center;padding:2px 0">
+      <span style="font-size:12.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.sec)}</span>
+      <div style="position:relative;height:18px">
+        <div style="position:absolute;top:-2px;bottom:-2px;left:${x100}%;width:1px;background:var(--hair)"></div>
+        <div style="position:absolute;top:4px;height:11px;left:${l}%;width:${w}%;background:var(--${acima?"acima":"abaixo"});border-radius:${acima?"0 4px 4px 0":"4px 0 0 4px"}"></div>
+        ${comBase && r.base ? `<div style="position:absolute;top:1px;height:17px;width:2px;left:${x(r.base)}%;background:var(--ink-2);opacity:.75"></div>` : ""}
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:right;color:var(--ink)">${pct(r.rep)}</span>
+    </div>`;
+  }).join("");
+}
+
+/* ===== aba 2 ===== */
+function renderCxV(){
+  const meses = [...new Set(D.sec.map(r=>r.mes))].sort();
+  const hojeMes = hojeISO().slice(0,7);
+  const fechados = meses.filter(m => m < hojeMes);
+  if(fechados.length < 2){ $("kpis2").innerHTML = "<div class='card'>Ainda não há mês fechado suficiente.</div>"; return; }
+  const mes = fechados[fechados.length-1];
+  const baseDe = fechados[Math.max(0, fechados.length-4)], baseAte = fechados[fechados.length-2];
+  $("t2titulo").textContent = "Reposição por seção — " + mesRotulo(mes);
+  const atual = agregarSecoes(mes, mes), base = agregarSecoes(baseDe, baseAte);
+  const bmap = new Map(base.map(r => [r.k, r]));
+  const linhas = atual.filter(r => r.v > 60000).map(r => {
+    const b = bmap.get(r.k) || {c:0,q:0,v:0};
+    return {...r, rep: r.q ? r.c/r.q*100 : 0, base: b.q ? b.c/b.q*100 : 0,
+            cv: r.v ? r.c/r.v*100 : 0, exc: r.c - r.q};
+  });
+  const T = linhas.reduce((a,r)=>({c:a.c+r.c, v:a.v+r.v, q:a.q+r.q}), {c:0,v:0,q:0});
+  const Tb = base.reduce((a,r)=>({c:a.c+r.c, v:a.v+r.v, q:a.q+r.q}), {c:0,v:0,q:0});
+  const nb = Math.max(1, fechados.length-1 - Math.max(0, fechados.length-4));
+  $("kpis2").innerHTML = [
+    {t:"Compra de "+mesRotulo(mes), v:brl(T.c), s:`média anterior <b>${brl(Tb.c/nb)}</b>`},
+    {t:"Venda", v:brl(T.v), s:`média anterior <b>${brl(Tb.v/nb)}</b>`},
+    {t:"Compra / venda", v:pct(T.v?T.c/T.v*100:0), s:"meta abaixo de 85%"},
+    {t:"Reposição", v:pct(T.q?T.c/T.q*100:0), s:`padrão <b>${pct(Tb.q?Tb.c/Tb.q*100:0)}</b>`},
+    {t:"Estoque no mês", v:(T.c-T.q>=0?"+":"−")+brl(Math.abs(T.c-T.q)), s:`no padrão seriam <b>${(Tb.c-Tb.q>=0?"+":"−")+brl(Math.abs((Tb.c-Tb.q)/nb))}</b>`}
+  ].map(x=>`<div class="kpi"><span class="eyebrow">${x.t}</span><span class="val">${x.v}</span><span class="sub">${x.s}</span></div>`).join("");
+  barrasDivergentes($("dv2"), linhas.slice().sort((a,b)=>b.rep-a.rep), true);
+
+  const desvio = linhas.slice().sort((a,b)=>(b.rep-b.base)-(a.rep-a.base)).slice(0,4);
+  const ids = ORDEM_LOJA.filter(l => lojasOn.has(l));
+  let h = "<thead><tr><th>Seção</th>" + ids.map(l=>`<th>${l} ${LOJAS[l]}</th>`).join("") + "<th>Selecionado</th></tr></thead><tbody>";
+  for(const d of desvio){
+    h += `<tr><td>${esc(d.sec)}</td>` + ids.map(l => {
+      const rs = D.sec.filter(r => r.mes===mes && r.loja===l && chaveSecao(r.cod)===d.k);
+      const c = rs.reduce((a,r)=>a+Number(r.compra||0),0), q = rs.reduce((a,r)=>a+Number(r.cmv||0),0);
+      if(!q) return "<td>—</td>";
+      const rep = c/q*100, cls = rep>=130 ? "color:var(--acima);font-weight:600" : rep<90 ? "color:var(--abaixo);font-weight:600" : "";
+      return `<td style="${cls}">${pct(rep)}</td>`;
+    }).join("") + `<td style="font-weight:600">${pct(d.rep)}</td></tr>`;
+  }
+  $("tabLojas").innerHTML = h + "</tbody>";
+}
+
+/* ===== aba 3 ===== */
+function renderAnalista(){
+  const meses = [...new Set(D.sec.map(r=>r.mes))].sort();
+  document.querySelectorAll("#chipsMes .chip").forEach(c =>
+    c.dataset.on = (c.dataset.mes >= mesDe && c.dataset.mes <= mesAte) ? "1" : "0");
+  const nd = diasDoPeriodo(mesDe, mesAte);
+  $("seloPeriodo").textContent = (mesDe === mesAte ? mesRotulo(mesDe) : mesRotulo(mesDe)+" a "+mesRotulo(mesAte)) +
+    " · " + nd + " dias" + (mesAte === hojeISO().slice(0,7) ? " (mês corrente parcial)" : "");
+  const linhas = agregarSecoes(mesDe, mesAte).filter(r => r.v > 40000).map(r => {
+    const dia = r.q/nd;
+    return {...r, rep: r.q ? r.c/r.q*100 : 0, cv: r.v ? r.c/r.v*100 : 0,
+            mg: r.v ? (1-r.q/r.v)*100 : 0, cob: dia ? r.e/dia : 0, dia,
+            parado: Math.max(0, r.e - dia*45)};
+  });
+  const T = linhas.reduce((a,r)=>({c:a.c+r.c, v:a.v+r.v, q:a.q+r.q, e:a.e+r.e}), {c:0,v:0,q:0,e:0});
+  $("kpis3").innerHTML = [
+    {t:"Compra", v:brl(T.c), s:`${brl(T.c/nd)} por dia`},
+    {t:"Venda", v:brl(T.v), s:`${brl(T.v/nd)} por dia`},
+    {t:"Compra / venda", v:pct(T.v?T.c/T.v*100:0), s:"meta abaixo de 85%"},
+    {t:"Reposição", v:pct(T.q?T.c/T.q*100:0), s:`estoque ${T.c>=T.q?"cresceu":"caiu"} ${brl(Math.abs(T.c-T.q))}`},
+    {t:"Estoque hoje", v:brl(T.e), s:`cobre ${Math.round(T.q?T.e/(T.q/nd):0)} dias de venda`}
+  ].map(x=>`<div class="kpi"><span class="eyebrow">${x.t}</span><span class="val">${x.v}</span><span class="sub">${x.s}</span></div>`).join("");
+
+  const rel = linhas.filter(r => r.v > 100000);
+  const folga = rel.slice().sort((a,b)=>a.cob-b.cob).slice(0,4);
+  const sobra = rel.filter(r => r.parado > 0 && r.k !== "prod").sort((a,b)=>b.parado-a.parado).slice(0,4);
+  const puxou = rel.slice().sort((a,b)=>(b.rep-100)*b.q - (a.rep-100)*a.q)[0];
+  const margem = rel.slice().sort((a,b)=>a.mg-b.mg)[0];
+  $("insights").innerHTML = `
+    <div class="ins falta"><h3>Menor folga de estoque</h3>
+      <ul>${folga.length?folga.map(r=>`<li><b>${esc(r.sec)}</b> — cobre <b>${dd(r.cob)}</b> (${brl(r.dia)}/dia sai da prateleira), reposição de ${pct(r.rep)}${r.rep<100?" — <b>está tirando do estoque</b>":""}</li>`).join(""):"<li>Sem seção com venda relevante no período.</li>"}</ul>
+      <p>São as seções com menos folga: qualquer parada de compra aparece nelas primeiro.</p></div>
+    <div class="ins sobra"><h3>Estoque sobrando</h3>
+      <ul>${(sobra.length?sobra:[]).map(r=>`<li><b>${esc(r.sec)}</b> — <b>${brl(r.parado)}</b> acima de 45 dias de venda, cobertura de ${dd(r.cob)}${r.rep>110?", e ainda comprando "+pct(r.rep):""}</li>`).join("") || "<li>Nenhuma seção com estoque acima de 45 dias de venda no período selecionado.</li>"}</ul>
+      <p>Padaria e matéria-prima ficam fora desta lista: a baixa de matéria-prima não é feita no VR e infla o estoque.</p></div>
+    <div class="ins ok"><h3>Para perguntar ao comprador</h3>
+      <ul>
+        ${puxou?`<li><b>${esc(puxou.sec)}</b> foi quem mais puxou estoque em reais: reposição de ${pct(puxou.rep)} sobre ${brl(puxou.q)} de custo vendido.</li>`:""}
+        ${margem?`<li>Margem mais apertada: <b>${esc(margem.sec)}</b>, com ${pct(margem.mg)} — compra/venda de ${pct(margem.cv)}.</li>`:""}
+        <li>O conjunto selecionado fechou com reposição de <b>${pct(T.q?T.c/T.q*100:0)}</b>; acima de 105% o caixa financia prateleira.</li>
+      </ul></div>`;
+  barrasDivergentes($("dv3"), linhas.slice().sort((a,b)=>b.rep-a.rep), false);
+
+  const cols = [["sec","Seção"],["c","Compra"],["v","Venda"],["q","Custo vendido"],["mg","Margem"],
+                ["cv","Compra/venda"],["rep","Reposição"],["e","Estoque hoje"],["cob","Cobertura"],["st","Leitura"]];
+  const dados = linhas.slice().sort((a,b) => ordem.col === "sec"
+    ? a.sec.localeCompare(b.sec)*ordem.dir : (a[ordem.col]-b[ordem.col])*ordem.dir);
+  const corRep = v => v>=130 ? "background:color-mix(in srgb,var(--acima) 22%,transparent);color:var(--acima)"
+                   : v>=110 ? "background:color-mix(in srgb,var(--acima) 11%,transparent);color:var(--ink-2)"
+                   : v<85 ? "background:color-mix(in srgb,var(--abaixo) 16%,transparent);color:var(--abaixo)" : "";
+  const corCob = v => v<=12 ? "background:color-mix(in srgb,var(--falta) 16%,transparent);color:var(--falta)"
+                   : v>=90 ? "background:color-mix(in srgb,var(--acima) 20%,transparent);color:var(--acima)"
+                   : v>=60 ? "background:color-mix(in srgb,var(--acima) 10%,transparent);color:var(--ink-2)" : "";
+  let h = "<thead><tr>" + cols.map(([k,t])=>`<th data-k="${k}">${t}</th>`).join("") + "</tr></thead><tbody>";
+  for(const r of dados){
+    const st = r.parado>0 && r.rep>105 ? '<span class="pill s">estoque sobrando</span>'
+             : r.rep<95 && r.cob<15 ? '<span class="pill f">precisa comprar</span>'
+             : r.rep>115 ? '<span class="pill s">comprando acima</span>'
+             : r.rep<85 ? '<span class="pill f">comprando abaixo</span>'
+             : '<span class="pill n">no ritmo</span>';
+    h += `<tr><td>${esc(r.sec)}</td><td>${brl(r.c)}</td><td>${brl(r.v)}</td><td>${brl(r.q)}</td>
+      <td>${pct(r.mg)}</td><td>${pct(r.cv)}</td>
+      <td><span class="heat" style="${corRep(r.rep)}">${pct(r.rep)}</span></td>
+      <td>${brl(r.e)}</td><td><span class="heat" style="${corCob(r.cob)}">${dd(r.cob)}</span></td>
+      <td style="text-align:left">${st}</td></tr>`;
+  }
+  $("tabSec").innerHTML = h + "</tbody>";
+  $("tabSec").querySelectorAll("th").forEach(th => th.onclick = () => {
+    const k = th.dataset.k;
+    ordem = {col:k, dir: ordem.col === k ? -ordem.dir : -1};
+    renderAnalista();
+  });
+}
+
+/* ---------------- início ---------------- */
+(function(){
+  let s = null;
+  try{ s = JSON.parse(localStorage.getItem("caixaSess")||"null"); }catch(e){}
+  if(s && PODE.includes(s.papel)){ sess = s; abrirApp(); } else iniciarLogin();
+})();
+</script>
+</body>
+</html>
