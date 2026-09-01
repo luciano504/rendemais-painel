@@ -348,6 +348,7 @@ footer{color:var(--muted); font-size:12px; text-align:center; padding:8px 0 0}
         <li><b>Compra</b> = notas de entrada de compra e de insumos, pelo custo final com impostos. <b>Custo vendido</b> = quantidade vendida × custo médio com imposto, mesma base. <b>Reposição</b> = um dividido pelo outro, em reais — não em unidades.</li>
         <li><b>Previsão de venda</b> = mesmo dia da semana de 52 semanas atrás × crescimento da loja nos últimos 90 dias contra o mesmo período do ano anterior. Não corrige feriado que mudou de dia da semana.</li>
         <li><b>Padaria, Pastelaria e Restaurante</b> aparecem somados a Matéria-prima: compram numa seção e vendem em outra. A baixa de matéria-prima não é feita corretamente no VR, então o estoque e a cobertura desse grupo estão inflados — não use como excesso real.</li>
+        <li><b>Remanejamento entre lojas não conta como compra.</b> Quando uma loja compra para o grupo e emite nota para as outras — o caso do óleo que entra no Tradição —, a nota que chega na loja destino tem uma loja nossa como fornecedor. Essas entradas ficam de fora da compra e aparecem à parte como transferência, senão o grupo pareceria ter comprado duas vezes.</li>
         <li>Os credores dos próximos 30 dias são da rede inteira, sem quebra por loja.</li>
       </ul>
     </section>
@@ -459,7 +460,7 @@ async function carregar(){
       sbTudo("caixa_vencimentos?select=data,loja,total,boleto,titulos&order=data"),
       sbTudo("caixa_previsao?select=data,loja,valor,fator&order=data"),
       sbTudo("caixa_credores?select=nome,valor,titulos,proximo&order=valor.desc"),
-      sbTudo("caixa_secao_mes?select=cod,mes,loja,secao,compra,venda,cmv&order=id"),
+      sbTudo("caixa_secao_mes?select=cod,mes,loja,secao,compra,interna,venda,cmv&order=id"),
       sbTudo("caixa_secao_estoque?select=cod,loja,secao,valor,itens&order=id"),
       sb("caixa_meta?select=chave,valor,detalhe&chave=eq.atualizacao")
     ]);
@@ -521,8 +522,9 @@ function agregarSecoes(de, ate){
   for(const r of D.sec){
     if(!lojaOk(r.loja) || r.mes < de || r.mes > ate) continue;
     const k = chaveSecao(r.cod);
-    const o = acc.get(k) || {k, sec:nomeSecao(r.cod, r.secao), c:0, v:0, q:0, e:0};
-    o.c += Number(r.compra||0); o.v += Number(r.venda||0); o.q += Number(r.cmv||0);
+    const o = acc.get(k) || {k, sec:nomeSecao(r.cod, r.secao), c:0, i:0, v:0, q:0, e:0};
+    o.c += Number(r.compra||0); o.i += Number(r.interna||0);
+    o.v += Number(r.venda||0); o.q += Number(r.cmv||0);
     acc.set(k, o);
   }
   for(const r of D.est){
@@ -783,9 +785,9 @@ function renderAnalista(){
             mg: r.v ? (1-r.q/r.v)*100 : 0, cob: dia ? r.e/dia : 0, dia,
             parado: Math.max(0, r.e - dia*45)};
   });
-  const T = linhas.reduce((a,r)=>({c:a.c+r.c, v:a.v+r.v, q:a.q+r.q, e:a.e+r.e}), {c:0,v:0,q:0,e:0});
+  const T = linhas.reduce((a,r)=>({c:a.c+r.c, i:a.i+r.i, v:a.v+r.v, q:a.q+r.q, e:a.e+r.e}), {c:0,i:0,v:0,q:0,e:0});
   $("kpis3").innerHTML = [
-    {t:"Compra", v:brl(T.c), s:`${brl(T.c/nd)} por dia`},
+    {t:"Compra", v:brl(T.c), s:`${brl(T.c/nd)} por dia` + (T.i ? ` · fora ${brl(T.i)} de transferência entre lojas` : "")},
     {t:"Venda", v:brl(T.v), s:`${brl(T.v/nd)} por dia`},
     {t:"Compra / venda", v:pct(T.v?T.c/T.v*100:0), s:"meta abaixo de 85%"},
     {t:"Reposição", v:pct(T.q?T.c/T.q*100:0), s:`estoque ${T.c>=T.q?"cresceu":"caiu"} ${brl(Math.abs(T.c-T.q))}`},
