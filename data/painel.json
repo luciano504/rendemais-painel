@@ -81,8 +81,8 @@
    {
     "loja": "L05",
     "coletado": 173,
-    "esperado": 381,
-    "pct": 0.4541
+    "esperado": 387,
+    "pct": 0.447
    },
    {
     "loja": "L08",
@@ -93,8 +93,8 @@
    {
     "loja": "L09",
     "coletado": 113,
-    "esperado": 405,
-    "pct": 0.279
+    "esperado": 414,
+    "pct": 0.2729
    }
   ],
   "anterior": {
