@@ -1,31 +1,31 @@
 {
- "gerado_em": "2026-09-03T15:17-03:00",
+ "gerado_em": "2026-09-03T18:32-03:00",
  "galeto": {
   "periodo": "01/09 a 03/09",
-  "atualizado_em": "2026-09-03T15:17-03:00",
+  "atualizado_em": "2026-09-03T18:32-03:00",
   "lojas": [
    {
     "loja": "L01",
     "inteiros": 62,
-    "meios": 52,
-    "galetos": 88.0,
-    "pontos": 176,
+    "meios": 53,
+    "galetos": 88.5,
+    "pontos": 177,
     "meta": 3521
    },
    {
     "loja": "L03",
-    "inteiros": 42,
-    "meios": 28,
-    "galetos": 56.0,
-    "pontos": 112,
+    "inteiros": 44,
+    "meios": 32,
+    "galetos": 60.0,
+    "pontos": 120,
     "meta": 1439
    },
    {
     "loja": "L02",
-    "inteiros": 10,
+    "inteiros": 11,
     "meios": 1,
-    "galetos": 10.5,
-    "pontos": 21,
+    "galetos": 11.5,
+    "pontos": 23,
     "meta": 441
    },
    {
@@ -58,43 +58,43 @@
   "semana": "semana de 31/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-09-03T15:17-03:00",
+  "atualizado_em": "2026-09-03T18:32-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 908,
-    "esperado": 1427,
-    "pct": 0.6363
+    "coletado": 1071,
+    "esperado": 1564,
+    "pct": 0.6848
    },
    {
     "loja": "L02",
-    "coletado": 666,
-    "esperado": 816,
-    "pct": 0.8162
+    "coletado": 667,
+    "esperado": 818,
+    "pct": 0.8154
    },
    {
     "loja": "L03",
-    "coletado": 658,
-    "esperado": 877,
-    "pct": 0.7503
+    "coletado": 678,
+    "esperado": 878,
+    "pct": 0.7722
    },
    {
     "loja": "L05",
-    "coletado": 612,
-    "esperado": 978,
-    "pct": 0.6258
+    "coletado": 700,
+    "esperado": 982,
+    "pct": 0.7128
    },
    {
     "loja": "L08",
-    "coletado": 730,
-    "esperado": 1140,
-    "pct": 0.6404
+    "coletado": 805,
+    "esperado": 1166,
+    "pct": 0.6904
    },
    {
     "loja": "L09",
-    "coletado": 623,
-    "esperado": 1101,
-    "pct": 0.5658
+    "coletado": 768,
+    "esperado": 1144,
+    "pct": 0.6713
    }
   ],
   "anterior": {
