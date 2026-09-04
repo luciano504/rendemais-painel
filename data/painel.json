@@ -1,31 +1,31 @@
 {
- "gerado_em": "2026-09-04T11:35-03:00",
+ "gerado_em": "2026-09-04T11:42-03:00",
  "galeto": {
   "periodo": "01/09 a 04/09",
-  "atualizado_em": "2026-09-04T11:35-03:00",
+  "atualizado_em": "2026-09-04T11:42-03:00",
   "lojas": [
    {
     "loja": "L01",
     "inteiros": 69,
-    "meios": 63,
-    "galetos": 100.5,
-    "pontos": 201,
+    "meios": 66,
+    "galetos": 102.0,
+    "pontos": 204,
     "meta": 3521
    },
    {
     "loja": "L03",
-    "inteiros": 54,
-    "meios": 44,
-    "galetos": 76.0,
-    "pontos": 152,
+    "inteiros": 55,
+    "meios": 47,
+    "galetos": 78.5,
+    "pontos": 157,
     "meta": 1439
    },
    {
     "loja": "L08",
-    "inteiros": 13,
+    "inteiros": 14,
     "meios": 4,
-    "galetos": 15.0,
-    "pontos": 30,
+    "galetos": 16.0,
+    "pontos": 32,
     "meta": 823
    },
    {
@@ -38,10 +38,10 @@
    },
    {
     "loja": "L05",
-    "inteiros": 11,
+    "inteiros": 12,
     "meios": 3,
-    "galetos": 12.5,
-    "pontos": 25,
+    "galetos": 13.5,
+    "pontos": 27,
     "meta": 1533
    },
    {
@@ -58,25 +58,25 @@
   "semana": "semana de 31/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-09-04T11:35-03:00",
+  "atualizado_em": "2026-09-04T11:42-03:00",
   "lojas": [
    {
     "loja": "L01",
     "coletado": 1112,
-    "esperado": 1774,
-    "pct": 0.6268
+    "esperado": 1775,
+    "pct": 0.6265
    },
    {
     "loja": "L02",
-    "coletado": 720,
-    "esperado": 983,
-    "pct": 0.7325
+    "coletado": 733,
+    "esperado": 984,
+    "pct": 0.7449
    },
    {
     "loja": "L03",
     "coletado": 761,
-    "esperado": 1147,
-    "pct": 0.6635
+    "esperado": 1150,
+    "pct": 0.6617
    },
    {
     "loja": "L05",
@@ -86,15 +86,15 @@
    },
    {
     "loja": "L08",
-    "coletado": 918,
-    "esperado": 1386,
-    "pct": 0.6623
+    "coletado": 919,
+    "esperado": 1397,
+    "pct": 0.6578
    },
    {
     "loja": "L09",
     "coletado": 785,
-    "esperado": 1395,
-    "pct": 0.5627
+    "esperado": 1396,
+    "pct": 0.5623
    }
   ],
   "anterior": {
