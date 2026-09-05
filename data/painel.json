@@ -1,55 +1,55 @@
 {
- "gerado_em": "2026-09-05T14:04-03:00",
+ "gerado_em": "2026-09-05T17:54-03:00",
  "galeto": {
   "periodo": "01/09 a 05/09",
-  "atualizado_em": "2026-09-05T14:04-03:00",
+  "atualizado_em": "2026-09-05T17:54-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 141,
-    "meios": 116,
-    "galetos": 199.0,
-    "pontos": 398,
+    "inteiros": 152,
+    "meios": 121,
+    "galetos": 212.5,
+    "pontos": 425,
     "meta": 3521
    },
    {
     "loja": "L03",
-    "inteiros": 116,
-    "meios": 93,
-    "galetos": 162.5,
-    "pontos": 325,
+    "inteiros": 118,
+    "meios": 95,
+    "galetos": 165.5,
+    "pontos": 331,
     "meta": 1439
    },
    {
     "loja": "L08",
-    "inteiros": 83,
+    "inteiros": 100,
     "meios": 28,
-    "galetos": 97.0,
-    "pontos": 194,
+    "galetos": 114.0,
+    "pontos": 228,
     "meta": 823
    },
    {
     "loja": "L05",
-    "inteiros": 68,
+    "inteiros": 70,
     "meios": 6,
-    "galetos": 71.0,
-    "pontos": 142,
+    "galetos": 73.0,
+    "pontos": 146,
     "meta": 1533
    },
    {
     "loja": "L09",
-    "inteiros": 44,
+    "inteiros": 46,
     "meios": 4,
-    "galetos": 46.0,
-    "pontos": 92,
+    "galetos": 48.0,
+    "pontos": 96,
     "meta": 760
    },
    {
     "loja": "L02",
-    "inteiros": 38,
+    "inteiros": 44,
     "meios": 6,
-    "galetos": 41.0,
-    "pontos": 82,
+    "galetos": 47.0,
+    "pontos": 94,
     "meta": 441
    }
   ]
@@ -58,7 +58,7 @@
   "semana": "semana de 31/08",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-09-05T14:04-03:00",
+  "atualizado_em": "2026-09-05T17:54-03:00",
   "lojas": [
    {
     "loja": "L01",
