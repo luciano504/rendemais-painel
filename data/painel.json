@@ -1,8 +1,8 @@
 {
- "gerado_em": "2026-09-08T09:28-03:00",
+ "gerado_em": "2026-09-08T09:43-03:00",
  "galeto": {
   "periodo": "01/09 a 08/09",
-  "atualizado_em": "2026-09-08T09:28-03:00",
+  "atualizado_em": "2026-09-08T09:43-03:00",
   "lojas": [
    {
     "loja": "L01",
@@ -58,19 +58,19 @@
   "semana": "semana de 07/09",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-09-08T09:28-03:00",
+  "atualizado_em": "2026-09-08T09:43-03:00",
   "lojas": [
    {
     "loja": "L01",
     "coletado": 8,
-    "esperado": 58,
-    "pct": 0.1379
+    "esperado": 60,
+    "pct": 0.1333
    },
    {
     "loja": "L02",
-    "coletado": 23,
+    "coletado": 50,
     "esperado": 91,
-    "pct": 0.2527
+    "pct": 0.5495
    },
    {
     "loja": "L03",
@@ -80,28 +80,28 @@
    },
    {
     "loja": "L05",
-    "coletado": 0,
-    "esperado": 169,
-    "pct": 0.0
+    "coletado": 11,
+    "esperado": 191,
+    "pct": 0.0576
    },
    {
     "loja": "L08",
     "coletado": 6,
-    "esperado": 209,
-    "pct": 0.0287
+    "esperado": 253,
+    "pct": 0.0237
    },
    {
     "loja": "L09",
     "coletado": 13,
-    "esperado": 195,
-    "pct": 0.0667
+    "esperado": 220,
+    "pct": 0.0591
    }
   ],
   "anterior": {
    "semana": "31/08",
-   "itens": 8441,
+   "itens": 8378,
    "coletado": 6238,
-   "pct": 0.739,
+   "pct": 0.7446,
    "lojas": [
     {
      "loja": "L01",
@@ -130,14 +130,14 @@
     {
      "loja": "L08",
      "coletado": 1103,
-     "esperado": 1542,
-     "pct": 0.7153
+     "esperado": 1501,
+     "pct": 0.7348
     },
     {
      "loja": "L09",
      "coletado": 985,
-     "esperado": 1416,
-     "pct": 0.6956
+     "esperado": 1394,
+     "pct": 0.7066
     }
    ]
   }
@@ -147,24 +147,24 @@
    "id": "estoque_parado",
    "titulo": "Mercadoria sem venda",
    "arquivo": "data/estoque_parado.xlsx",
-   "atualizado_em": "2026-09-07T13:04-03:00",
-   "linhas": 1681,
-   "origem": "estoque_parado_20260907.xlsx"
+   "atualizado_em": "2026-09-08T09:43-03:00",
+   "linhas": 1803,
+   "origem": "estoque_parado_20260908.xlsx"
   },
   {
    "id": "transferencias",
    "titulo": "Transferências sugeridas",
    "arquivo": "data/transferencias.xlsx",
-   "atualizado_em": "2026-09-07T13:04-03:00",
-   "linhas": 2977,
-   "origem": "transferencias_20260907.xlsx"
+   "atualizado_em": "2026-09-08T09:43-03:00",
+   "linhas": 3079,
+   "origem": "transferencias_20260908.xlsx"
   },
   {
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-09-07T13:04-03:00",
-   "linhas": 917,
+   "atualizado_em": "2026-09-08T09:43-03:00",
+   "linhas": 927,
    "origem": "categorias_01092026.xlsx"
   }
  ],
