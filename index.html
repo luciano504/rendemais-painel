@@ -384,6 +384,26 @@ async function sb(path, comContagem){
   const t = Number(String(cr).split("/")[1]);
   return {linhas, total: Number.isFinite(t) ? t : linhas.length};
 }
+/* O PostgREST devolve no MÁXIMO 1.000 linhas por leitura, mesmo pedindo
+   limit=50000 — o limite é do servidor. Em 10/09/2026 compras_mes passou de
+   1.000 linhas e o índice de perdas da L09 apareceu como 7,52%: era a perda
+   certa dividida por um pedaço da compra (R$ 18 mil em vez de R$ 519 mil).
+   sbTudo pagina com o cabeçalho Range até a tabela acabar. */
+async function sbTudo(path, passo){
+  passo = passo || 1000;
+  const out = [];
+  for(let ini = 0; ini < 300000; ini += passo){
+    const r = await fetch(SB_URL+"/rest/v1/"+path, {headers:{
+      apikey: SB_KEY, Authorization: "Bearer "+SB_KEY,
+      Range: ini+"-"+(ini+passo-1)
+    }});
+    if(!r.ok) throw new Error(await r.text());
+    const bloco = await r.json();
+    out.push.apply(out, bloco);
+    if(bloco.length < passo) break;
+  }
+  return out;
+}
 function mesAtual(){ return hoje().slice(0,7); }
 const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho",
                "agosto","setembro","outubro","novembro","dezembro"];
@@ -460,20 +480,20 @@ async function carregar(){
 
 async function carregarCritica(){
   try{
-    D.lotes = await sb("lotes?select=id,loja,ean,validade,qtd_restante,preco_atual,criado_em&resolvido=eq.false&limit=20000");
+    D.lotes = await sbTudo("lotes?select=id,loja,ean,validade,qtd_restante,preco_atual,criado_em&resolvido=eq.false");
   }catch(e){ D.erros.push("lotes"); D.lotes=[]; }
   try{
-    const d = await sb("descartes?select=lote_id&status=neq.validado&limit=5000");
+    const d = await sbTudo("descartes?select=lote_id&status=neq.validado");
     D.descartes = d.length;
   }catch(e){ D.descartes = null; }
   try{
     const m = mesAtual();
-    const r = await sb(`ressarcimento_diario?select=valor&data=gte.${m}-01&data=lt.${proxMes(m)}&limit=50000`);
+    const r = await sbTudo(`ressarcimento_diario?select=valor&data=gte.${m}-01&data=lt.${proxMes(m)}`);
     D.ress = r.reduce((a,x)=>a+(Number(x.valor)||0),0);
   }catch(e){ D.ress = null; }
   // aba Sugestões: rebaixa que o fornecedor propôs e a loja ainda não respondeu
   try{
-    const s = await sb("sugestoes_fornecedor?select=id&status=eq.pendente&limit=5000");
+    const s = await sbTudo("sugestoes_fornecedor?select=id&status=eq.pendente");
     D.sugestoes = s.length;
   }catch(e){ D.sugestoes = null; }
   // base ativa dos fornecedores, montada de madrugada para as campanhas
@@ -500,14 +520,14 @@ async function carregarCampanhas(){
 async function carregarPerdas(){
   const m = mesAtual(), ini = m+"-01", fim = proxMes(m);
   try{
-    const ress = await sb(`ressarcimento_diario?select=lote_id,ean,loja,valor,preco_vigente`
-                        + `&data=gte.${ini}&data=lt.${fim}&limit=50000`);
+    const ress = await sbTudo(`ressarcimento_diario?select=lote_id,ean,loja,valor,preco_vigente`
+                        + `&data=gte.${ini}&data=lt.${fim}`);
     let descs = [];
-    try{ descs = await sb("descartes?select=lote_id,qtd_contada&status=eq.validado&limit=50000"); }catch(e){}
+    try{ descs = await sbTudo("descartes?select=lote_id,qtd_contada&status=eq.validado"); }catch(e){}
     const semAcomp = new Set(descs.filter(d=>Number(d.qtd_contada)===0).map(d=>d.lote_id));
 
     let compras = [], balancos = [], semCompras = false, semBalancos = false;
-    try{ compras = await sb(`compras_mes?select=loja,valor&mes=eq.${m}&limit=50000`); }
+    try{ compras = await sbTudo(`compras_mes?select=loja,valor&mes=eq.${m}`); }
     catch(e){ semCompras = true; }
     try{ balancos = await sb(`balancos?select=loja,valor&mes=eq.${m}&limit=500`); }
     catch(e){ semBalancos = true; }
