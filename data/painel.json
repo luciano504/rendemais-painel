@@ -1,15 +1,15 @@
 {
- "gerado_em": "2026-09-22T12:13-03:00",
+ "gerado_em": "2026-09-22T12:21-03:00",
  "galeto": {
   "periodo": "01/09 a 22/09",
-  "atualizado_em": "2026-09-22T12:13-03:00",
+  "atualizado_em": "2026-09-22T12:21-03:00",
   "lojas": [
    {
     "loja": "L01",
     "inteiros": 863,
-    "meios": 511,
-    "galetos": 1118.5,
-    "pontos": 2237,
+    "meios": 512,
+    "galetos": 1119.0,
+    "pontos": 2238,
     "meta": 3521
    },
    {
@@ -58,7 +58,7 @@
   "semana": "semana de 21/09",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-09-22T12:13-03:00",
+  "atualizado_em": "2026-09-22T12:21-03:00",
   "lojas": [
    {
     "loja": "L01",
