@@ -1,24 +1,32 @@
 {
- "gerado_em": "2026-09-26T22:03-03:00",
+ "gerado_em": "2026-09-27T12:29-03:00",
  "galeto": {
-  "periodo": "01/09 a 26/09",
-  "atualizado_em": "2026-09-26T22:03-03:00",
+  "periodo": "01/09 a 27/09",
+  "atualizado_em": "2026-09-27T12:29-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 1004,
-    "meios": 603,
-    "galetos": 1305.5,
-    "pontos": 2611,
+    "inteiros": 1107,
+    "meios": 625,
+    "galetos": 1419.5,
+    "pontos": 2839,
     "meta": 3521
    },
    {
     "loja": "L03",
-    "inteiros": 449,
-    "meios": 288,
-    "galetos": 593.0,
-    "pontos": 1186,
+    "inteiros": 492,
+    "meios": 290,
+    "galetos": 637.0,
+    "pontos": 1274,
     "meta": 1439
+   },
+   {
+    "loja": "L05",
+    "inteiros": 455,
+    "meios": 52,
+    "galetos": 481.0,
+    "pontos": 962,
+    "meta": 1533
    },
    {
     "loja": "L08",
@@ -29,27 +37,19 @@
     "meta": 823
    },
    {
-    "loja": "L05",
-    "inteiros": 415,
-    "meios": 46,
-    "galetos": 438.0,
-    "pontos": 876,
-    "meta": 1533
-   },
-   {
     "loja": "L09",
-    "inteiros": 338,
-    "meios": 15,
-    "galetos": 345.5,
-    "pontos": 691,
+    "inteiros": 373,
+    "meios": 19,
+    "galetos": 382.5,
+    "pontos": 765,
     "meta": 760
    },
    {
     "loja": "L02",
-    "inteiros": 217,
+    "inteiros": 232,
     "meios": 14,
-    "galetos": 224.0,
-    "pontos": 448,
+    "galetos": 239.0,
+    "pontos": 478,
     "meta": 441
    }
   ]
@@ -58,7 +58,7 @@
   "semana": "semana de 21/09",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-09-26T22:03-03:00",
+  "atualizado_em": "2026-09-27T12:29-03:00",
   "lojas": [
    {
     "loja": "L01",
@@ -86,15 +86,15 @@
    },
    {
     "loja": "L08",
-    "coletado": 874,
-    "esperado": 1161,
-    "pct": 0.7528
+    "coletado": 878,
+    "esperado": 1165,
+    "pct": 0.7536
    },
    {
     "loja": "L09",
-    "coletado": 778,
-    "esperado": 1125,
-    "pct": 0.6916
+    "coletado": 786,
+    "esperado": 1133,
+    "pct": 0.6937
    }
   ],
   "anterior": {
