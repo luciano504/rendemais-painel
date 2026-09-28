@@ -1,39 +1,39 @@
 {
- "gerado_em": "2026-09-28T15:21-03:00",
+ "gerado_em": "2026-09-28T20:37-03:00",
  "galeto": {
   "periodo": "01/09 a 28/09",
-  "atualizado_em": "2026-09-28T15:21-03:00",
+  "atualizado_em": "2026-09-28T20:37-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 1144,
-    "meios": 657,
-    "galetos": 1472.5,
-    "pontos": 2945,
+    "inteiros": 1150,
+    "meios": 659,
+    "galetos": 1479.5,
+    "pontos": 2959,
     "meta": 3521
    },
    {
     "loja": "L03",
-    "inteiros": 506,
-    "meios": 292,
-    "galetos": 652.0,
-    "pontos": 1304,
+    "inteiros": 512,
+    "meios": 300,
+    "galetos": 662.0,
+    "pontos": 1324,
     "meta": 1439
    },
    {
     "loja": "L05",
-    "inteiros": 465,
+    "inteiros": 467,
     "meios": 53,
-    "galetos": 491.5,
-    "pontos": 983,
+    "galetos": 493.5,
+    "pontos": 987,
     "meta": 1533
    },
    {
     "loja": "L08",
-    "inteiros": 385,
+    "inteiros": 387,
     "meios": 123,
-    "galetos": 446.5,
-    "pontos": 893,
+    "galetos": 448.5,
+    "pontos": 897,
     "meta": 823
    },
    {
@@ -58,13 +58,13 @@
   "semana": "semana de 28/09",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-09-28T15:21-03:00",
+  "atualizado_em": "2026-09-28T20:37-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 113,
-    "esperado": 195,
-    "pct": 0.5795
+    "coletado": 116,
+    "esperado": 196,
+    "pct": 0.5918
    },
    {
     "loja": "L02",
@@ -74,9 +74,9 @@
    },
    {
     "loja": "L03",
-    "coletado": 146,
+    "coletado": 224,
     "esperado": 246,
-    "pct": 0.5935
+    "pct": 0.9106
    },
    {
     "loja": "L05",
@@ -86,28 +86,28 @@
    },
    {
     "loja": "L08",
-    "coletado": 107,
-    "esperado": 188,
-    "pct": 0.5691
+    "coletado": 111,
+    "esperado": 206,
+    "pct": 0.5388
    },
    {
     "loja": "L09",
-    "coletado": 65,
-    "esperado": 159,
-    "pct": 0.4088
+    "coletado": 142,
+    "esperado": 169,
+    "pct": 0.8402
    }
   ],
   "anterior": {
    "semana": "21/09",
-   "itens": 6917,
+   "itens": 6899,
    "coletado": 5138,
-   "pct": 0.7428,
+   "pct": 0.7447,
    "lojas": [
     {
      "loja": "L01",
      "coletado": 1145,
-     "esperado": 1564,
-     "pct": 0.7321
+     "esperado": 1558,
+     "pct": 0.7349
     },
     {
      "loja": "L02",
@@ -136,8 +136,8 @@
     {
      "loja": "L09",
      "coletado": 786,
-     "esperado": 1133,
-     "pct": 0.6937
+     "esperado": 1121,
+     "pct": 0.7012
     }
    ]
   }
