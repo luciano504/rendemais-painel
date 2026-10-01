@@ -1,8 +1,8 @@
 {
- "gerado_em": "2026-10-01T14:13-03:00",
+ "gerado_em": "2026-10-01T14:14-03:00",
  "galeto": {
   "periodo": "01/10 a 01/10",
-  "atualizado_em": "2026-10-01T14:13-03:00",
+  "atualizado_em": "2026-10-01T14:14-03:00",
   "lojas": [
    {
     "loja": "L01",
@@ -58,13 +58,13 @@
   "semana": "semana de 28/09",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-10-01T14:13-03:00",
+  "atualizado_em": "2026-10-01T14:14-03:00",
   "lojas": [
    {
     "loja": "L01",
     "coletado": 319,
-    "esperado": 610,
-    "pct": 0.523
+    "esperado": 653,
+    "pct": 0.4885
    },
    {
     "loja": "L02",
