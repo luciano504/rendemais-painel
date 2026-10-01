@@ -1,32 +1,32 @@
 {
- "gerado_em": "2026-10-01T14:14-03:00",
+ "gerado_em": "2026-10-01T19:58-03:00",
  "galeto": {
   "periodo": "01/10 a 01/10",
-  "atualizado_em": "2026-10-01T14:14-03:00",
+  "atualizado_em": "2026-10-01T19:58-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 21,
-    "meios": 13,
-    "galetos": 27.5,
-    "pontos": 55,
+    "inteiros": 25,
+    "meios": 14,
+    "galetos": 32.0,
+    "pontos": 64,
     "meta": 3388
+   },
+   {
+    "loja": "L02",
+    "inteiros": 6,
+    "meios": 1,
+    "galetos": 6.5,
+    "pontos": 13,
+    "meta": 541
    },
    {
     "loja": "L08",
     "inteiros": 5,
-    "meios": 2,
-    "galetos": 6.0,
-    "pontos": 12,
+    "meios": 3,
+    "galetos": 6.5,
+    "pontos": 13,
     "meta": 1020
-   },
-   {
-    "loja": "L02",
-    "inteiros": 4,
-    "meios": 1,
-    "galetos": 4.5,
-    "pontos": 9,
-    "meta": 541
    },
    {
     "loja": "L05",
@@ -58,43 +58,43 @@
   "semana": "semana de 28/09",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-10-01T14:14-03:00",
+  "atualizado_em": "2026-10-01T19:58-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 319,
-    "esperado": 653,
-    "pct": 0.4885
+    "coletado": 417,
+    "esperado": 708,
+    "pct": 0.589
    },
    {
     "loja": "L02",
-    "coletado": 206,
-    "esperado": 327,
-    "pct": 0.63
+    "coletado": 235,
+    "esperado": 346,
+    "pct": 0.6792
    },
    {
     "loja": "L03",
-    "coletado": 599,
-    "esperado": 708,
-    "pct": 0.846
+    "coletado": 659,
+    "esperado": 767,
+    "pct": 0.8592
    },
    {
     "loja": "L05",
-    "coletado": 425,
-    "esperado": 605,
-    "pct": 0.7025
+    "coletado": 454,
+    "esperado": 630,
+    "pct": 0.7206
    },
    {
     "loja": "L08",
-    "coletado": 508,
-    "esperado": 663,
-    "pct": 0.7662
+    "coletado": 554,
+    "esperado": 731,
+    "pct": 0.7579
    },
    {
     "loja": "L09",
-    "coletado": 458,
-    "esperado": 736,
-    "pct": 0.6223
+    "coletado": 534,
+    "esperado": 789,
+    "pct": 0.6768
    }
   ],
   "anterior": {
