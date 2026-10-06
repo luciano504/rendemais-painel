@@ -1,8 +1,8 @@
 {
- "gerado_em": "2026-10-06T13:52-03:00",
+ "gerado_em": "2026-10-06T13:58-03:00",
  "galeto": {
   "periodo": "01/10 a 06/10",
-  "atualizado_em": "2026-10-06T13:52-03:00",
+  "atualizado_em": "2026-10-06T13:58-03:00",
   "lojas": [
    {
     "loja": "L01",
@@ -58,7 +58,7 @@
   "semana": "semana de 05/10",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-10-06T13:52-03:00",
+  "atualizado_em": "2026-10-06T13:58-03:00",
   "lojas": [
    {
     "loja": "L01",
@@ -147,24 +147,24 @@
    "id": "estoque_parado",
    "titulo": "Mercadoria sem venda",
    "arquivo": "data/estoque_parado.xlsx",
-   "atualizado_em": "2026-10-05T16:37-03:00",
-   "linhas": 1302,
-   "origem": "estoque_parado_20261005.xlsx"
+   "atualizado_em": "2026-10-06T13:58-03:00",
+   "linhas": 1427,
+   "origem": "estoque_parado_20261006.xlsx"
   },
   {
    "id": "transferencias",
    "titulo": "Transferências sugeridas",
    "arquivo": "data/transferencias.xlsx",
-   "atualizado_em": "2026-10-05T16:37-03:00",
-   "linhas": 3235,
-   "origem": "transferencias_20261005.xlsx"
+   "atualizado_em": "2026-10-06T13:58-03:00",
+   "linhas": 3242,
+   "origem": "transferencias_20261006.xlsx"
   },
   {
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-10-05T16:37-03:00",
-   "linhas": 906,
+   "atualizado_em": "2026-10-06T13:58-03:00",
+   "linhas": 917,
    "origem": "categorias_01102026.xlsx"
   }
  ],
