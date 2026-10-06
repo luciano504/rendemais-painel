@@ -1,39 +1,39 @@
 {
- "gerado_em": "2026-10-06T14:01-03:00",
+ "gerado_em": "2026-10-06T19:51-03:00",
  "galeto": {
   "periodo": "01/10 a 06/10",
-  "atualizado_em": "2026-10-06T14:01-03:00",
+  "atualizado_em": "2026-10-06T19:51-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 340,
-    "meios": 150,
-    "galetos": 415.0,
-    "pontos": 830,
+    "inteiros": 345,
+    "meios": 156,
+    "galetos": 423.0,
+    "pontos": 846,
     "meta": 3388
    },
    {
     "loja": "L03",
-    "inteiros": 131,
-    "meios": 48,
-    "galetos": 155.0,
-    "pontos": 310,
+    "inteiros": 133,
+    "meios": 53,
+    "galetos": 159.5,
+    "pontos": 319,
     "meta": 1488
    },
    {
     "loja": "L05",
     "inteiros": 135,
-    "meios": 11,
-    "galetos": 140.5,
-    "pontos": 281,
+    "meios": 12,
+    "galetos": 141.0,
+    "pontos": 282,
     "meta": 1107
    },
    {
     "loja": "L09",
-    "inteiros": 101,
+    "inteiros": 102,
     "meios": 3,
-    "galetos": 102.5,
-    "pontos": 205,
+    "galetos": 103.5,
+    "pontos": 207,
     "meta": 870
    },
    {
@@ -58,43 +58,43 @@
   "semana": "semana de 05/10",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-10-06T14:01-03:00",
+  "atualizado_em": "2026-10-06T19:51-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 182,
-    "esperado": 318,
-    "pct": 0.5723
+    "coletado": 228,
+    "esperado": 374,
+    "pct": 0.6096
    },
    {
     "loja": "L02",
-    "coletado": 135,
-    "esperado": 211,
-    "pct": 0.6398
+    "coletado": 158,
+    "esperado": 243,
+    "pct": 0.6502
    },
    {
     "loja": "L03",
-    "coletado": 114,
-    "esperado": 166,
-    "pct": 0.6867
+    "coletado": 164,
+    "esperado": 225,
+    "pct": 0.7289
    },
    {
     "loja": "L05",
-    "coletado": 123,
-    "esperado": 252,
-    "pct": 0.4881
+    "coletado": 128,
+    "esperado": 265,
+    "pct": 0.483
    },
    {
     "loja": "L08",
-    "coletado": 140,
-    "esperado": 256,
-    "pct": 0.5469
+    "coletado": 160,
+    "esperado": 279,
+    "pct": 0.5735
    },
    {
     "loja": "L09",
-    "coletado": 214,
-    "esperado": 437,
-    "pct": 0.4897
+    "coletado": 230,
+    "esperado": 440,
+    "pct": 0.5227
    }
   ],
   "anterior": {
