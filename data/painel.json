@@ -1,39 +1,39 @@
 {
- "gerado_em": "2026-10-19T22:28-03:00",
+ "gerado_em": "2026-10-20T12:22-03:00",
  "galeto": {
-  "periodo": "01/10 a 19/10",
-  "atualizado_em": "2026-10-19T22:28-03:00",
+  "periodo": "01/10 a 20/10",
+  "atualizado_em": "2026-10-20T12:22-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 934,
-    "meios": 475,
-    "galetos": 1171.5,
-    "pontos": 2343,
+    "inteiros": 945,
+    "meios": 487,
+    "galetos": 1188.5,
+    "pontos": 2377,
     "meta": 3388
    },
    {
     "loja": "L05",
-    "inteiros": 370,
-    "meios": 35,
-    "galetos": 387.5,
-    "pontos": 775,
+    "inteiros": 371,
+    "meios": 36,
+    "galetos": 389.0,
+    "pontos": 778,
     "meta": 1107
    },
    {
     "loja": "L09",
-    "inteiros": 305,
+    "inteiros": 310,
     "meios": 12,
-    "galetos": 311.0,
-    "pontos": 622,
+    "galetos": 316.0,
+    "pontos": 632,
     "meta": 870
    },
    {
     "loja": "L08",
-    "inteiros": 253,
-    "meios": 110,
-    "galetos": 308.0,
-    "pontos": 616,
+    "inteiros": 254,
+    "meios": 111,
+    "galetos": 309.5,
+    "pontos": 619,
     "meta": 1020
    },
    {
@@ -47,9 +47,9 @@
    {
     "loja": "L02",
     "inteiros": 131,
-    "meios": 5,
-    "galetos": 133.5,
-    "pontos": 267,
+    "meios": 6,
+    "galetos": 134.0,
+    "pontos": 268,
     "meta": 541
    }
   ]
@@ -58,20 +58,50 @@
   "semana": "semana de 19/10",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-10-19T22:28-03:00",
+  "atualizado_em": "2026-10-20T12:22-03:00",
   "lojas": [
    {
+    "loja": "L01",
+    "coletado": 64,
+    "esperado": 271,
+    "pct": 0.2362
+   },
+   {
     "loja": "L02",
-    "coletado": 0,
-    "esperado": 12,
-    "pct": 0.0
+    "coletado": 108,
+    "esperado": 198,
+    "pct": 0.5455
+   },
+   {
+    "loja": "L03",
+    "coletado": 81,
+    "esperado": 205,
+    "pct": 0.3951
+   },
+   {
+    "loja": "L05",
+    "coletado": 160,
+    "esperado": 322,
+    "pct": 0.4969
+   },
+   {
+    "loja": "L08",
+    "coletado": 114,
+    "esperado": 327,
+    "pct": 0.3486
+   },
+   {
+    "loja": "L09",
+    "coletado": 147,
+    "esperado": 309,
+    "pct": 0.4757
    }
   ],
   "anterior": {
    "semana": "12/10",
-   "itens": 4755,
-   "coletado": 3186,
-   "pct": 0.67,
+   "itens": 4780,
+   "coletado": 3200,
+   "pct": 0.6695,
    "lojas": [
     {
      "loja": "L01",
@@ -81,21 +111,21 @@
     },
     {
      "loja": "L02",
-     "coletado": 371,
-     "esperado": 533,
-     "pct": 0.6961
+     "coletado": 379,
+     "esperado": 541,
+     "pct": 0.7006
     },
     {
      "loja": "L03",
-     "coletado": 423,
-     "esperado": 618,
-     "pct": 0.6845
+     "coletado": 429,
+     "esperado": 624,
+     "pct": 0.6875
     },
     {
      "loja": "L05",
      "coletado": 531,
-     "esperado": 836,
-     "pct": 0.6352
+     "esperado": 849,
+     "pct": 0.6254
     },
     {
      "loja": "L08",
@@ -106,8 +136,8 @@
     {
      "loja": "L09",
      "coletado": 693,
-     "esperado": 932,
-     "pct": 0.7436
+     "esperado": 930,
+     "pct": 0.7452
     }
    ]
   }
@@ -117,24 +147,24 @@
    "id": "estoque_parado",
    "titulo": "Mercadoria sem venda",
    "arquivo": "data/estoque_parado.xlsx",
-   "atualizado_em": "2026-10-19T14:17-03:00",
-   "linhas": 1653,
-   "origem": "estoque_parado_20261019.xlsx"
+   "atualizado_em": "2026-10-20T12:22-03:00",
+   "linhas": 1700,
+   "origem": "estoque_parado_20261020.xlsx"
   },
   {
    "id": "transferencias",
    "titulo": "Transferências sugeridas",
    "arquivo": "data/transferencias.xlsx",
-   "atualizado_em": "2026-10-19T14:17-03:00",
-   "linhas": 3412,
-   "origem": "transferencias_20261019.xlsx"
+   "atualizado_em": "2026-10-20T12:22-03:00",
+   "linhas": 3505,
+   "origem": "transferencias_20261020.xlsx"
   },
   {
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-10-19T14:17-03:00",
-   "linhas": 983,
+   "atualizado_em": "2026-10-20T12:22-03:00",
+   "linhas": 985,
    "origem": "categorias_01102026.xlsx"
   }
  ],
