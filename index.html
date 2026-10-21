@@ -215,8 +215,9 @@ footer{max-width:1180px;margin:34px auto 0;padding:0 16px;font-size:11.5px;color
     <div class="card" id="cCritica"></div>
   </div>
 
-  <h2 class="sec">Prevenção de perdas</h2>
+  <h2 class="sec">Controle e redução de quebras</h2>
   <div class="card" id="cPerdas"></div>
+  <div class="grid-apps" id="gQuebra" style="margin-top:12px"></div>
 
   <h2 class="sec">Arquivos do dia</h2>
   <div class="card" id="cArquivos"></div>
@@ -250,7 +251,7 @@ const APPS = [
   {ico:"🎯", nome:"Rende Mais 360", url:"http://rendemaisdns.zapto.org:8086/teste/painel360.html",
    desc:"O painel do dia, inspirado no Controller 360 mas lendo o VR ao vivo: venda da rede e de cada loja contra o mesmo dia da semana anterior, margem e markup na régua do DRE, venda por hora, cupons, ticket, % em oferta e venda identificada. Um toque na loja abre as seções e os produtos mais vendidos do dia.",
    tag:"no servidor do VR", estado:"rede interna"},
-  {ico:"⏳", nome:"Data Crítica", url:"https://luciano504.github.io/rendemais-datacritica/",
+  {ico:"⏳", quebra:1, nome:"Data Crítica", url:"https://luciano504.github.io/rendemais-datacritica/",
    desc:"Mercadoria perto do vencimento: coleta, lotes FEFO, rebaixa, descarte validado, índice de perdas, portal do fornecedor e a aba Sugestões, onde o fornecedor propõe a rebaixa e a loja aceita em lote.",
    tag:"PWA · Supabase", estado:"no ar"},
   {ico:"💸", nome:"Rende Mais Campanhas", url:"https://luciano504.github.io/rendemais-campanhas/",
@@ -259,7 +260,7 @@ const APPS = [
   {ico:"💰", nome:"Caixa e Compras", url:"https://luciano504.github.io/rendemais-painel/caixa.html",
    desc:"Boletos a vencer por loja e por dia de pagamento, calendário de vencimentos, compra × venda por seção e o analista de compra. Vem do VR duas vezes por dia.",
    tag:"PWA · Supabase", estado:"no ar"},
-  {ico:"🐔", nome:"Aves Resfriadas", url:"https://luciano504.github.io/rendemais-aves/",
+  {ico:"🐔", quebra:1, nome:"Aves Resfriadas", url:"https://luciano504.github.io/rendemais-aves/",
    desc:"Sugestão e pedido diário de aves e galeto nas 6 lojas, sempre em caixa fechada: estoque virtual, DDV que varia com o dia da semana e a semana do mês, aviso de mercadoria em trânsito para a loja não pedir dobrado, minibalanço semanal e TXT no layout do VR por loja e fornecedor.",
    tag:"PWA · Supabase", estado:"no ar"},
   {ico:"🏬", nome:"Vendas entre Lojas", url:"http://rendemaisdns.zapto.org:8086/teste/transferencias.html",
@@ -271,7 +272,7 @@ const APPS = [
   {ico:"🏷️", nome:"Plaquinhas de Testeira", url:"http://rendemaisdns.zapto.org:8086/teste/plaquinhas.html",
    desc:"Etiquetas de preço na impressora térmica, cortadas uma a uma: promoções que terminaram e voltaram ao preço normal, bipagem por leitor ou pela câmera do celular, fila compartilhada entre aparelhos, código de barras e de/por quando o item está em oferta.",
    tag:"no servidor do VR", estado:"rede interna"},
-  {ico:"🥬", nome:"Horti", url:"http://rendemaisdns.zapto.org:8086/teste/horti.html",
+  {ico:"🥬", quebra:1, nome:"Horti", url:"http://rendemaisdns.zapto.org:8086/teste/horti.html",
    desc:"Sugestão e pedido diário de hortifrúti, com DDV e calendário de compra por dia da semana.",
    tag:"no servidor do VR", estado:"rede interna"},
   {ico:"🚚", nome:"Rastreio de Pedidos", url:"http://rendemaisdns.zapto.org:8086/teste/pedidos.html",
@@ -292,7 +293,10 @@ const APPS = [
   {ico:"🕵️", nome:"Auditoria de Fornecedores", url:"http://rendemaisdns.zapto.org:8086/teste/auditoria.html",
    desc:"Devoluções e verbas cobradas do fornecedor × o que ele de fato pagou: abatimento real no boleto, bonificação em mercadoria e depósito lançado na tela. Classifica cada bonificação pelo motivo e gera o extrato de cobrança por fornecedor.",
    tag:"no servidor do VR", estado:"rede interna"},
-  {ico:"📉", nome:"Perdas Rende Mais", url:"http://rendemaisdns.zapto.org:8086/teste/perdas.html",
+  {ico:"📊", quebra:1, nome:"Resultado Real", url:"http://rendemaisdns.zapto.org:8086/teste/resultado.html",
+   desc:"A situação real das lojas depois da quebra: margem do sistema → quebra medida nos balanços (ou estimada no mês) → margem real → bonificações, acordos, impostos, despesas e taxa de cartão → margem operacional. Rede, loja e setores, sempre com margem e markup, DDV e cobertura de estoque.",
+   tag:"no servidor do VR", estado:"rede interna"},
+  {ico:"📉", quebra:1, nome:"Perdas Rende Mais", url:"http://rendemaisdns.zapto.org:8086/teste/perdas.html",
    desc:"Perda real de cada loja entre dois balanços: lançada no VR, não identificada, produção à parte e o que o Data Crítica acompanha. Quebra por item, plano de ação com responsável e prazo, rotativo de conferência pela Prevenção e alertas de erro (zerado sem contagem, troca de código, transferência sem NF).",
    tag:"no servidor do VR · VR + Data Crítica", estado:"rede interna"},
   {ico:"🏷️", nome:"Placas de Oferta", url:"https://luciano504.github.io/placas/",
@@ -989,7 +993,10 @@ function cardApp(a){
              : `<a class="app" href="${esc(a.url)}" target="_blank" rel="noopener">${inner}</a>`;
 }
 function apps(){
-  $("gApps").innerHTML = APPS.map(cardApp).join("");
+  /* apps de controle e redução de quebra ficam juntos na seção de quebras */
+  const ordQ = ["Resultado Real","Perdas Rende Mais","Data Crítica","Horti","Aves Resfriadas"];
+  $("gQuebra").innerHTML = APPS.filter(a=>a.quebra).sort((a,b)=>ordQ.indexOf(a.nome)-ordQ.indexOf(b.nome)).map(cardApp).join("");
+  $("gApps").innerHTML = APPS.filter(a=>!a.quebra).map(cardApp).join("");
   $("gSist").innerHTML = SISTEMAS.map(cardApp).join("");
   $("ftGer").textContent = D.erros.length ? " · falha ao ler: "+D.erros.join(", ") : "";
 }
