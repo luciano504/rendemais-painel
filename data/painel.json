@@ -1,5 +1,5 @@
 {
- "gerado_em": "2026-10-22T19:02-03:00",
+ "gerado_em": "2026-10-22T22:08-03:00",
  "galeto": {
   "periodo": "01/10 a 22/10",
   "atualizado_em": "2026-10-22T19:02-03:00",
@@ -55,92 +55,54 @@
   ]
  },
  "medidor": {
-  "semana": "semana de 19/10",
-  "fonte": "notas de entrada (VR)",
+  "semana": "19/10 a 25/10",
+  "fonte": "lotes registrados (Supabase)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-10-22T19:02-03:00",
+  "atualizado_em": "2026-10-22T22:08-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 818,
-    "esperado": 1166,
-    "pct": 0.7015
+    "coletado": 14,
+    "esperado": 40,
+    "pct": 0.35
    },
    {
     "loja": "L02",
-    "coletado": 490,
-    "esperado": 660,
-    "pct": 0.7424
+    "coletado": 16,
+    "esperado": 40,
+    "pct": 0.4
    },
    {
     "loja": "L03",
-    "coletado": 623,
-    "esperado": 790,
-    "pct": 0.7886
+    "coletado": 79,
+    "esperado": 40,
+    "pct": 1.975
+   },
+   {
+    "loja": "L04",
+    "coletado": 0,
+    "esperado": 40,
+    "pct": 0.0
    },
    {
     "loja": "L05",
-    "coletado": 563,
-    "esperado": 750,
-    "pct": 0.7507
+    "coletado": 24,
+    "esperado": 40,
+    "pct": 0.6
    },
    {
     "loja": "L08",
-    "coletado": 682,
-    "esperado": 1030,
-    "pct": 0.6621
+    "coletado": 84,
+    "esperado": 40,
+    "pct": 2.1
    },
    {
     "loja": "L09",
-    "coletado": 709,
-    "esperado": 917,
-    "pct": 0.7732
+    "coletado": 96,
+    "esperado": 40,
+    "pct": 2.4
    }
-  ],
-  "anterior": {
-   "semana": "12/10",
-   "itens": 4729,
-   "coletado": 3210,
-   "pct": 0.6788,
-   "lojas": [
-    {
-     "loja": "L01",
-     "coletado": 665,
-     "esperado": 1044,
-     "pct": 0.637
-    },
-    {
-     "loja": "L02",
-     "coletado": 379,
-     "esperado": 541,
-     "pct": 0.7006
-    },
-    {
-     "loja": "L03",
-     "coletado": 429,
-     "esperado": 613,
-     "pct": 0.6998
-    },
-    {
-     "loja": "L05",
-     "coletado": 531,
-     "esperado": 849,
-     "pct": 0.6254
-    },
-    {
-     "loja": "L08",
-     "coletado": 513,
-     "esperado": 752,
-     "pct": 0.6822
-    },
-    {
-     "loja": "L09",
-     "coletado": 693,
-     "esperado": 930,
-     "pct": 0.7452
-    }
-   ]
-  }
+  ]
  },
  "arquivos": [
   {
@@ -168,5 +130,8 @@
    "origem": "categorias_01102026.xlsx"
   }
  ],
- "diagnostico": []
+ "diagnostico": [
+  "galeto/apuração: RuntimeError: Query falhou: Erro VR: <!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Login</title>\n    <style>\n        body {\n   ",
+  "medidor oficial (usando proxy do Supabase): RuntimeError: Query falhou: Erro VR: <!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Login</title>\n    <style>\n        body {\n   "
+ ]
 }
