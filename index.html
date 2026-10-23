@@ -856,15 +856,17 @@ function coleta(){
   const el = $("cColeta");
   const m = D.painel?.medidor;
   if(m && (m.lojas||[]).length){
-    const temPct = m.lojas.some(x=>x.pct!=null);
+    const oficial = String(m.fonte||"").includes("nota");
+    // sem o VR, a automática cai no proxy (lotes do Supabase ÷ 40 fixo) — isso NÃO é % de coleta,
+    // dava 240% na L09. Fora da fonte oficial, mostra só a contagem de lotes e avisa.
+    const temPct = oficial && m.lojas.some(x=>x.pct!=null);
     const itens = temPct
       ? [...m.lojas].sort((a,b)=>(b.pct||0)-(a.pct||0)).map(x=>({
           k:x.loja, v:(Number(x.pct)||0)*100, meta:(Number(m.meta_pct)||0.8)*100, rot:pct(x.pct||0)}))
       : [...m.lojas].sort((a,b)=>(b.coletado||0)-(a.coletado||0)).map(x=>({
-          k:x.loja, v:Number(x.coletado)||0, meta:Number(x.esperado)||0, rot:num(x.coletado||0)}));
+          k:x.loja, v:Number(x.coletado)||0, meta:oficial?(Number(x.esperado)||0):0, rot:num(x.coletado||0)}));
     const temMeta = itens.some(i=>i.meta>0);
     const per = String(m.semana||"").replace(/^semana\s+(de\s+)?/i,"");
-    const oficial = String(m.fonte||"").includes("nota");
     const totItens = m.lojas.reduce((a,x)=>a+(Number(x.esperado)||0),0);
     const colet = m.lojas.reduce((a,x)=>a+(Number(x.coletado)||0),0);
     const ant = m.anterior;
@@ -874,7 +876,8 @@ function coleta(){
       <p class="desc">Semana de ${esc(per)} · ${temPct
         ? (oficial ? `${num(colet)} de ${num(totItens)} itens de nota de entrada com validade coletada — meta ${pct(m.meta_pct||0.8)}`
                    : `meta ${pct(m.meta_pct||0.8)}`)
-        : "lotes coletados por loja"}</p>
+        : (oficial ? "lotes coletados por loja"
+           : `<span style="color:#b45309">⚠ medição oficial fora do ar (o VR não respondeu à automática) — mostrando só os lotes registrados no Data Crítica na semana, sem percentual</span>`)}</p>
       ${ant && ant.pct!=null ? `<p class="desc" style="margin-top:-6px">${magra
           ? `Semana ainda no começo — pouca nota entrou. Na semana de ${esc(ant.semana)} a rede fechou em <b>${pct(ant.pct)}</b>.`
           : `Semana de ${esc(ant.semana)} fechou em <b>${pct(ant.pct)}</b>.`}</p>` : ""}
