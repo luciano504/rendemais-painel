@@ -1,55 +1,55 @@
 {
- "gerado_em": "2026-10-30T22:57-03:00",
+ "gerado_em": "2026-10-31T12:55-03:00",
  "galeto": {
-  "periodo": "01/10 a 30/10",
-  "atualizado_em": "2026-10-30T22:57-03:00",
+  "periodo": "01/10 a 31/10",
+  "atualizado_em": "2026-10-31T12:55-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 1368,
-    "meios": 711,
-    "galetos": 1723.5,
-    "pontos": 3447,
+    "inteiros": 1427,
+    "meios": 740,
+    "galetos": 1797.0,
+    "pontos": 3594,
     "meta": 3388
    },
    {
     "loja": "L03",
-    "inteiros": 543,
-    "meios": 188,
-    "galetos": 637.0,
-    "pontos": 1274,
+    "inteiros": 561,
+    "meios": 196,
+    "galetos": 659.0,
+    "pontos": 1318,
     "meta": 1488
    },
    {
     "loja": "L05",
-    "inteiros": 492,
-    "meios": 47,
-    "galetos": 515.5,
-    "pontos": 1031,
+    "inteiros": 531,
+    "meios": 48,
+    "galetos": 555.0,
+    "pontos": 1110,
     "meta": 1107
    },
    {
     "loja": "L08",
-    "inteiros": 409,
-    "meios": 163,
-    "galetos": 490.5,
-    "pontos": 981,
+    "inteiros": 437,
+    "meios": 172,
+    "galetos": 523.0,
+    "pontos": 1046,
     "meta": 1020
    },
    {
     "loja": "L09",
-    "inteiros": 409,
+    "inteiros": 440,
     "meios": 16,
-    "galetos": 417.0,
-    "pontos": 834,
+    "galetos": 448.0,
+    "pontos": 896,
     "meta": 870
    },
    {
     "loja": "L02",
-    "inteiros": 209,
+    "inteiros": 228,
     "meios": 7,
-    "galetos": 212.5,
-    "pontos": 425,
+    "galetos": 231.5,
+    "pontos": 463,
     "meta": 541
    }
   ]
@@ -58,43 +58,43 @@
   "semana": "semana de 26/10",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-10-30T22:57-03:00",
+  "atualizado_em": "2026-10-31T12:55-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 1245,
-    "esperado": 1735,
-    "pct": 0.7176
+    "coletado": 1362,
+    "esperado": 1846,
+    "pct": 0.7378
    },
    {
     "loja": "L02",
-    "coletado": 800,
-    "esperado": 934,
-    "pct": 0.8565
+    "coletado": 820,
+    "esperado": 979,
+    "pct": 0.8376
    },
    {
     "loja": "L03",
-    "coletado": 765,
-    "esperado": 981,
-    "pct": 0.7798
+    "coletado": 771,
+    "esperado": 997,
+    "pct": 0.7733
    },
    {
     "loja": "L05",
-    "coletado": 1097,
-    "esperado": 1347,
-    "pct": 0.8144
+    "coletado": 1114,
+    "esperado": 1403,
+    "pct": 0.794
    },
    {
     "loja": "L08",
-    "coletado": 1007,
-    "esperado": 1302,
-    "pct": 0.7734
+    "coletado": 1054,
+    "esperado": 1338,
+    "pct": 0.7877
    },
    {
     "loja": "L09",
-    "coletado": 995,
-    "esperado": 1266,
-    "pct": 0.7859
+    "coletado": 1028,
+    "esperado": 1429,
+    "pct": 0.7194
    }
   ],
   "anterior": {
