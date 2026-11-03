@@ -210,6 +210,7 @@ footer{max-width:1180px;margin:34px auto 0;padding:0 16px;font-size:11.5px;color
     <div class="card" id="cGaleto"></div>
     <div class="card" id="cColeta"></div>
   </div>
+  <div class="grid2" id="gPremiadas" style="margin-top:12px"></div>
   <div class="grid2" style="margin-top:12px">
     <div class="card" id="cVerbas"></div>
     <div class="card" id="cCritica"></div>
@@ -292,9 +293,6 @@ const APPS = [
    tag:"no servidor do VR", estado:"rede interna"},
   {ico:"🕵️", nome:"Auditoria de Fornecedores", url:"http://rendemaisdns.zapto.org:8086/teste/auditoria.html",
    desc:"Devoluções e verbas cobradas do fornecedor × o que ele de fato pagou: abatimento real no boleto, bonificação em mercadoria e depósito lançado na tela. Classifica cada bonificação pelo motivo e gera o extrato de cobrança por fornecedor.",
-   tag:"no servidor do VR", estado:"rede interna"},
-  {ico:"🎉", nome:"Festa de Aniversário — Fornecedores", url:"http://rendemaisdns.zapto.org:8086/teste/festa.html",
-   desc:"Contribuição de 1% das compras anuais dos fornecedores para a festa de Aniversário: compras de 12 meses por fornecedor (filiais do mesmo CNPJ juntas), carta oficial \"Estamos em festa!!!\" com assinatura em PDF (uma ou em lote), atendimento (contato, valor acordado, situação) e recebimentos por abatimento no boleto, PIX ou bonificação, com senha.",
    tag:"no servidor do VR", estado:"rede interna"},
   {ico:"📊", quebra:1, nome:"Resultado Real", url:"http://rendemaisdns.zapto.org:8086/teste/resultado.html",
    desc:"A situação real das lojas depois da quebra: margem do sistema → quebra medida nos balanços (ou estimada no mês) → margem real → bonificações, acordos, impostos, despesas e taxa de cartão → margem operacional. Rede, loja e setores, sempre com margem e markup, DDV e cobertura de estoque.",
@@ -510,7 +508,7 @@ const D = {lotes:[], descartes:0, ress:0, campanhas:[], consumo:[], alertas:[], 
 async function carregar(){
   $("hdSub").textContent = "atualizando…";
   D.erros = [];
-  await Promise.all([carregarCritica(), carregarCampanhas(), carregarPainelJson(), carregarPerdas()]);
+  await Promise.all([carregarCritica(), carregarCampanhas(), carregarPainelJson(), carregarPerdas(), carregarPremiadas()]);
   render();
   $("hdSub").textContent = "atualizado às " + new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
 }
@@ -613,7 +611,7 @@ async function carregarPainelJson(){
 /* ============================================================
    RENDER
    ============================================================ */
-function render(){ aviso(); kpis(); galeto(); coleta(); verbas(); critica(); perdas(); arquivos(); apps(); }
+function render(){ aviso(); kpis(); galeto(); coleta(); premiadas(); verbas(); critica(); perdas(); arquivos(); apps(); }
 
 function perdas(){
   const el = $("cPerdas"), P = D.perdas;
@@ -862,6 +860,66 @@ function galeto(){
         <td class="n" style="color:${mh?(ok?"var(--success-text)":"var(--critical)"):"inherit"}">${mh?num(mh):"—"}</td>
         <td class="n">${x.meta?num(x.meta):"—"}</td></tr>`;}).join("")}
       </tbody></table></details>`;
+}
+
+/* ============================================================
+   VENDAS PREMIADAS — placar ao vivo das campanhas do app
+   (o Galeto tem bloco próprio acima; as demais campanhas ativas entram aqui sozinhas)
+   ============================================================ */
+const VP_URL = "https://luciano504.github.io/vendas-premiadas/";
+async function carregarPremiadas(){
+  D.premiadas = [];
+  try{
+    const camps = await sb("cv_campanhas?select=id,nome,config,ultima_carga,ultimo_erro&ativa=eq.true&order=id");
+    const hoje = new Date(); const isoD = d => d.toISOString().slice(0,10);
+    for(const c of camps){
+      if(/galeto/i.test(c.nome)) continue;
+      const cfg = c.config||{};
+      let ini, fim;
+      if((cfg.recorrencia||"mensal")==="mensal"){
+        ini = isoD(new Date(Date.UTC(hoje.getFullYear(), hoje.getMonth(), 1)));
+        fim = isoD(new Date(Date.UTC(hoje.getFullYear(), hoje.getMonth()+1, 0)));
+        if(cfg.inicio > ini) ini = cfg.inicio;
+      }else{ ini = cfg.inicio; fim = cfg.fim; }
+      if(!ini || !fim || ini > isoD(hoje)) continue;
+      const v = await sbTudo(`cv_vendas?select=loja,grupo,qtd,qtd_oferta&campanha_id=eq.${c.id}&dia=gte.${ini}&dia=lte.${fim}`);
+      D.premiadas.push({c, ini, fim, v});
+    }
+  }catch(e){ D.premiadas = null; }
+}
+function premiadas(){
+  const el = $("gPremiadas");
+  if(!D.premiadas || !D.premiadas.length){ el.innerHTML = ""; el.style.display="none"; return; }
+  el.style.display = "";
+  const br = s => s.slice(8,10)+"/"+s.slice(5,7);
+  el.innerHTML = D.premiadas.map(({c, ini, fim, v})=>{
+    const cfg = c.config||{}, grupos = Object.fromEntries((cfg.grupos||[]).map(g=>[g.id,g]));
+    const conta = cfg.regras?.contar_oferta!==false;
+    const soUnid = (cfg.grupos||[]).every(g=>Number(g.peso)===1 && g.unidade!=="KG");
+    const u = soUnid ? "unidades" : "pontos";
+    const P = {}; (cfg.lojas||[]).forEach(l=>P[l]=0);
+    v.forEach(x=>{ if(!grupos[x.grupo]) return;
+      const q = conta ? Number(x.qtd) : Number(x.qtd)-Number(x.qtd_oferta);
+      P[x.loja] = (P[x.loja]||0) + q*Number(grupos[x.grupo].peso||0); });
+    const itens = Object.entries(P).map(([l,p])=>({k:"L"+String(l).padStart(2,"0"), v:p, rot:num(Math.round(p))}))
+                  .sort((a,b)=>b.v-a.v);
+    const tot = itens.reduce((a,x)=>a+x.v,0), lider = itens[0];
+    const hoje = new Date(); const dIni = new Date(ini+"T00:00:00"), dFim = new Date(fim+"T00:00:00");
+    const total = Math.round((dFim-dIni)/864e5)+1, corr = Math.min(total, Math.max(0, Math.floor((hoje-dIni)/864e5)+1));
+    const ehUnica = (cfg.recorrencia||"mensal")!=="mensal";
+    return `<div class="card">
+      <h3>${esc(cfg.icone||"🏆")} ${esc(c.nome)}</h3>
+      <p class="desc">${br(ini)} a ${br(fim)} · ${num(Math.round(tot))} ${u} na rede${ehUnica?` · dia ${corr} de ${total}`:""}</p>
+      ${lider && lider.v>0 ? `<p class="desc" style="margin-top:-6px">Liderando: ${badgeLoja(lider.k)} <b>${esc(LOJAS[lider.k]||"")}</b> com ${lider.rot} ${u}${
+        itens[1] && itens[1].v===lider.v ? ` — empatada com ${esc(LOJAS[itens[1].k]||"")}` : ""}.</p>` : `<p class="desc">Ainda sem venda na campanha.</p>`}
+      ${c.ultimo_erro ? `<p class="desc" style="color:var(--critical)">A última carga do VR falhou.</p>` : ""}
+      ${barras(itens)}
+      <div class="legenda">
+        <span class="k">${idade(c.ultima_carga)}</span>
+        <a class="k" href="${VP_URL}#c=${c.id}" target="_blank" rel="noopener">Abrir no Vendas Premiadas ›</a>
+      </div>
+    </div>`;
+  }).join("");
 }
 
 function coleta(){
