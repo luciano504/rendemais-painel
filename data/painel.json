@@ -1,55 +1,55 @@
 {
- "gerado_em": "2026-11-17T01:55-03:00",
+ "gerado_em": "2026-11-17T16:55-03:00",
  "galeto": {
   "periodo": "01/11 a 17/11",
-  "atualizado_em": "2026-11-17T01:55-03:00",
+  "atualizado_em": "2026-11-17T16:55-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 795,
-    "meios": 403,
-    "galetos": 996.5,
-    "pontos": 1993,
+    "inteiros": 818,
+    "meios": 417,
+    "galetos": 1026.5,
+    "pontos": 2053,
     "meta": 4029
    },
    {
     "loja": "L03",
-    "inteiros": 342,
-    "meios": 208,
-    "galetos": 446.0,
-    "pontos": 892,
+    "inteiros": 356,
+    "meios": 210,
+    "galetos": 461.0,
+    "pontos": 922,
     "meta": 1450
    },
    {
     "loja": "L02",
-    "inteiros": 341,
-    "meios": 33,
-    "galetos": 357.5,
-    "pontos": 715,
+    "inteiros": 350,
+    "meios": 35,
+    "galetos": 367.5,
+    "pontos": 735,
     "meta": 522
    },
    {
     "loja": "L05",
-    "inteiros": 318,
-    "meios": 16,
-    "galetos": 326.0,
-    "pontos": 652,
+    "inteiros": 319,
+    "meios": 17,
+    "galetos": 327.5,
+    "pontos": 655,
     "meta": 1238
    },
    {
     "loja": "L09",
-    "inteiros": 256,
+    "inteiros": 264,
     "meios": 7,
-    "galetos": 259.5,
-    "pontos": 519,
+    "galetos": 267.5,
+    "pontos": 535,
     "meta": 993
    },
    {
     "loja": "L08",
-    "inteiros": 201,
-    "meios": 68,
-    "galetos": 235.0,
-    "pontos": 470,
+    "inteiros": 204,
+    "meios": 69,
+    "galetos": 238.5,
+    "pontos": 477,
     "meta": 1176
    }
   ]
@@ -58,50 +58,50 @@
   "semana": "semana de 16/11",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-11-17T01:55-03:00",
+  "atualizado_em": "2026-11-17T16:55-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "coletado": 233,
-    "esperado": 309,
-    "pct": 0.754
+    "coletado": 448,
+    "esperado": 666,
+    "pct": 0.6727
    },
    {
     "loja": "L02",
-    "coletado": 232,
-    "esperado": 285,
-    "pct": 0.814
+    "coletado": 295,
+    "esperado": 373,
+    "pct": 0.7909
    },
    {
     "loja": "L03",
-    "coletado": 168,
-    "esperado": 199,
-    "pct": 0.8442
+    "coletado": 380,
+    "esperado": 474,
+    "pct": 0.8017
    },
    {
     "loja": "L05",
-    "coletado": 166,
-    "esperado": 229,
-    "pct": 0.7249
+    "coletado": 242,
+    "esperado": 323,
+    "pct": 0.7492
    },
    {
     "loja": "L08",
-    "coletado": 186,
-    "esperado": 237,
-    "pct": 0.7848
+    "coletado": 330,
+    "esperado": 453,
+    "pct": 0.7285
    },
    {
     "loja": "L09",
-    "coletado": 101,
-    "esperado": 158,
-    "pct": 0.6392
+    "coletado": 255,
+    "esperado": 364,
+    "pct": 0.7005
    }
   ],
   "anterior": {
    "semana": "09/11",
-   "itens": 6628,
+   "itens": 6623,
    "coletado": 4844,
-   "pct": 0.7308,
+   "pct": 0.7314,
    "lojas": [
     {
      "loja": "L01",
@@ -130,8 +130,8 @@
     {
      "loja": "L08",
      "coletado": 802,
-     "esperado": 1039,
-     "pct": 0.7719
+     "esperado": 1034,
+     "pct": 0.7756
     },
     {
      "loja": "L09",
@@ -147,24 +147,24 @@
    "id": "estoque_parado",
    "titulo": "Mercadoria sem venda",
    "arquivo": "data/estoque_parado.xlsx",
-   "atualizado_em": "2026-11-16T18:28-03:00",
-   "linhas": 1685,
-   "origem": "estoque_parado_20261116.xlsx"
+   "atualizado_em": "2026-11-17T16:55-03:00",
+   "linhas": 1769,
+   "origem": "estoque_parado_20261117.xlsx"
   },
   {
    "id": "transferencias",
    "titulo": "Transferências sugeridas",
    "arquivo": "data/transferencias.xlsx",
-   "atualizado_em": "2026-11-16T18:28-03:00",
-   "linhas": 3131,
-   "origem": "transferencias_20261116.xlsx"
+   "atualizado_em": "2026-11-17T16:55-03:00",
+   "linhas": 3078,
+   "origem": "transferencias_20261117.xlsx"
   },
   {
    "id": "categorias",
    "titulo": "Categorias (mês corrente)",
    "arquivo": "data/categorias.xlsx",
-   "atualizado_em": "2026-11-16T18:28-03:00",
-   "linhas": 926,
+   "atualizado_em": "2026-11-17T16:55-03:00",
+   "linhas": 929,
    "origem": "categorias_01112026.xlsx"
   }
  ],
