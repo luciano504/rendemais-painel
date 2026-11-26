@@ -1,23 +1,23 @@
 {
- "gerado_em": "2026-11-25T17:20-03:00",
+ "gerado_em": "2026-11-26T01:39-03:00",
  "galeto": {
-  "periodo": "01/11 a 25/11",
-  "atualizado_em": "2026-11-25T17:20-03:00",
+  "periodo": "01/11 a 26/11",
+  "atualizado_em": "2026-11-26T01:39-03:00",
   "lojas": [
    {
     "loja": "L01",
-    "inteiros": 1186,
-    "meios": 638,
-    "galetos": 1505.0,
-    "pontos": 3010,
+    "inteiros": 1188,
+    "meios": 643,
+    "galetos": 1509.5,
+    "pontos": 3019,
     "meta": 4029
    },
    {
     "loja": "L03",
     "inteiros": 499,
-    "meios": 275,
-    "galetos": 636.5,
-    "pontos": 1273,
+    "meios": 277,
+    "galetos": 637.5,
+    "pontos": 1275,
     "meta": 1450
    },
    {
@@ -38,10 +38,10 @@
    },
    {
     "loja": "L09",
-    "inteiros": 409,
+    "inteiros": 410,
     "meios": 11,
-    "galetos": 414.5,
-    "pontos": 829,
+    "galetos": 415.5,
+    "pontos": 831,
     "meta": 993
    },
    {
@@ -58,7 +58,7 @@
   "semana": "semana de 23/11",
   "fonte": "notas de entrada (VR)",
   "meta_pct": 0.8,
-  "atualizado_em": "2026-11-25T17:20-03:00",
+  "atualizado_em": "2026-11-26T01:39-03:00",
   "lojas": [
    {
     "loja": "L01",
